@@ -8,3 +8,5 @@ spring:
     username: username
     password: password
 
+server:
+  port: 9002

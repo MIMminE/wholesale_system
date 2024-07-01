@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: order
@@ -12,3 +13,6 @@ logging:
   level:
     org.springframework.amqp.rabbit.core.RabbitTemplate: info
     nuts.lib.manager.broker_manager.rabbitmq: debug
+
+server:
+  port:  9004
