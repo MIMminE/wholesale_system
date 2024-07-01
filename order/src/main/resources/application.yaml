@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: order
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: username
+    password: password
+
+logging:
+  level:
+    org.springframework.amqp.rabbit.core.RabbitTemplate: info
+    nuts.lib.manager.broker_manager.rabbitmq: debug
