@@ -9,6 +9,10 @@ spring:
     username: username
     password: password
 
+  jpa:
+    generate-ddl: true
+    show-sql: true
+
 logging:
   level:
     org.springframework.amqp.rabbit.core.RabbitTemplate: info

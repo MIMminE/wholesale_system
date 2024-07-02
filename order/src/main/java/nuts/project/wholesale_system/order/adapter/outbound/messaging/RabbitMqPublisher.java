@@ -1,25 +1,22 @@
-package nuts.project.wholesale_system.order.event;
+package nuts.project.wholesale_system.order.adapter.outbound.messaging;
 
 import nuts.lib.manager.broker_manager.rabbitmq.RabbitMqProducer;
+import nuts.project.wholesale_system.order.domain.port.log_publisher.LogPublisherPort;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RabbitProducer extends RabbitMqProducer implements CommandLineRunner {
+public class RabbitMqPublisher extends RabbitMqProducer implements LogPublisherPort {
 
     private static final String EXCHANGE_NAME = "wholesale_system";
     private static final String ROUTING_KEY = "order_log.routing";
 
-    public RabbitProducer(RabbitTemplate rabbitTemplate) {
+    public RabbitMqPublisher(RabbitTemplate rabbitTemplate) {
         super(rabbitTemplate, EXCHANGE_NAME, ROUTING_KEY);
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        while (true) {
-            Thread.sleep(2000);
-            this.send("hello");
-        }
+    public void publishing(Object message) {
+        this.send(message);
     }
 }
