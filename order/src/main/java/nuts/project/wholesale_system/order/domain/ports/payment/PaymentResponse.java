@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.order.domain.port.payment_service.dto;
+package nuts.project.wholesale_system.order.domain.ports.payment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

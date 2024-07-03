@@ -1,7 +1,7 @@
 package nuts.project.wholesale_system.order.adapter.outbound.messaging;
 
 import nuts.lib.manager.broker_manager.rabbitmq.RabbitMqProducer;
-import nuts.project.wholesale_system.order.domain.port.log_publisher.LogPublisherPort;
+import nuts.project.wholesale_system.order.domain.ports.log.LogPublisherPort;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
