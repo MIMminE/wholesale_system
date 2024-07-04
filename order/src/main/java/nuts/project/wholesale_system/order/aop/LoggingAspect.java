@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class LoggingAspect {
     private final LogPublisherPort logPublisher;
 
-    @Before("execution(* nuts.project.wholesale_system.order.service.*.*(..))")
+    @Before("execution(* nuts.project.wholesale_system.order.domain.service.*.*(..))")
     public void beforeAdvice(JoinPoint point) {
 
         Object[] args = point.getArgs();

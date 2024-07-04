@@ -2,10 +2,10 @@ package nuts.project.wholesale_system.order.adapter.inbound.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import nuts.project.wholesale_system.order.dto.CreateOrderRequest;
+import nuts.project.wholesale_system.order.domain.dto.CreateOrderRequest;
 import nuts.project.wholesale_system.order.domain.dto.OrderResponse;
-import nuts.project.wholesale_system.order.dto.DeleteOrderRequest;
-import nuts.project.wholesale_system.order.service.OrderService;
+import nuts.project.wholesale_system.order.domain.dto.DeleteOrderRequest;
+import nuts.project.wholesale_system.order.domain.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

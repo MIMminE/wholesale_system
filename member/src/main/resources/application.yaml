@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: member
+
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+server:
+  port: 9011
