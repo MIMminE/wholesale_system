@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.member.domain.service.member.dto.request;
+package nuts.project.wholesale_system.member.adapter.inbound.controller.member.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

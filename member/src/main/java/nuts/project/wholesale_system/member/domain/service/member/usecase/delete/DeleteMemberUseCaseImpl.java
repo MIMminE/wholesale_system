@@ -12,6 +12,7 @@ public class DeleteMemberUseCaseImpl implements DeleteMemberUseCase{
 
     private final MemberRepository memberRepository;
 
+
     @Override
     public Member execute(String memberId) {
 

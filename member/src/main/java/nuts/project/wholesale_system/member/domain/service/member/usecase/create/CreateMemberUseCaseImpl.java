@@ -1,6 +1,5 @@
 package nuts.project.wholesale_system.member.domain.service.member.usecase.create;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationRepository;

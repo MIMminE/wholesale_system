@@ -16,6 +16,10 @@ public class MemberService {
     private final DeleteMemberUseCase deleteMemberUseCase;
     private final UpdateMemberUseCase updateMemberUseCase;
 
+    public Member getMember(String id, String password){
+
+    }
+
     public Member createMember(String name, String id, String password, String contactNumber, String corporationId) {
         try {
             return createMemberUseCase.execute(name, id, password, contactNumber, corporationId);
@@ -36,5 +40,4 @@ public class MemberService {
             throw new IllegalArgumentException("Id already exists");
         }
     }
-
 }

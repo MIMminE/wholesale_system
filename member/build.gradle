@@ -26,6 +26,9 @@ repositories {
 
 dependencies {
     implementation 'nuts:spring_provision_lib:1.0'
+    implementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.14'
+
+    implementation 'org.springframework.security:spring-security-crypto'
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-web'
