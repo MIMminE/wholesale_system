@@ -5,5 +5,5 @@ import nuts.project.wholesale_system.member.domain.model.Member;
 
 public interface GetMemberUseCase {
 
-    Member executor(String id, String password);
+    Member execute(String id);
 }

@@ -6,9 +6,11 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CreateMemberRequest {
 
@@ -16,11 +18,11 @@ public class CreateMemberRequest {
     private String name;
 
     @NotBlank
-    @Size(min = 5, max = 15)
+    @Size(min = 5)
     private String id;
 
     @NotBlank
-    @Size(min = 5, max = 15)
+    @Size(min = 5)
     private String password;
 
     @NotBlank

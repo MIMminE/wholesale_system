@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 public class GetMemberUseCaseImpl implements GetMemberUseCase{
 
     private final PasswordEncoder passwordEncoder;
-    private final MemberRepository memberRepository;
-
     @Override
-    public Member executor(String id, String password) {
+    public Member execute(String id) {
         return null;
     }
+
+    private final MemberRepository memberRepository;
 }

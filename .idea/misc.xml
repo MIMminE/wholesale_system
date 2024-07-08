@@ -9,6 +9,7 @@
     <file type="web" url="file://$PROJECT_DIR$/order" />
     <file type="web" url="file://$PROJECT_DIR$/payment" />
     <file type="web" url="file://$PROJECT_DIR$/stock" />
+    <file type="web" url="file://$PROJECT_DIR$/web" />
   </component>
   <component name="ProjectRootManager">
     <output url="file://$PROJECT_DIR$/out" />

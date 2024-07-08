@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.member.domain.utills;
+package nuts.project.wholesale_system.member.domain.config;
 
 
 import org.springframework.context.annotation.Bean;
