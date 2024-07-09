@@ -4,7 +4,7 @@ package nuts.project.wholesale_system.member.adapter.inbound.controller.member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nuts.lib.manager.restdocs_manager.MockMvcSupport;
 import nuts.lib.manager.restdocs_manager.RestDocsManager;
-import nuts.lib.manager.restdocs_manager.RestDocsSupport;
+import nuts.lib.manager.restdocs_manager.support.RestDocsSupport;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.member.dto.request.CreateMemberRequest;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.member.dto.request.DeleteMemberRequest;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.member.dto.request.RequestRestDocs;
@@ -17,8 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Map;
@@ -29,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MemberControllerTest extends RestDocsSupport {
 
     private final MemberService memberService = Mockito.mock(MemberService.class);
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final RestDocsManager restDocsManager = new RestDocsManager(RequestRestDocs.class, ResponseRestDocs.class);
 

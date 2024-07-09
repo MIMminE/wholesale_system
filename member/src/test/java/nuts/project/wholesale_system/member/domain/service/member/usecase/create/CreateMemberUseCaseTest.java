@@ -1,9 +1,9 @@
 package nuts.project.wholesale_system.member.domain.service.member.usecase.create;
 
 import nuts.project.wholesale_system.member.SpringTestSupport;
+import nuts.project.wholesale_system.member.adapter.inbound.controller.member.dto.request.CreateMemberRequest;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.domain.model.Member;
-import nuts.project.wholesale_system.member.domain.service.member.dto.request.CreateMemberRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

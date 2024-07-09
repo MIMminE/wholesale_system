@@ -1,8 +1,16 @@
 package nuts.project.wholesale_system.member.domain.model;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.List;
 
+@Getter
+@Builder
+@ToString
 public class Corporation {
+    private String corporationId;
     private String corporationName;
     private String representative;
     private String contactNumber;
