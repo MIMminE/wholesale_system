@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.member.MemberEntity;
+import nuts.project.wholesale_system.member.domain.model.Corporation;
 import nuts.project.wholesale_system.member.domain.model.Grade;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,6 @@ import java.util.UUID;
 @Getter
 @Table(name = "corporations")
 public class CorporationEntity {
-
 
     @Id
     private String corporationId;
@@ -32,6 +32,7 @@ public class CorporationEntity {
     private String contactNumber;
 
     @NotBlank
+    @Column(unique = true)
     private String businessNumber;
 
     @NotNull
@@ -66,6 +67,18 @@ public class CorporationEntity {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public Corporation toCorporation() {
+        return Corporation.builder()
+                .corporationId(this.corporationId)
+                .corporationName(this.corporationName)
+                .representative(this.representative)
+                .contactNumber(this.contactNumber)
+                .businessNumber(this.businessNumber)
+                .grade(this.grade)
+                .registeredMembers(this.registeredMembers.stream().map(MemberEntity::toMember).toList())
+                .build();
     }
 
     public void addMember(MemberEntity memberEntity) {

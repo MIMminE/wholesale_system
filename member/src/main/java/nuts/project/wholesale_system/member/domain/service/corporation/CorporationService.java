@@ -30,7 +30,6 @@ public class CorporationService {
 
     public Corporation deleteCorporation(String corporationId) {
 
-
         return deleteCorporationUseCase.execute(corporationId);
     }
 
