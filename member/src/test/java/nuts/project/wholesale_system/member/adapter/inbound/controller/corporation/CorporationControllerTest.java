@@ -138,7 +138,6 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     @Test
     @DisplayName("[Corporation Controller PUT 요청 테스트] /api/v1/corporations")
     void updateCorporation() throws Exception {
-
         UpdateCorporationRequest updateCorporationRequest = getOrderedObject(UpdateCorporationRequest.class).get(0);
 
         String corporationId = updateCorporationRequest.getCorporationId();
