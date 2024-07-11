@@ -1,6 +1,6 @@
 package nuts.project.wholesale_system.member.domain.service.member.usecase.create;
 
-import nuts.project.wholesale_system.member.SpringTestSupport;
+import nuts.project.wholesale_system.member.support.SpringTestSupport;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.member.dto.request.CreateMemberRequest;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.domain.model.Member;

@@ -30,7 +30,6 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     CorporationService corporationService = Mockito.mock(CorporationService.class);
     RestDocsManager restDocsManager = new RestDocsManager(RequestRestDocs.class, ResponseRestDocs.class);
 
-
     @Test
     @DisplayName("[Corporation Controller GET 요청 테스트] /api/v1/corporations/{corporationId}")
     void getCorporation() throws Exception {

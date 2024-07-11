@@ -5,7 +5,7 @@ import nuts.lib.manager.restdocs_manager.domain.annotation.RestDocsSnippet;
 import nuts.lib.manager.restdocs_manager.domain.expression.FieldDescription;
 
 @RestDocsHolder(RestDocsHolder.RestDocsHolderType.response)
-public class ResponseRestDocs {
+public abstract class ResponseRestDocs {
 
     @RestDocsSnippet(fields = {
             @FieldDescription(name = "corporationId", description = "생성된 기관에 부여된 ID"),

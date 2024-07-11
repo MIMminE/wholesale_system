@@ -34,6 +34,7 @@ class CorporationServiceTest extends FixtureGenerateSupport {
 
     @Mock
     CreateCorporationUseCase createCorporationUseCase;
+
     @Mock
     DeleteCorporationUseCase deleteCorporationUseCase;
 

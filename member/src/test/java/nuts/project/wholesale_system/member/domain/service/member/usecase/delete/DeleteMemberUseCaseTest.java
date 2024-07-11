@@ -1,6 +1,6 @@
 package nuts.project.wholesale_system.member.domain.service.member.usecase.delete;
 
-import nuts.project.wholesale_system.member.SpringTestSupport;
+import nuts.project.wholesale_system.member.support.SpringTestSupport;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.member.MemberEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

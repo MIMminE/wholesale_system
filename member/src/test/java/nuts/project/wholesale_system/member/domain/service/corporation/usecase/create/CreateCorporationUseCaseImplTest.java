@@ -1,18 +1,17 @@
-package nuts.project.wholesale_system.member.domain.service.corporation.usecase;
+package nuts.project.wholesale_system.member.domain.service.corporation.usecase.create;
 
-import nuts.project.wholesale_system.member.SpringTestSupport;
+import nuts.project.wholesale_system.member.support.SpringTestSupport;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.request.CreateCorporationRequest;
-import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
+import nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException;
 import nuts.project.wholesale_system.member.domain.model.Corporation;
 import nuts.project.wholesale_system.member.domain.model.Grade;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.dao.DataIntegrityViolationException;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import static nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException.CorporationExceptionCase.CREATE_REDUNDANCY_BUSINESS_NUMBER;
 
-public class CorporationUseCaseTest extends SpringTestSupport {
+class CreateCorporationUseCaseImplTest extends SpringTestSupport {
 
     @DisplayName("createCorporationUseCase 동작 성공 테스트")
     @Test
@@ -50,32 +49,11 @@ public class CorporationUseCaseTest extends SpringTestSupport {
 
         // when
         Corporation result = createCorporationUseCase.execute(corporationName, representative, contactNumber, businessNumber, grade);
-        createCorporationUseCase.execute(corporationName, representative, contactNumber, businessNumber, grade);
 
         // then
-        Assertions.assertThatThrownBy(() -> corporationRepository.flush()).isInstanceOf(DataIntegrityViolationException.class);
+        Assertions.assertThatThrownBy(() -> createCorporationUseCase.execute(corporationName, representative, contactNumber, businessNumber, grade))
+                .isInstanceOf(CorporationUseCaseException.class)
+                .hasMessage(CREATE_REDUNDANCY_BUSINESS_NUMBER.getMessage());
     }
 
-
-    @DisplayName("deleteCorporationUseCase 동작 성공 테스트")
-    @Test
-    void deleteCorporationUseCase() {
-        // given
-        CorporationEntity corporationEntity = getOrderedObject(CorporationEntity.class).get(0);
-        CorporationEntity resultEntity = corporationRepository.save(corporationEntity);
-
-        String corporationId = resultEntity.getCorporationId();
-        String corporationName = corporationEntity.getCorporationName();
-        String representative = corporationEntity.getRepresentative();
-        String contactNumber = corporationEntity.getContactNumber();
-        String businessNumber = corporationEntity.getBusinessNumber();
-        Grade grade = corporationEntity.getGrade();
-        // when
-        Corporation corporation = deleteCorporationUseCase.execute(corporationId);
-
-        // then
-        Assertions.assertThat(corporation)
-                .extracting("corporationId", "corporationName", "representative", "contactNumber", "businessNumber","grade")
-                .contains(corporationId, corporationName, representative, contactNumber, businessNumber, grade);
-    }
 }
