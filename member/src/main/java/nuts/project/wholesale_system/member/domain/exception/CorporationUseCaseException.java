@@ -3,6 +3,7 @@ package nuts.project.wholesale_system.member.domain.exception;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 public class CorporationUseCaseException extends RuntimeException {
     public CorporationUseCaseException(CorporationExceptionCase exceptionCase, Throwable throwable) {
         super(exceptionCase.message);
@@ -10,8 +11,13 @@ public class CorporationUseCaseException extends RuntimeException {
         this.throwable = throwable;
     }
 
+    public CorporationUseCaseException(CorporationExceptionCase exceptionCase) {
+        super(exceptionCase.message);
+        this.exceptionCase = exceptionCase;
+    }
+
     private final CorporationExceptionCase exceptionCase;
-    private final Throwable throwable;
+    private Throwable throwable;
 
 
     @RequiredArgsConstructor
