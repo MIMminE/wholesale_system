@@ -10,3 +10,10 @@ spring:
 
 server:
   port: 9002
+
+app:
+  config:
+    name: hello
+    consumer-information-list:
+      - queue-name: example-queue
+        db_source: elk-source
