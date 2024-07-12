@@ -1,3 +1,5 @@
+
+
 spring:
   application:
     name: member
@@ -5,5 +7,8 @@ spring:
   jpa:
     generate-ddl: true
     show-sql: true
+
+  profiles:
+    active: dev
 server:
   port: 9011

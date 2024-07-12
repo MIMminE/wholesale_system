@@ -3,14 +3,12 @@ package nuts.project.wholesale_system.member.adapter.inbound.controller.corporat
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import nuts.project.wholesale_system.member.domain.model.Grade;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Builder
 public class CreateCorporationRequest {

@@ -8,6 +8,7 @@ import lombok.*;
 @Builder
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class SearchCorporationsRequest {
 
     private String corporationId;

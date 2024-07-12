@@ -23,7 +23,7 @@ public class CorporationController {
     private final CorporationService corporationService;
 
     @GetMapping("/api/v1/corporations/{corporationId}")
-    public ResponseEntity<GetCorporationResponse> getCorporation(@PathVariable String corporationId) {
+    public ResponseEntity<GetCorporationResponse> getCorporation(@PathVariable("corporationId") String corporationId) {
 
         Corporation corporation = corporationService.getCorporation(corporationId);
         GetCorporationResponse getCorporationResponse = GetCorporationResponse.fromCorporation(corporation);

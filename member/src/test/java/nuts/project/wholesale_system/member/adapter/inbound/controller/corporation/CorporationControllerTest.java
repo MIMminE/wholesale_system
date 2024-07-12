@@ -8,6 +8,7 @@ import nuts.lib.manager.restdocs_manager.RestDocsManager;
 import nuts.lib.manager.restdocs_manager.support.ExtendsFixtureRestDocsSupport;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.request.*;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.response.ResponseRestDocs;
+import nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException;
 import nuts.project.wholesale_system.member.domain.model.Corporation;
 import nuts.project.wholesale_system.member.domain.model.Grade;
 import nuts.project.wholesale_system.member.domain.service.corporation.CorporationService;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -24,6 +26,7 @@ import java.util.*;
 import static java.util.Map.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+@Import(CorporationExceptionHandler.class)
 class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -48,6 +51,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
                         "businessNumber", corporation.getBusinessNumber(),
                         "grade", corporation.getGrade().toString()
                 )))
+                .andDo(restDocsManager.document("/api/v1/get-corporations","getCorporationResponse"))
                 .andDo(print());
     }
 
@@ -88,6 +92,9 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
                         entry("corporationResponses[1].businessNumber", sceondCorporation.getBusinessNumber()),
                         entry("corporationResponses[1].grade", sceondCorporation.getGrade().toString()))
                 ))
+                .andDo(restDocsManager.document("/api/v1/search-corporations",
+                        "searchCorporationRequest",
+                        "searchCorporationResponse"))
                 .andDo(print());
     }
 
@@ -116,6 +123,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
 
         BDDMockito.given(corporationService.createCorporation(corporationName, representative, contactNumber, businessNumber, grade)).willReturn(corporation);
 
+
         mockController.perform(MockMvcRequestBuilders.post("/api/v1/corporations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCorporationRequest)))
@@ -131,7 +139,6 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
                 .andDo(restDocsManager.document("/api/v1/create-corporations",
                         "createCorporationRequest",
                         "createCorporationResponse"));
-
     }
 
     @Test
@@ -180,7 +187,9 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
                         entry("afterCorporation.businessNumber", expectUpdatedCorporation.getBusinessNumber()),
                         entry("afterCorporation.grade", expectUpdatedCorporation.getGrade().toString())
                 )))
-
+                .andDo(restDocsManager.document("/api/v1/update-corporations",
+                        "updateCorporationRequest",
+                        "updateCorporationResponse"))
                 .andDo(print());
     }
 
@@ -206,10 +215,11 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
                         entry("representative", corporation.getRepresentative()),
                         entry("businessNumber", corporation.getBusinessNumber())
                 )))
-
+                .andDo(restDocsManager.document("/api/v1/delete-corporations",
+                        "deleteCorporationRequest",
+                        "deleteCorporationResponse"))
                 .andDo(print());
     }
-
 
     @Override
     protected Object initController() {

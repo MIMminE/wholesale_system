@@ -181,6 +181,7 @@ class CorporationServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
+    @DisplayName("searchCorporation 서비스 동작 테스트 성공")
     void searchCorporation() {
 
         // given
