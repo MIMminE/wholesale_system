@@ -8,7 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class SamplePaymentService implements PaymentServicePort {
     @Override
-    public PaymentResponse getPaymentInformation(PaymentRequest request) {
+    public PaymentResponse requestPayment(PaymentRequest request) {
         return new PaymentResponse("no", "test",10);
+    }
+
+    @Override
+    public PaymentResponse getPaymentInformation(String orderId) {
+        return null;
     }
 }

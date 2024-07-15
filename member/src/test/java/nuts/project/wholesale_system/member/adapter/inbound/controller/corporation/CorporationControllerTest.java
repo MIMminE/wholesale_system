@@ -15,8 +15,11 @@ import nuts.project.wholesale_system.member.domain.service.corporation.Corporati
 import nuts.project.wholesale_system.member.domain.service.corporation.usecase.update.UpdateCorporationResultSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,11 +29,13 @@ import java.util.*;
 import static java.util.Map.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@Import(CorporationExceptionHandler.class)
 class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
 
     ObjectMapper objectMapper = new ObjectMapper();
-    CorporationService corporationService = Mockito.mock(CorporationService.class);
+
+    @Mock
+    CorporationService corporationService;
+
     RestDocsManager restDocsManager = new RestDocsManager(RequestRestDocs.class, ResponseRestDocs.class);
 
     @Test

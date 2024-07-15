@@ -19,7 +19,6 @@ public class CorporationUseCaseException extends RuntimeException {
     private final CorporationExceptionCase exceptionCase;
     private Throwable throwable;
 
-
     @RequiredArgsConstructor
     @Getter
     public enum CorporationExceptionCase {

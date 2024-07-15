@@ -36,10 +36,10 @@ public class OrderEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    public OrderEntity(String orderId, String customerId, OrderStatus orderStatus) {
+    public OrderEntity(String orderId, String userId, OrderStatus orderStatus) {
         this();
         this.orderId = orderId;
-        this.userId = customerId;
+        this.userId = userId;
         this.orderStatus = orderStatus;
     }
 
@@ -74,6 +74,11 @@ public class OrderEntity {
 
         return entity;
     }
+
+    public Order toOrder(){
+        return new Order(this.orderId, this.userId, this.items.stream().map(OrderItemEntity::toOrderItem).toList(), this.orderStatus);
+    }
+
 
     static public Order toOrder(OrderEntity orderEntity) {
         String orderId = orderEntity.getOrderId();

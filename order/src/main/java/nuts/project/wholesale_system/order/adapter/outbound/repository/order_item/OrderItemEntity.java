@@ -32,12 +32,8 @@ public class OrderItemEntity {
         this.quantity = quantity;
     }
 
-    static public OrderItem toOrderItem(OrderItemEntity orderItemEntity) {
-
-        String productId = orderItemEntity.getProductId();
-        int quantity = orderItemEntity.getQuantity();
-
-        return OrderItem.createOrderItem(productId, quantity);
+    public OrderItem toOrderItem() {
+        return new OrderItem(this.productId, this.quantity);
     }
 
     static public OrderItemEntity fromOrderItem(OrderItem orderItem) {

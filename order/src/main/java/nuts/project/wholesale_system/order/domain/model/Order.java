@@ -1,9 +1,6 @@
 package nuts.project.wholesale_system.order.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,6 +8,8 @@ import java.util.List;
 @Setter
 @Builder
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Order {
     private String orderId;
     private String userId;
