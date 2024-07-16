@@ -55,7 +55,6 @@ public class OrderService {
         } catch (IllegalArgumentException e) {
             throw new OrderException(OrderException.OrderExceptionCase.UPDATE_NO_SUCH_ELEMENT);
         }
-
     }
 
     public List<OrderProcessDto> getOrders(String userId) {
