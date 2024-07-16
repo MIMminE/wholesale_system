@@ -25,6 +25,7 @@ public class OrderEntity {
     @Id
     private String orderId;
 
+    @Column(unique = true)
     private String userId;
 
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -5,10 +5,9 @@ import lombok.*;
 import java.util.List;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @ToString
 public class Order {
 

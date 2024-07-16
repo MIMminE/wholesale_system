@@ -1,6 +1,5 @@
 package nuts.project.wholesale_system.order.adapter.inbound.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.jqwik.api.Arbitraries;
 import nuts.lib.manager.fixture_manager.OrderSheet;
@@ -54,7 +53,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                 .willReturn(orderProcessDto);
 
         // when // then
-        mockController.perform(MockMvcRequestBuilders.post("/orders")
+        mockController.perform(MockMvcRequestBuilders.post("/api/v1/orders")
                         .header("jwtUserId", userId)
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(createOrderRequest)))
@@ -181,6 +180,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
+    @DisplayName("getOrder Controller 성공 테스트")
     void getOrder() throws Exception {
 
         Order order = getOrderedObject(Order.class).get(0);
