@@ -1,13 +1,10 @@
 package nuts.project.wholesale_system.order.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
-@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class OrderItem {
     private String productId;

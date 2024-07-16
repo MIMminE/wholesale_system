@@ -8,7 +8,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@ToString
 @Getter
 public class UpdateOrderRequest {
 

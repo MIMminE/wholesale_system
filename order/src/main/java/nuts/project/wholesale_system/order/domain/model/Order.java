@@ -6,11 +6,12 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class Order {
+
     private String orderId;
     private String userId;
     private List<OrderItem> items;

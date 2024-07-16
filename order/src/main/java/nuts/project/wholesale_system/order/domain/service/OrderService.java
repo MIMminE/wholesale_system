@@ -7,6 +7,7 @@ import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderDto;
+import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderStatusDto;
 import nuts.project.wholesale_system.order.domain.service.usecase.create.CreateOrderUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.delete.DeleteOrderIdUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrderUseCase;
@@ -42,13 +43,19 @@ public class OrderService {
         return updateOrderUseCase.execute(orderId, orderItems);
     }
 
-    public UpdateOrderDto updateOrderStatus(String orderId, String orderStatus) {
+    /**
+     * @throws OrderException(OrderException.OrderExceptionCase)
+     */
+    public UpdateOrderStatusDto updateOrderStatus(String orderId, String orderStatus) {
+
         try {
             OrderStatus status = OrderStatus.valueOf(orderStatus);
             return updateOrderStatusUseCase.execute(orderId, status);
+
         } catch (IllegalArgumentException e) {
             throw new OrderException(OrderException.OrderExceptionCase.UPDATE_NO_SUCH_ELEMENT);
         }
+
     }
 
     public List<OrderProcessDto> getOrders(String userId) {

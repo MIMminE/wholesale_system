@@ -8,11 +8,11 @@ import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.service.OrderService;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderDto;
+import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderStatusDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("/orders")
+    @PostMapping("/api/v1/orders")
     public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody @Valid CreateOrderRequest request, @RequestHeader("jwtUserId") String jwtUserId) {
 
         List<OrderItemRequest> orderItems = request.getOrderItems();
@@ -32,7 +32,7 @@ public class OrderController {
         return ResponseEntity.ok().body(createOrderResponse);
     }
 
-    @DeleteMapping("/orders")
+    @DeleteMapping("/api/v1/orders")
     public ResponseEntity<DeleteOrderResponse> deleteOrder(@RequestBody @Valid DeleteOrderRequest request, @RequestHeader("jwtUserId") String jwtUserId) {
 
         Order order = orderService.deleteOrder(request.getOrderId());
@@ -40,8 +40,8 @@ public class OrderController {
         return ResponseEntity.ok().body(DeleteOrderResponse.fromOrder(order));
     }
 
-    @PutMapping("/orders")
-    public ResponseEntity<UpdateOrderResponse> updateOrder(@RequestBody @Valid UpdateOrderRequest request) {
+    @PutMapping("/api/v1/orders")
+    public ResponseEntity<UpdateOrderResponse> updateOrder(@RequestBody @Valid UpdateOrderRequest request, @RequestHeader("jwtUserId") String jwtUserId) {
 
         UpdateOrderDto updateOrderDto = orderService.updateOrder(request.getOrderId(),
                 request.getOrderItems().stream().map(OrderItemRequest::toOrderItem).toList());
@@ -49,27 +49,27 @@ public class OrderController {
         return ResponseEntity.ok().body(UpdateOrderResponse.fromUpdateOrderDto(updateOrderDto));
     }
 
-    @PutMapping("/orders/status")
-    public ResponseEntity<UpdateOrderResponse> updateOrderStatus(@RequestBody @Valid UpdateOrderStatusRequest request) {
+    @PutMapping("/api/v1/orders/status")
+    public ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(@RequestBody @Valid UpdateOrderStatusRequest request, @RequestHeader("jwtUserId") String jwtUserId) {
 
         String orderId = request.getOrderId();
         String orderStatus = request.getOrderStatus();
 
-        UpdateOrderDto updateOrderDto = orderService.updateOrderStatus(orderId, orderStatus);
+        UpdateOrderStatusDto updateOrderStatusDto = orderService.updateOrderStatus(orderId, orderStatus);
 
-        return ResponseEntity.ok().body(UpdateOrderResponse.fromUpdateOrderDto(updateOrderDto));
+        return ResponseEntity.ok().body(UpdateOrderStatusResponse.fromUpdateOrderStatusDto(updateOrderStatusDto));
     }
 
-    @GetMapping("/orders/user/{userId}")
-    public ResponseEntity<GetOrdersByUserIdResponse> getOrders(@PathVariable String userId) {
+    @GetMapping("/api/v1/orders/user/{userId}")
+    public ResponseEntity<GetOrdersByUserIdResponse> getOrders(@PathVariable("userId") String userId, @RequestHeader("jwtUserId") String jwtUserId) {
 
         List<OrderProcessDto> orderProcessDtoList = orderService.getOrders(userId);
 
         return ResponseEntity.ok().body(GetOrdersByUserIdResponse.fromOrderProcessDtoList(orderProcessDtoList));
     }
 
-    @GetMapping("/orders/{orderId}")
-    public ResponseEntity<GetOrderByOrderIdResponse> getOrder(@PathVariable String orderId) {
+    @GetMapping("/api/v1/orders/{orderId}")
+    public ResponseEntity<GetOrderByOrderIdResponse> getOrder(@PathVariable("orderId") String orderId, @RequestHeader("jwtUserId") String jwtUserId) {
 
         OrderProcessDto orderProcessDto = orderService.getOrderByOrderId(orderId);
 
