@@ -25,20 +25,18 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
 
     @Override
     public OrderProcessDto execute(String userId, List<OrderItem> items) {
-        try {
-            PaymentInformation payResponse = getPaymentInformation();
-            OrderEntity orderEntity = orderRepository.save(createOrderEntity(userId, items));
 
-            Order resultOrder = orderEntity.toOrder();
+        OrderEntity orderEntity = orderRepository.save(createOrderEntity(userId, items));
 
-            return new OrderProcessDto(payResponse, resultOrder);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("payment service is failed");
-        }
+        Order resultOrder = orderEntity.toOrder();
+        String orderId = resultOrder.getOrderId();
+        PaymentInformation payResponse = getPaymentInformation(userId, orderId);
+        return new OrderProcessDto(payResponse, resultOrder);
+
     }
 
-    private PaymentInformation getPaymentInformation() {
-        PaymentResponse paymentInformation = paymentService.requestPayment(new PaymentRequest());
+    private PaymentInformation getPaymentInformation(String userId, String orderId) {
+        PaymentResponse paymentInformation = paymentService.requestPayment(userId, orderId);
         return new PaymentInformation(paymentInformation.getAccountId());
     }
 

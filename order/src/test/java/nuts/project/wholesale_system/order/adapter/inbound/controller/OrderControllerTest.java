@@ -96,13 +96,12 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
         String orderId = updateOrderRequest.getOrderId();
         Order beforeOrder = getOrderedObject(Order.class).get(0);
         String userId = beforeOrder.getUserId();
-        PaymentInformation testPaymentInfo = new PaymentInformation("test_payment_info");
         List<OrderItem> orderItems = updateOrderRequest.getOrderItems().stream().map(OrderItemRequest::toOrderItem).toList();
 
         changeFieldValue(beforeOrder, "orderId", orderId);
         Order afterOrder = new Order(orderId, userId, orderItems, OrderStatus.pendPayment);
 
-        UpdateOrderDto returnedOrderDto = new UpdateOrderDto(orderId, userId, testPaymentInfo, beforeOrder, afterOrder);
+        UpdateOrderDto returnedOrderDto = new UpdateOrderDto(orderId, userId, beforeOrder.getItems(), afterOrder.getItems());
 
         BDDMockito.given(orderService.updateOrder(orderId, orderItems))
                 .willReturn(returnedOrderDto);

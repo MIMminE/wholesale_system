@@ -112,7 +112,7 @@ class OrderServiceTest extends FixtureGenerateSupport {
 
         changeFieldValue(afterOrder, "orderId", orderId);
 
-        UpdateOrderDto updateOrderDto = new UpdateOrderDto(orderId, userId, new PaymentInformation("test_payment"), beforeOrder, afterOrder);
+        UpdateOrderDto updateOrderDto = new UpdateOrderDto(orderId, userId, beforeOrder.getItems(), afterOrder.getItems());
 
         BDDMockito.given(updateOrderUseCase.execute(orderId, afterOrder.getItems()))
                 .willReturn(updateOrderDto);
@@ -122,8 +122,8 @@ class OrderServiceTest extends FixtureGenerateSupport {
 
         // then
         Assertions.assertThat(resultUpdateOrderDto)
-                .extracting("orderId", "userId", "beforeOrder", "afterOrder")
-                .contains(orderId, userId, beforeOrder, afterOrder);
+                .extracting("orderId", "userId", "beforeOrderItems", "afterOrderItems")
+                .contains(orderId, userId, beforeOrder.getItems(), afterOrder.getItems());
     }
 
     @Test

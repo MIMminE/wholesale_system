@@ -7,7 +7,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-//@EqualsAndHashCode
 @ToString
 public class Order {
 

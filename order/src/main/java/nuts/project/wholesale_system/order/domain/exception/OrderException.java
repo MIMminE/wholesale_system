@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 public class OrderException extends RuntimeException {
 
-    private OrderExceptionCase orderExceptionCase;
-
     public OrderException(OrderExceptionCase orderExceptionCase) {
         super(orderExceptionCase.getMessage());
     }
@@ -21,7 +19,9 @@ public class OrderException extends RuntimeException {
         SEARCH_NO_SUCH_ELEMENT("There is no data found for that condition."),
         UPDATE_NO_SUCH_ELEMENT("An invalid ID was entered."),
         UPDATE_NO_MATCH_STATUS("Invalid status change request."),
-        UNKNOWN_EXCEPTION("It's an unknown exception.");
+        UNKNOWN_EXCEPTION("It's an unknown exception."),
+
+        PAYMENT_SERVICE_FAIL("Payment Service fail");
 
         private final String message;
     }

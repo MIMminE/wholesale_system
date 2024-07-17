@@ -26,21 +26,16 @@ public class UpdateOrderResponse {
     @NotEmpty
     private List<OrderItemResponse> afterOrderItems;
 
-    @NotEmpty
-    private PaymentInformation paymentInformation;
-
     public static UpdateOrderResponse fromUpdateOrderDto(UpdateOrderDto updateOrderDto) {
 
         String orderId = updateOrderDto.getOrderId();
         String userId = updateOrderDto.getUserId();
 
-        List<OrderItemResponse> beforeOrderItems = updateOrderDto.getBeforeOrder().getItems().stream()
+        List<OrderItemResponse> beforeOrderItems = updateOrderDto.getBeforeOrderItems().stream()
                 .map(OrderItemResponse::fromOrderItem).toList();
-        List<OrderItemResponse> afterOrderItems = updateOrderDto.getAfterOrder().getItems().stream()
+        List<OrderItemResponse> afterOrderItems = updateOrderDto.getAfterOrderItems().stream()
                 .map(OrderItemResponse::fromOrderItem).toList();
 
-        PaymentInformation paymentInformation = updateOrderDto.getPaymentInformation();
-
-        return new UpdateOrderResponse(orderId, userId, beforeOrderItems, afterOrderItems, paymentInformation);
+        return new UpdateOrderResponse(orderId, userId, beforeOrderItems, afterOrderItems);
     }
 }

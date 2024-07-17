@@ -27,7 +27,7 @@ public class GetOrdersUseCaseImpl implements GetOrdersUseCase {
                 .orElseThrow(() -> new OrderException(GET_NO_SUCH_ELEMENT));
 
         return orderEntities.stream().map(e -> {
-            PaymentResponse paymentInformation = paymentService.getPaymentInformation(e.getOrderId());
+            PaymentResponse paymentInformation = paymentService.requestPayment(userId, e.getOrderId());
             return new OrderProcessDto(new PaymentInformation(paymentInformation.getAccountId()), e.toOrder());
         }).toList();
     }
