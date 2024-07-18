@@ -1,4 +1,11 @@
+
+
 spring:
   jpa:
     generate-ddl: true
     show-sql: true
+  profiles:
+    default: dev
+
+server:
+  port: 9811

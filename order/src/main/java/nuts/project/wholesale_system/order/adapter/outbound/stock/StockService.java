@@ -5,6 +5,7 @@ import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
@@ -13,8 +14,12 @@ import static nuts.project.wholesale_system.order.domain.exception.StockExceptio
 @Component
 public class StockService implements StockServicePort {
 
+    private final RestTemplate restTemplate = new RestTemplate();
+
     @Override
     public Optional<StockResponse> checkStock(StockRequest request) throws StockException {
+
+
         try {
             //TODO
             System.out.println("stock check!");

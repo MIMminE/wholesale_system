@@ -29,7 +29,7 @@ class GetStockUseCaseTest extends StockUseCaseTestSupport {
 
         // then
         Assertions.assertThat(getResult)
-                .extracting("stockId","stockName","category","stockQuantity")
+                .extracting("stockId","stockName","category","quantity")
                 .contains(stockId, stockName, category.name(), quantity);
 
     }
