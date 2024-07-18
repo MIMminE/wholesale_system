@@ -29,7 +29,7 @@ public class StockController {
 
         return ResponseEntity.ok()
                 .body(new GetStockResponse(getResult.getStockId(), getResult.getStockName(),
-                        getResult.getCategory(), getResult.getStockQuantity()));
+                        getResult.getCategory(), getResult.getQuantity()));
 
     }
 
@@ -40,7 +40,7 @@ public class StockController {
 
         return ResponseEntity.ok()
                 .body(new CreateStockResponse(createResult.getStockId(),
-                        createResult.getStockName(), createResult.getStockCategory()));
+                        createResult.getStockName(), createResult.getCategory()));
     }
 
     @PutMapping("/stocks/add")

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class CreateStockResultDto {
     private String stockId;
     private String stockName;
-    private String stockCategory;
+    private String category;
 }

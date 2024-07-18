@@ -12,5 +12,5 @@ public class GetStockResultDto {
     private String stockId;
     private String stockName;
     private String category;
-    private int stockQuantity;
+    private int quantity;
 }
