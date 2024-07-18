@@ -4,8 +4,9 @@ import nuts.project.wholesale_system.order.adapter.outbound.repository.order.Ord
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order_item.OrderItemEntity;
 import nuts.project.wholesale_system.order.domain.exception.StockException;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
+import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
+import nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType;
 import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderDto;
 import nuts.project.wholesale_system.order.support.UseCaseTestSupport;
 import org.assertj.core.api.Assertions;
@@ -33,8 +34,8 @@ class UpdateOrderUseCaseTest extends UseCaseTestSupport {
         String orderId = orderEntity.getOrderId();
         List<OrderItem> beforeOrderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
 
-        BDDMockito.given(stockService.checkStock(ArgumentMatchers.isA(StockRequest.class)))
-                .willReturn(Optional.of(new StockResponse()));
+        BDDMockito.given(stockService.reserveStock(ArgumentMatchers.isA(StockRequest.class)))
+                .willReturn(Optional.of(new StockResponse(StockRequestType.Reserve, true)));
 
         // when
         UpdateOrderDto result = updateOrderUseCase.execute(orderId, updateOrderItemsSource);
@@ -77,7 +78,7 @@ class UpdateOrderUseCaseTest extends UseCaseTestSupport {
         String orderId = orderEntity.getOrderId();
         List<OrderItem> orderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
 
-        BDDMockito.given(stockService.checkStock(ArgumentMatchers.isA(StockRequest.class)))
+        BDDMockito.given(stockService.reserveStock(ArgumentMatchers.isA(StockRequest.class)))
                 .willThrow(new StockException(OUT_OF_STOCK));
 
         // when then
@@ -94,7 +95,7 @@ class UpdateOrderUseCaseTest extends UseCaseTestSupport {
         String orderId = orderEntity.getOrderId();
         List<OrderItem> orderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
 
-        BDDMockito.given(stockService.checkStock(ArgumentMatchers.isA(StockRequest.class)))
+        BDDMockito.given(stockService.reserveStock(ArgumentMatchers.isA(StockRequest.class)))
                 .willThrow(new StockException(STOCK_SERVICE_FAIL));
 
         // when then

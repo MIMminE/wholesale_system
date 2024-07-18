@@ -77,7 +77,7 @@ public class UseCaseTestSupport extends FixtureGenerateSupport {
                                 .set("userId", UUID.randomUUID().toString())
                                 .size("items", 2, 5)
                                 .set("items[*].orderEntity.orderId", orderId),
-                        1),
+                        2),
                 OrderSheet.order(orderCustom(OrderItem.class)
                                 .set("productId", UUID.randomUUID().toString())
                                 .set("quantity", Arbitraries.integers().between(5, 15)),

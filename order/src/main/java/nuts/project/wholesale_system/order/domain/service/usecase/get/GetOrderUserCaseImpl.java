@@ -20,10 +20,10 @@ public class GetOrderUserCaseImpl implements GetOrderUseCase {
     @Override
     public OrderProcessDto execute(String orderId) {
 
-        PaymentResponse paymentInformation = paymentService.getPaymentInformation(orderId);
+        PaymentResponse paymentResponse = paymentService.getPaymentInformation(orderId);
         OrderEntity orderEntity = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderException(OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT));
 
-        return new OrderProcessDto(new PaymentInformation(paymentInformation.getAccountId()), orderEntity.toOrder());
+        return new OrderProcessDto(new PaymentInformation(paymentResponse.getAccountId()), orderEntity.toOrder());
     }
 }
