@@ -6,6 +6,6 @@ import nuts.project.wolesale_system.stock.domain.service.dto.CreateStockResultDt
 
 public interface CreateStockUseCase {
 
-    CreateStockResultDto execute(String stockName, StockCategory category) throws StockException;
+    CreateStockResultDto execute(String stockId, String stockName, StockCategory category) throws StockException;
 
 }

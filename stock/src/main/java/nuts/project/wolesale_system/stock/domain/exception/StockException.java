@@ -1,6 +1,8 @@
 package nuts.project.wolesale_system.stock.domain.exception;
 
 
+import lombok.Getter;
+
 public class StockException extends RuntimeException {
 
     public StockException(StockExceptionCase stockExceptionCase) {
@@ -11,9 +13,13 @@ public class StockException extends RuntimeException {
         super(stockExceptionCase.message, cause);
     }
 
+    @Getter
     public enum StockExceptionCase {
 
-        SERVER_FAIL("server connection fail");
+        SERVER_FAIL("server connection fail."),
+        NOT_FOUND_ELEMENT("There is no data available for that condition."),
+        OUT_OF_STOCK("There is not enough stock left.")
+        ;
 
         private final String message;
 

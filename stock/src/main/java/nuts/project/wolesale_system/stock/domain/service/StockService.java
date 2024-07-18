@@ -12,6 +12,8 @@ import nuts.project.wolesale_system.stock.domain.service.usecase.update.AddStock
 import nuts.project.wolesale_system.stock.domain.service.usecase.update.DeductStockUseCase;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class StockService {
@@ -22,10 +24,10 @@ public class StockService {
     private final DeductStockUseCase deductStockUseCase;
     private final AddStockUseCase addStockUseCase;
 
-    public CreateStockResultDto createStock(String productName, String category) {
-
+    public CreateStockResultDto createStock(String stockName, String category) {
+        String stockId = UUID.randomUUID().toString();
         StockCategory stockCategory = StockCategory.valueOf(category);
-        return createStockUseCase.execute(productName, stockCategory);
+        return createStockUseCase.execute(stockId, stockName, stockCategory);
     }
 
     public void deleteStock(String stockId) {

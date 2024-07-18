@@ -55,6 +55,8 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/payment" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -64,6 +66,8 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/stock" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -73,6 +77,8 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/web" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
