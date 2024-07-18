@@ -8,9 +8,9 @@ public interface StockServicePort {
 
     Optional<StockResponse> checkStock(StockRequest request) throws StockException;
 
-    Optional<StockResponse> reserveStock(StockRequest request);
+    Optional<StockResponse> reserveStock(StockRequest request) throws StockException;
 
-    Optional<StockResponse> deductStock(StockRequest request);
+    Optional<StockResponse> deductStock(StockRequest request) throws StockException;
 
-    Optional<StockResponse> returnStock(StockRequest request);
+    Optional<StockResponse> returnStock(StockRequest request) throws StockException;
 }
