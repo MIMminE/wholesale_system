@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.log.properties;
+package nuts.project.wholesale_system.log.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,5 +1,6 @@
-package nuts.project.wholesale_system.log.consumer;
+package nuts.project.wholesale_system.log.consumer.order;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nuts.lib.manager.broker_manager.rabbitmq.AbstractRabbitMqConsumer;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
