@@ -65,6 +65,6 @@ public class StockController {
     public ResponseEntity<DeleteStockResponse> deleteStock(@RequestBody @Valid DeleteStockRequest request) {
         stockService.deleteStock(request.getStockId());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new DeleteStockResponse(request.getStockId(), true));
     }
 }
