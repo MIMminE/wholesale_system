@@ -8,6 +8,7 @@ import nuts.project.wholesale_system.order.domain.exception.OrderException;
 import nuts.project.wholesale_system.order.domain.exception.StockException;
 import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
+import nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static nuts.project.wholesale_system.order.domain.exception.OrderException.OrderExceptionCase.*;
-import static nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType.Check;
+import static nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType.Update;
 
 @Component
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class UpdateOrderUseCaseImpl implements UpdateOrderUseCase {
         OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(UPDATE_NO_SUCH_ELEMENT));
         Order beforeOrder = orderEntity.toOrder();
 
-        StockResponse stockResponse = stockServicePort.reserveStock(new StockRequest(Check,items)).orElseThrow();
+        StockResponse stockResponse = stockServicePort.updateStock(new StockRequest(items)).orElseThrow();
 
         items.stream().map(e -> new OrderItemEntity(e.getProductId(), e.getQuantity()))
                 .forEach(orderEntity::addItem);

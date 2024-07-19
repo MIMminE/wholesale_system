@@ -9,6 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class StockRequest {
-    private StockRequestType requestType;
     private List<OrderItem> requestItems;
 }

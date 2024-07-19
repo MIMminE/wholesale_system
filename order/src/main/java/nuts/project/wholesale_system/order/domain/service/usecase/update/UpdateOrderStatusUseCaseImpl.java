@@ -35,7 +35,7 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
         List<OrderItem> orderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
 
         if (orderStatus.equals(OrderStatus.cancelled)) {
-            StockResponse stockResponse = stockService.returnStock(new StockRequest(StockRequestType.Return, orderItems)).orElseThrow();
+            StockResponse stockResponse = stockService.returnStock(new StockRequest(orderItems)).orElseThrow();
         }
 
         return new UpdateOrderStatusDto(orderId, beforeOrderStatus.toString(), orderStatus.toString());

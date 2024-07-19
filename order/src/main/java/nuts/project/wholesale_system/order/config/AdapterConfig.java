@@ -1,15 +1,21 @@
-package nuts.project.wholesale_system.order.adapter.outbound.repository;
+package nuts.project.wholesale_system.order.config;
 
 import nuts.lib.manager.data_access_manager.DataSourceGenerator;
 import nuts.lib.manager.data_access_manager.DataSourceType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class DataSourceConfig {
+public class AdapterConfig {
+
+    @Bean
+    RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
 
     @Profile("dev")
     @Bean

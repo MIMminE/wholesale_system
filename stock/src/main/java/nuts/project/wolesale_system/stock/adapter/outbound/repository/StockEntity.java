@@ -1,8 +1,6 @@
 package nuts.project.wolesale_system.stock.adapter.outbound.repository;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import nuts.project.wolesale_system.stock.domain.model.StockCategory;
@@ -12,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Table(name = "stock")
 public class StockEntity {
 
     @Id
@@ -21,6 +20,7 @@ public class StockEntity {
     private String stockName;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private StockCategory category;
 
     @Column(nullable = false)

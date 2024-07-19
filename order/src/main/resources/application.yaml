@@ -20,3 +20,6 @@ logging:
 
 server:
   port:  9004
+
+
+stock_server_url: http://localhost:9811/

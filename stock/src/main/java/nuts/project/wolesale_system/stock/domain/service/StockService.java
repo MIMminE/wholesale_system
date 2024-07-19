@@ -11,11 +11,13 @@ import nuts.project.wolesale_system.stock.domain.service.usecase.get.GetStockUse
 import nuts.project.wolesale_system.stock.domain.service.usecase.update.AddStockUseCase;
 import nuts.project.wolesale_system.stock.domain.service.usecase.update.DeductStockUseCase;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StockService {
 
     private final CreateStockUseCase createStockUseCase;
