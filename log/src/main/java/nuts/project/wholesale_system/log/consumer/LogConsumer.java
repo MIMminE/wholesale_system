@@ -35,7 +35,6 @@ public class LogConsumer {
         } catch (Exception e) {
             System.out.printf("예외");
         }
-
     }
 
     @RabbitListener(queues = "order_log")

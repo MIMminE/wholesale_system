@@ -1,6 +1,6 @@
 name: log-service-update
 on:
-  pull_request:
+  push:
     branches: ["log-service-branch"]
     paths:
       - 'log/src/**'
