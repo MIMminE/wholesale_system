@@ -1,25 +1,31 @@
 version: '3.7'
 
 services:
-#  rabbitmq:
+  rabbitmq:
+    image: harunuts/rabbittest1
 #    image: rabbitmq:management
-#    container_name: rabbitmq
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#    environment:
-#      RABBITMQ_DEFAULT_USER: "username"
-#      RABBITMQ_DEFAULT_PASS: "password"
-#
-#  log_db:
-#    image: mysql
-#    container_name: log_db
-#    ports:
-#      - "8501:3306"
-#
-#    environment:
-#      MYSQL_DATABASE: log_Db
-#      MYSQL_ROOT_PASSWORD: tester
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: username
+      RABBITMQ_DEFAULT_PASS: password
+
+    volumes:
+      - ./init/rabbitmq:/init/rabbitmq
+
+#    entrypoint: ["/bin/sh", "/init/rabbitmq/setup.sh"]
+
+  log_db:
+    image: mysql
+    container_name: log_db
+    ports:
+      - "8501:3306"
+
+    environment:
+      MYSQL_DATABASE: log_db
+      MYSQL_ROOT_PASSWORD: tester
 
   test_db:
     image: mysql
