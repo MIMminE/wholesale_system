@@ -1,45 +1,32 @@
 version: '3.7'
 
-
 services:
-  rabbitmq:
-    image: rabbitmq:management
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: "username"
-      RABBITMQ_DEFAULT_PASS: "password"
+#  rabbitmq:
+#    image: rabbitmq:management
+#    container_name: rabbitmq
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    environment:
+#      RABBITMQ_DEFAULT_USER: "username"
+#      RABBITMQ_DEFAULT_PASS: "password"
+#
+#  log_db:
+#    image: mysql
+#    container_name: log_db
+#    ports:
+#      - "8501:3306"
+#
+#    environment:
+#      MYSQL_DATABASE: log_Db
+#      MYSQL_ROOT_PASSWORD: tester
 
-  elasticsearch:
-    image: elasticsearch:8.14.1
-    container_name: elastic_search
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      discovery.type: "single-node"
-      xpack.security.enabled: "false"
-
-  kibana:
-    image: kibana:8.14.1
-    container_name: kibana
-    environment:
-      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
-
-    ports:
-      - "5601:5601"
-    depends_on:
-      - elasticsearch
-
-
-  log_db:
+  test_db:
     image: mysql
-    container_name: log_db
+    container_name: test_db
     ports:
-      - "8501:3306"
+      - "8811:3306"
 
     environment:
       MYSQL_DATABASE: log_Db
-      MYSQL_ROOT_PASSWORD: tester
+      MYSQL_ROOT_PASSWORD: "tester"
