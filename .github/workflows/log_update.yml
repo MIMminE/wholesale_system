@@ -1,10 +1,9 @@
 name: log-service-update
 on:
   push:
-    branches:
-      - log-service-branch
+    branches: ["log-service-branch"]
     paths:
-      - order/src/*
+      - 'order/src/**'
 
 jobs:
   path-filter:
