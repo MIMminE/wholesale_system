@@ -1,8 +1,9 @@
 name: log-service-update
 on:
   push:
-    branches: ["master"]
+    branches: ["log-service-branch"]
     paths:
+      - '.github/workflows/log_update.yml'
       - 'log/src/**'
 
 jobs:

@@ -21,7 +21,7 @@ class MemberLogConsumerTest extends LogTestSupport {
 
         // when
         OrderLog byLog = orderLogRepository.findByLog(testLog);
-
+        System.out.printf(byLog.toString());
         // then
         Assertions.assertThat(byLog).extracting("logType", "log").contains(LogType.error, testLog);
     }
