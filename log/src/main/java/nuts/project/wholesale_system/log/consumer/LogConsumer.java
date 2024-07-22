@@ -53,6 +53,7 @@ public class LogConsumer {
 
     @RabbitListener(queues = "stock_log")
     public void stockLogHandle(Map<String, Object> message) {
+
         System.out.printf(message.toString());
     }
 }
