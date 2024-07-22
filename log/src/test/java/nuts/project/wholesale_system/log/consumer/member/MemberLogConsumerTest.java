@@ -18,10 +18,14 @@ class MemberLogConsumerTest extends LogTestSupport {
         // given
         String testLog = "test string log";
         rabbitTemplate.convertAndSend("order_log", "_key", Map.of("logType", LogType.error.name(), "log",testLog));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         // when
         OrderLog byLog = orderLogRepository.findByLog(testLog);
-        System.out.printf(byLog.toString());
         // then
         Assertions.assertThat(byLog).extracting("logType", "log").contains(LogType.error, testLog);
     }
