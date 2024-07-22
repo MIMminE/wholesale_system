@@ -21,7 +21,6 @@ public class LoggingAspect {
 
         Object[] args = point.getArgs();
         logPublisher.publishing(Arrays.toString(args));
-
     }
 
     @AfterReturning(value = "execution(* nuts.project.wholesale_system.order.service.*.*(..))", returning = "response")
