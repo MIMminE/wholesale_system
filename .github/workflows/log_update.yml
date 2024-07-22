@@ -1,7 +1,7 @@
 name: log-service-update
 on:
   pull_request:
-    branches: [ mas]
+    branches: ["master"]
 #    paths:
 #      - '.github/workflows/log_update.yml'
 #      - 'log/src/**'
