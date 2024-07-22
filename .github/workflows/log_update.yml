@@ -38,11 +38,11 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: |
-          cd order
+          cd log
           chmod +x ./gradlew
 
       # Gradle test 실행 (특정 모듈)
       - name: Test module A with Gradle
         run: | 
-          cd order
+          cd log
           ./gradlew --info test
