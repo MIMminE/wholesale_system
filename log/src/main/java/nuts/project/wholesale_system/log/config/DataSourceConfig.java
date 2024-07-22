@@ -11,7 +11,7 @@ public class DataSourceConfig {
 
     DataSource dataSource(){
         return DataSourceGenerator.createHikariDataSource(DataSourceType.mysql,
-                "localhost", 8501, "log_Db", "root","tester")
+                "localhost", 8501, "log_Db", "root","tester");
     }
 
 }

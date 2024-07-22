@@ -1,0 +1,25 @@
+name: CI
+
+on: push
+jobs:
+  push-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Verify Java version
+        run: java -version
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./order/gradlew
+
+      # Gradle test 실행 (특정 모듈)
+      - name: Test module A with Gradle
+        run: ./order/gradlew --info test
