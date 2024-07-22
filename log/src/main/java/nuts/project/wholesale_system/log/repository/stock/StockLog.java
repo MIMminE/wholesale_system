@@ -1,13 +1,16 @@
-package nuts.project.wholesale_system.log.repository.member;
+package nuts.project.wholesale_system.log.repository.stock;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import nuts.project.wholesale_system.log.LogType;
 
 @Entity
-public class Member {
-
+@AllArgsConstructor
+@NoArgsConstructor
+public class StockLog {
     @Id
-    private String logId;
+    private String id;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

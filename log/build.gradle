@@ -21,11 +21,11 @@ configurations {
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'nuts:spring_provision_lib:1.0'
+    implementation 'com.github.MIMminE:project_nuts_lib:1.3'
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-web'

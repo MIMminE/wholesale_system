@@ -1,9 +1,10 @@
 name: log-service-update
 on:
-  push:
-    branches: ["log-service-branch"]
-    paths:
-      - 'order/src/**'
+  pull_request:
+    branches: ["master"]
+#    paths:
+#      - '.github/workflows/log_update.yml'
+#      - 'log/src/**'
 
 jobs:
   path-filter:
@@ -38,11 +39,11 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: |
-          cd order
+          cd log
           chmod +x ./gradlew
 
       # Gradle test 실행 (특정 모듈)
       - name: Test module A with Gradle
         run: | 
-          cd order
+          cd log
           ./gradlew --info test

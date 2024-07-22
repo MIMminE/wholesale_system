@@ -8,6 +8,11 @@ spring:
     username: username
     password: password
 
+  jpa:
+    generate-ddl: true
+    show-sql: true
+
+
 server:
   port: 9002
 
