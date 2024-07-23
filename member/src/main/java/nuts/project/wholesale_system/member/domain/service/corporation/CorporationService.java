@@ -55,5 +55,4 @@ public class CorporationService {
 
         return searchCorporationsUseCase.execute(corporationId, corporationName, representative, contactNumber, businessNumber, grade);
     }
-
 }

@@ -6,6 +6,7 @@ import lombok.*;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Member {
     private String name;

@@ -21,7 +21,7 @@ configurations {
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -31,7 +31,7 @@ dependencies {
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
-    implementation 'nuts:spring_provision_lib:1.0'
+    implementation 'com.github.MIMminE:project_nuts_lib:1.3'
     implementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.14'
 
     implementation 'org.springframework.security:spring-security-crypto'
