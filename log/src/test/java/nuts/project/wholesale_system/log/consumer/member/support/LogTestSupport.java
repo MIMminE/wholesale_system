@@ -1,6 +1,5 @@
 package nuts.project.wholesale_system.log.consumer.member.support;
 
-import jakarta.transaction.Transactional;
 import nuts.project.wholesale_system.log.repository.member.MemberLogRepository;
 import nuts.project.wholesale_system.log.repository.order.OrderLogRepository;
 import nuts.project.wholesale_system.log.repository.stock.StockLogRepository;

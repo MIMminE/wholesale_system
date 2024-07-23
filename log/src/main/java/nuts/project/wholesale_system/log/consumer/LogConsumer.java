@@ -7,6 +7,7 @@ import nuts.project.wholesale_system.log.repository.member.MemberLog;
 import nuts.project.wholesale_system.log.repository.member.MemberLogRepository;
 import nuts.project.wholesale_system.log.repository.order.OrderLog;
 import nuts.project.wholesale_system.log.repository.order.OrderLogRepository;
+import nuts.project.wholesale_system.log.repository.stock.StockLog;
 import nuts.project.wholesale_system.log.repository.stock.StockLogRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -54,6 +55,15 @@ public class LogConsumer {
     @RabbitListener(queues = "stock_log")
     public void stockLogHandle(Map<String, Object> message) {
 
-        System.out.printf(message.toString());
+        try {
+            String logType = message.get("logType").toString();
+            String logMessage = message.get("log").toString();
+
+            StockLog stockLog = new StockLog(UUID.randomUUID().toString(), LogType.valueOf(logType), logMessage);
+
+            stockRepository.save(stockLog);
+        } catch (Exception e) {
+            System.out.printf("예외");
+        }
     }
 }
