@@ -23,23 +23,14 @@ public class MemberService {
     }
 
     public Member createMember(String name, String id, String password, String contactNumber, String corporationId) {
-        try {
-            return createMemberUseCase.execute(name, id, password, contactNumber, corporationId);
-        } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("Id already exists");
-        }
+        return createMemberUseCase.execute(name, id, password, contactNumber, corporationId);
     }
 
     public Member deleteMember(String memberId) {
-
         return deleteMemberUseCase.execute(memberId);
     }
 
     public Member updateMember(String memberId, Member member) {
-        try {
-            return updateMemberUseCase.execute(memberId, member);
-        } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("Id already exists");
-        }
+        return updateMemberUseCase.execute(memberId, member);
     }
 }

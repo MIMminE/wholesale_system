@@ -1,4 +1,4 @@
-name: log-service-update
+name: member-service-pull-request
 on:
   pull_request:
     branches: ["master"]
@@ -7,7 +7,7 @@ on:
 #      - 'log/src/**'
 
 jobs:
-  path-filter:
+  pull-request:
     runs-on: ubuntu-latest
 
     steps:

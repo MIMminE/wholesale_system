@@ -8,7 +8,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-//@Commit
 class CreateMemberUseCaseTest extends SpringTestSupport {
 
     @DisplayName("createMemberUseCase 동작 성공 테스트")
@@ -16,9 +15,7 @@ class CreateMemberUseCaseTest extends SpringTestSupport {
     void successCreateMemberUseCase() {
 
         // given
-        CorporationEntity corporationEntity = getOrderedObject(CorporationEntity.class).get(0);
-
-        corporationRepository.save(corporationEntity);
+        CorporationEntity corporationEntity = corporationRepository.save(getOrderedObject(CorporationEntity.class).get(0));
         CreateMemberRequest createMemberRequest = getOrderedObject(CreateMemberRequest.class).get(0);
         String corporationId = corporationEntity.getCorporationId();
 
