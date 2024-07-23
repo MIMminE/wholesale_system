@@ -1,6 +1,6 @@
 package nuts.project.wholesale_system.member.domain.service.corporation.usecase.update;
 
-import nuts.project.wholesale_system.member.support.SpringTestSupport;
+import nuts.project.wholesale_system.member.support.CorporationUseCaseTestSupport;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException;
 import nuts.project.wholesale_system.member.domain.model.Corporation;
@@ -13,7 +13,7 @@ import java.util.UUID;
 import static nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException.CorporationExceptionCase.UPDATE_NO_SUCH_ELEMENT;
 
 
-class UpdateCorporationUseCaseImplTest extends SpringTestSupport {
+class UpdateCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     @DisplayName("updateCorporationUseCase 동작 성공 테스트")
     @Test

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.domain.model.Member;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Table(name = "members")
+@ToString
 public class MemberEntity {
 
     @Id

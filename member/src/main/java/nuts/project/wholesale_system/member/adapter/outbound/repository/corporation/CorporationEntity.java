@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.member.MemberEntity;
 import nuts.project.wholesale_system.member.domain.model.Corporation;
 import nuts.project.wholesale_system.member.domain.model.Grade;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "corporations")
+@ToString
 public class CorporationEntity {
 
     @Id

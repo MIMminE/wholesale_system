@@ -1,6 +1,6 @@
 package nuts.project.wholesale_system.member.domain.service.member.usecase.update;
 
-import nuts.project.wholesale_system.member.support.SpringTestSupport;
+import nuts.project.wholesale_system.member.support.MemberUseCaseTestSupport;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.member.MemberEntity;
 import nuts.project.wholesale_system.member.domain.model.Member;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-class UpdateMemberUseCaseTest extends SpringTestSupport {
+class UpdateMemberUseCaseTest extends MemberUseCaseTestSupport {
 
     @DisplayName("updateMemberUseCase 동작 성공 테스트")
     @Test
