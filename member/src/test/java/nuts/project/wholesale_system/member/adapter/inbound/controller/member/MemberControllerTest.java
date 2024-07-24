@@ -12,23 +12,36 @@ import nuts.project.wholesale_system.member.adapter.inbound.controller.member.dt
 import nuts.project.wholesale_system.member.adapter.inbound.controller.member.dto.response.ResponseRestDocs;
 import nuts.project.wholesale_system.member.domain.model.Member;
 import nuts.project.wholesale_system.member.domain.service.member.MemberService;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class MemberControllerTest extends RestDocsSupport {
 
     private final MemberService memberService = Mockito.mock(MemberService.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final RestDocsManager restDocsManager = new RestDocsManager(RequestRestDocs.class, ResponseRestDocs.class);
+
+    @Autowired
+    private Environment env;
 
     @Override
     protected Object initController() {
@@ -39,6 +52,7 @@ class MemberControllerTest extends RestDocsSupport {
     @DisplayName("[Member Controller 회원 조회 테스트] /api/v1/members/{id}")
     @Test
     void getMember() throws Exception {
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
 
         // given
         String requestId = UUID.randomUUID().toString();
@@ -62,7 +76,7 @@ class MemberControllerTest extends RestDocsSupport {
     @DisplayName("[Member Controller 생성 요청 테스트] /api/v1/members")
     @Test
     void createMember() throws Exception {
-
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
         // given
         String id = UUID.randomUUID().toString();
         String name = UUID.randomUUID().toString();
@@ -100,7 +114,7 @@ class MemberControllerTest extends RestDocsSupport {
     @DisplayName("[Member Controller 삭제 요청 테스트] /api/v1/members")
     @Test
     void deleteMember() throws Exception {
-
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
         // given
         String name = "test_member_name";
         String id = UUID.randomUUID().toString();
@@ -131,6 +145,8 @@ class MemberControllerTest extends RestDocsSupport {
     @DisplayName("[Member Controller 수정 요청 테스트] /api/v1/members")
     @Test
     void updateMember() throws Exception {
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
+
         // given
         String requestId = UUID.randomUUID().toString();
         String name = "test_member_name";

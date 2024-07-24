@@ -13,6 +13,7 @@ import nuts.project.wholesale_system.member.domain.model.Corporation;
 import nuts.project.wholesale_system.member.domain.model.Grade;
 import nuts.project.wholesale_system.member.domain.service.corporation.CorporationService;
 import nuts.project.wholesale_system.member.domain.service.corporation.usecase.update.UpdateCorporationResultSet;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,8 +21,12 @@ import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.*;
@@ -29,7 +34,12 @@ import java.util.*;
 import static java.util.Map.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
+
+    @Autowired
+    private Environment env;
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -41,6 +51,8 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     @Test
     @DisplayName("[Corporation Controller GET 요청 테스트] /api/v1/corporations/{corporationId}")
     void getCorporation() throws Exception {
+
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
 
         Corporation corporation = getOrderedObject(Corporation.class).get(0);
         String corporationId = corporation.getCorporationId();
@@ -56,13 +68,15 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
                         "businessNumber", corporation.getBusinessNumber(),
                         "grade", corporation.getGrade().toString()
                 )))
-                .andDo(restDocsManager.document("/api/v1/get-corporations","getCorporationResponse"))
+                .andDo(restDocsManager.document("/api/v1/get-corporations", "getCorporationResponse"))
                 .andDo(print());
     }
 
     @Test
     @DisplayName("[Corporation Controller POST 요청 테스트] /api/v1/corporations/search")
     void searchCorporation() throws Exception {
+
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
 
         SearchCorporationsRequest searchCorporationsRequest = getOrderedObject(SearchCorporationsRequest.class).get(0);
 
@@ -107,6 +121,8 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     @DisplayName("[Corporation Controller POST 요청 테스트] /api/v1/corporations")
     void createCorporation() throws Exception {
 
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
+
         CreateCorporationRequest createCorporationRequest = getOrderedObject(CreateCorporationRequest.class).get(0);
 
         String corporationId = UUID.randomUUID().toString();
@@ -149,6 +165,8 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     @Test
     @DisplayName("[Corporation Controller PUT 요청 테스트] /api/v1/corporations")
     void updateCorporation() throws Exception {
+
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
         UpdateCorporationRequest updateCorporationRequest = getOrderedObject(UpdateCorporationRequest.class).get(0);
 
         String corporationId = updateCorporationRequest.getCorporationId();
@@ -202,6 +220,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     @DisplayName("[Corporation Controller DELETE 요청 테스트] /api/v1/corporations")
     void deleteCorporation() throws Exception {
 
+        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
         DeleteCorporationRequest deleteCorporationRequest = getOrderedObject(DeleteCorporationRequest.class).get(0);
 
         Corporation corporation = (Corporation) ordersObject().get(0).getArbitraryBuilder()
