@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: ["master"]
 #    paths:
-#      - '.github/workflows/log_update.yml'
+#      - '.github/workflows/pull-request-log-service.yml'
 #      - 'log/src/**'
 
 jobs:

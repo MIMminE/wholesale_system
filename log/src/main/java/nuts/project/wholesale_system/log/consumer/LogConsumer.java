@@ -27,10 +27,11 @@ public class LogConsumer {
     @RabbitListener(queues = "member_log")
     public void memberLogHandle(Map<String, Object> message) {
         try {
+            String requestId = message.get("requestId").toString();
             String logType = message.get("logType").toString();
             String logMessage = message.get("log").toString();
 
-            MemberLog memberLog = new MemberLog(UUID.randomUUID().toString(), LogType.valueOf(logType), logMessage);
+            MemberLog memberLog = new MemberLog(UUID.randomUUID().toString(), requestId, LogType.valueOf(logType), logMessage);
 
             memberRepository.save(memberLog);
         } catch (Exception e) {
@@ -41,10 +42,11 @@ public class LogConsumer {
     @RabbitListener(queues = "order_log")
     public void orderLogHandle(Map<String, Object> message) {
         try {
+            String requestId = message.get("requestId").toString();
             String logType = message.get("logType").toString();
             String logMessage = message.get("log").toString();
 
-            OrderLog orderLog = new OrderLog(UUID.randomUUID().toString(), LogType.valueOf(logType), logMessage);
+            OrderLog orderLog = new OrderLog(UUID.randomUUID().toString(), requestId, LogType.valueOf(logType), logMessage);
 
             orderLogRepository.save(orderLog);
         } catch (Exception e) {
@@ -56,10 +58,11 @@ public class LogConsumer {
     public void stockLogHandle(Map<String, Object> message) {
 
         try {
+            String requestId = message.get("requestId").toString();
             String logType = message.get("logType").toString();
             String logMessage = message.get("log").toString();
 
-            StockLog stockLog = new StockLog(UUID.randomUUID().toString(), LogType.valueOf(logType), logMessage);
+            StockLog stockLog = new StockLog(UUID.randomUUID().toString(), requestId, LogType.valueOf(logType), logMessage);
 
             stockRepository.save(stockLog);
         } catch (Exception e) {

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.Commit;
 
 import java.util.Map;
+import java.util.UUID;
 
 
 class LogConsumerTest extends LogTestSupport {
@@ -21,7 +22,7 @@ class LogConsumerTest extends LogTestSupport {
     void memberLogListener() {
         // given
         String testLog = "test string log";
-        rabbitTemplate.convertAndSend("member_log", "_key", Map.of("logType", LogType.error.name(), "log", testLog));
+        rabbitTemplate.convertAndSend("member_log", "_key", Map.of("requestId", UUID.randomUUID().toString(), "logType", LogType.error.name(), "log", testLog));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -42,7 +43,7 @@ class LogConsumerTest extends LogTestSupport {
     void orderLogListener() {
         // given
         String testLog = "test string log";
-        rabbitTemplate.convertAndSend("order_log", "_key", Map.of("logType", LogType.error.name(), "log", testLog));
+        rabbitTemplate.convertAndSend("order_log", "_key", Map.of("requestId", UUID.randomUUID().toString(),"logType", LogType.error.name(), "log", testLog));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -63,7 +64,7 @@ class LogConsumerTest extends LogTestSupport {
     void stockLogListener() {
         // given
         String testLog = "test string log";
-        rabbitTemplate.convertAndSend("stock_log", "_key", Map.of("logType", LogType.error.name(), "log", testLog));
+        rabbitTemplate.convertAndSend("stock_log", "_key", Map.of("requestId", UUID.randomUUID().toString(),"logType", LogType.error.name(), "log", testLog));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

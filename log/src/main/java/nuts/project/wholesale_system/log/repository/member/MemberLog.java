@@ -13,6 +13,8 @@ public class MemberLog {
     @Id
     private String id;
 
+    private String requestId;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private LogType logType;
