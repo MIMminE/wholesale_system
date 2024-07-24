@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static nuts.project.wholesale_system.order.domain.exception.StockException.StockExceptionCase.*;
 
 @Component
 @RequiredArgsConstructor
@@ -42,33 +41,23 @@ public class StockServiceAdapter implements StockServicePort {
             ResponseEntity<Map> exchange = restTemplate.exchange(stockSeverUrl + "stocks/deduct",
                     HttpMethod.PUT,
                     new HttpEntity<>(requestObject), Map.class);
-
-
         }
 
 
-        try {
-            //TODO
-            System.out.println("stock deduct");
-            return Optional.empty();
-        } catch (RuntimeException e) {
-            throw new StockException(STOCK_SERVICE_FAIL);
-        }
+        //TODO
+        System.out.println("stock deduct");
+        return Optional.empty();
     }
 
     @Override
     public Optional<StockResponse> returnStock(StockRequest request) {
-        try {
-            //TODO
-            System.out.println("stock return");
-            return Optional.empty();
-        } catch (RuntimeException e) {
-            throw new StockException(STOCK_SERVICE_FAIL);
-        }
+        //TODO
+        System.out.println("stock return");
+        return Optional.empty();
     }
 
     @Override
-    public Optional<StockResponse> updateStock(StockRequest request) throws StockException {
+    public Optional<StockResponse> updateStock(StockRequest request) {
         return Optional.empty();
     }
 }
