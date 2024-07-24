@@ -37,13 +37,8 @@ jobs:
       - name: Verify Java version
         run: java -version
 
-      - name: Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew && test
         run: |
           cd member
           chmod +x ./gradlew
-
-      # Gradle test 실행 (특정 모듈)
-      - name: Test module A with Gradle
-        run: | 
-          cd member
-          ./gradlew --info test
+           ./gradlew --info test
