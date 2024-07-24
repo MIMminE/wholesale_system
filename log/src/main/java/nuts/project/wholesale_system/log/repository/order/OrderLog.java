@@ -15,6 +15,8 @@ public class OrderLog {
     @Id
     String id;
 
+    String requestId;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     LogType logType;
