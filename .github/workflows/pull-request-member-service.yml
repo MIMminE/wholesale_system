@@ -37,6 +37,13 @@ jobs:
       - name: Verify Java version
         run: java -version
 
+      - name: restdocs folder generate
+        run: |
+          mkdir -p member/build/generated-snippets/api/v1/create-members
+          mkdir -p member/build/generated-snippets/api/v1/delete-members
+          mkdir -p member/build/generated-snippets/api/v1/get_members_{id}
+          mkdir -p member/build/generated-snippets/api/v1/update_members
+
       - name: Grant execute permission for gradlew && test
         run: |
           cd member
