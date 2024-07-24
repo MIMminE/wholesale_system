@@ -1,9 +1,6 @@
 package nuts.project.wholesale_system.order.domain.service.usecase.get;
 
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order.OrderEntity;
-import nuts.project.wholesale_system.order.domain.exception.PaymentException;
-import nuts.project.wholesale_system.order.domain.model.Order;
-import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.support.UseCaseTestSupport;
@@ -11,8 +8,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-
-import java.util.List;
 
 import static nuts.project.wholesale_system.order.domain.exception.OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT;
 import static nuts.project.wholesale_system.order.domain.exception.PaymentException.PaymentExceptionCase.PAYMENT_SERVICE_FAIL;

@@ -5,10 +5,8 @@ import nuts.project.wholesale_system.order.adapter.outbound.repository.order.Ord
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order.OrderRepository;
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order_item.OrderItemEntity;
 import nuts.project.wholesale_system.order.domain.exception.OrderException;
-import nuts.project.wholesale_system.order.domain.exception.StockException;
 import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static nuts.project.wholesale_system.order.domain.exception.OrderException.OrderExceptionCase.*;
-import static nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType.Update;
 
 @Component
 @RequiredArgsConstructor

@@ -1,7 +1,5 @@
 package nuts.project.wholesale_system.order.adapter.outbound.payment;
 
-import nuts.project.wholesale_system.order.domain.exception.PaymentException;
-import nuts.project.wholesale_system.order.domain.exception.PaymentException.PaymentExceptionCase;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentServicePort;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
 import org.springframework.stereotype.Component;

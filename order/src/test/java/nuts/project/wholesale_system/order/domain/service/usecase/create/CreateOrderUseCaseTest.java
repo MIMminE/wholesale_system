@@ -1,6 +1,5 @@
 package nuts.project.wholesale_system.order.domain.service.usecase.create;
 
-import nuts.project.wholesale_system.order.domain.exception.PaymentException;
 import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;

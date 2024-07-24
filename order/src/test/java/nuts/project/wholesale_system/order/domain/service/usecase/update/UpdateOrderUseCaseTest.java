@@ -2,7 +2,6 @@ package nuts.project.wholesale_system.order.domain.service.usecase.update;
 
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order.OrderEntity;
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order_item.OrderItemEntity;
-import nuts.project.wholesale_system.order.domain.exception.StockException;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;

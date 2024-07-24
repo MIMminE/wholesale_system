@@ -1,30 +1,46 @@
 package nuts.project.wholesale_system.order.aop;
 
 import lombok.RequiredArgsConstructor;
-import nuts.project.wholesale_system.order.domain.ports.log.LogPublisherPort;
+import nuts.project.wholesale_system.order.domain.ports.log.LogServicePort;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
-import java.util.Arrays;
+import java.util.Map;
+import java.util.UUID;
 
 @Aspect
 @Component
 @RequiredArgsConstructor
 public class LoggingAspect {
-    private final LogPublisherPort logPublisher;
+    private final LogServicePort logService;
 
-    @Before("execution(* nuts.project.wholesale_system.order.domain.service.*.*(..))")
+    @Before("execution(* nuts.project.wholesale_system.order.adapter.inbound.controller.*Controller.*(..))")
     public void beforeAdvice(JoinPoint point) {
+        String requestId = UUID.randomUUID().toString();
+        RequestContextHolder.currentRequestAttributes().setAttribute("requestId", requestId, RequestAttributes.SCOPE_REQUEST);
 
-        Object[] args = point.getArgs();
-        logPublisher.publishing(Arrays.toString(args));
+        Map<String, Object> logMessage = Map.of("requestId", requestId, "logType", "info", "log", point.getArgs()[0].toString());
+        logService.publishing(logMessage);
     }
 
-    @AfterReturning(value = "execution(* nuts.project.wholesale_system.order.service.*.*(..))", returning = "response")
+    @AfterReturning(value = "execution(* nuts.project.wholesale_system.order.adapter.inbound.controller.*Controller.*(..))", returning = "response")
     public void afterAdvice(Object response) {
-        logPublisher.publishing(response.toString());
+        String requestId = RequestContextHolder.currentRequestAttributes().getAttribute("requestId", RequestAttributes.SCOPE_REQUEST).toString();
+
+        Map<String, Object> logMessage = Map.of("requestId", requestId, "logType", "info", "log", response.toString());
+        logService.publishing(logMessage);
+    }
+
+    @AfterReturning(value = "execution(* nuts.project.wholesale_system.order.adapter.inbound.controller.*ExceptionHandler.*(..))", returning = "response")
+    public void exceptionHandlerAdvice(Object response) {
+        String requestId = RequestContextHolder.currentRequestAttributes().getAttribute("requestId", RequestAttributes.SCOPE_REQUEST).toString();
+
+        Map<String, Object> logMessage = Map.of("requestId", requestId, "logType", "error", "log", response.toString());
+        logService.publishing(logMessage);
     }
 }

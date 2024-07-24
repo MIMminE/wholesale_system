@@ -24,7 +24,7 @@ public class AdapterConfig {
                 "localhost", 9000, "test_db", "tester", "tester");
     }
 
-    @Profile("test")
+    @Profile({"unit_test", "integration_test"})
     @Bean
     DataSource dataSource_test() {
         return DataSourceGenerator.createHikariDataSource(DataSourceType.mysql,

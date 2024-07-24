@@ -27,7 +27,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @Transactional
-@ActiveProfiles("test")
+@ActiveProfiles("integration_test")
 public class UseCaseTestSupport extends FixtureGenerateSupport {
 
     @Autowired

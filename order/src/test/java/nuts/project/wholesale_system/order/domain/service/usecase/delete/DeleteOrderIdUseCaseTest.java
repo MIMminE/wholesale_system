@@ -2,7 +2,6 @@ package nuts.project.wholesale_system.order.domain.service.usecase.delete;
 
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order.OrderEntity;
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order_item.OrderItemEntity;
-import nuts.project.wholesale_system.order.domain.exception.PaymentException;
 import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
