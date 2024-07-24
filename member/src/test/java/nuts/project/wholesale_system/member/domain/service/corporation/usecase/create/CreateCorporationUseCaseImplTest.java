@@ -1,6 +1,6 @@
 package nuts.project.wholesale_system.member.domain.service.corporation.usecase.create;
 
-import nuts.project.wholesale_system.member.support.SpringTestSupport;
+import nuts.project.wholesale_system.member.support.CorporationUseCaseTestSupport;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.request.CreateCorporationRequest;
 import nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException;
 import nuts.project.wholesale_system.member.domain.model.Corporation;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException.CorporationExceptionCase.CREATE_REDUNDANCY_BUSINESS_NUMBER;
 
-class CreateCorporationUseCaseImplTest extends SpringTestSupport {
+class CreateCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     @DisplayName("createCorporationUseCase 동작 성공 테스트")
     @Test

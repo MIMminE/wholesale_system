@@ -8,10 +8,12 @@ import lombok.Builder;
 import lombok.Getter;
 import nuts.project.wholesale_system.member.domain.model.Corporation;
 
+import java.io.Serializable;
+
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class GetCorporationResponse {
+public class GetCorporationResponse implements Serializable {
     @NotBlank
     private String corporationId;
 

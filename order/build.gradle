@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.MIMminE:project_nuts_lib:662a859a3a'
+    implementation 'com.github.MIMminE:manager_library:1.0.0'
 
     implementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.14'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'

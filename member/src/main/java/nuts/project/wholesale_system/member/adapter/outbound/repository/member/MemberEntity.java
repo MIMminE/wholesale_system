@@ -3,9 +3,7 @@ package nuts.project.wholesale_system.member.adapter.outbound.repository.member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.domain.model.Member;
 
@@ -15,6 +13,8 @@ import java.util.UUID;
 @Entity
 @Getter
 @Table(name = "members")
+@ToString
+@NoArgsConstructor
 public class MemberEntity {
 
     @Id
@@ -46,11 +46,16 @@ public class MemberEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-
-    public MemberEntity() {
+    @PrePersist
+    protected void onCreate() {
         this.memberId = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
     @Builder
@@ -63,10 +68,6 @@ public class MemberEntity {
         this.corporationEntity = corporationEntity;
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Member toMember() {
         return new Member(this.name, this.id, this.password, this.contactNumber, this.corporationEntity.getCorporationId());

@@ -20,7 +20,9 @@ public class GetCorporationUseCaseImpl implements GetCorporationUseCase {
     @Override
     public Corporation execute(String corporationId) {
         try {
+            System.out.println(corporationId + " get corporation");
             CorporationEntity corporationEntity = corporationRepository.findById(corporationId).orElseThrow();
+
             return corporationEntity.toCorporation();
         } catch (NoSuchElementException e) {
             throw new CorporationUseCaseException(GET_NO_SUCH_ELEMENT, e);

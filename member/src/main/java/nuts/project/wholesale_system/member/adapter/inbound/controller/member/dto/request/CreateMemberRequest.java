@@ -26,7 +26,6 @@ public class CreateMemberRequest {
     private String password;
 
     @NotBlank
-    @Pattern(regexp = "^010-\\d{4}-\\d{4}$")
     private String contactNumber;
 
     @NotBlank

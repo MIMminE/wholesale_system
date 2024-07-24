@@ -6,13 +6,15 @@ import lombok.*;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class Member {
     private String name;
     private String id;
     private String password;
 
-    @Pattern(regexp = "010-\\d{4}-\\d{4}")
+//    @Pattern(regexp = "010-\\d{4}-\\d{4}")
     private String contactNumber;
 
     @Setter

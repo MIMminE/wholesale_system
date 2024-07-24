@@ -21,7 +21,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/api/v1/members/{id}")
-    public ResponseEntity<GetMemberResponse> getMember(@PathVariable String id) {
+    public ResponseEntity<GetMemberResponse> getMember(@PathVariable("id") String id) {
         Member member = memberService.getMember(id);
 
         return ResponseEntity.ok(GetMemberResponse.builder()

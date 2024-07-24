@@ -2,22 +2,21 @@ package nuts.project.wholesale_system.member.domain.service.corporation.usecase.
 
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.domain.model.Corporation;
-import nuts.project.wholesale_system.member.support.SpringTestSupport;
+import nuts.project.wholesale_system.member.support.CorporationUseCaseTestSupport;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class SearchCorporationUseCaseImplTest extends SpringTestSupport {
+class SearchCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     @Test
     @DisplayName("corporationName 만을 사용한 조회 성공 테스트")
     void successSearchCorporationsUseCase() {
 
         // given
-        List<CorporationEntity> corporationEntities = getOrderedObject(CorporationEntity.class);
-        corporationRepository.saveAll(corporationEntities);
+        List<CorporationEntity> corporationEntities = corporationRepository.saveAll(getOrderedObject(CorporationEntity.class));
 
         // when
         CorporationEntity searchTargetEntity = corporationEntities.get(0);

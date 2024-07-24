@@ -21,17 +21,18 @@ configurations {
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
 
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
-    implementation 'nuts:spring_provision_lib:1.0'
+    implementation 'com.github.MIMminE:manager_library:1.0.1'
     implementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.14'
 
     implementation 'org.springframework.security:spring-security-crypto'
