@@ -26,7 +26,7 @@ repositories {
 
 dependencies {
 
-    implementation 'nuts:spring_provision_lib:1.0'
+    implementation 'com.github.MIMminE:manager_library:1.0.0'
     implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.40'
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'

@@ -1,7 +1,9 @@
 package nuts.project.wholesale_system.member.support;
 
+import com.navercorp.fixturemonkey.FixtureMonkey;
 import net.jqwik.api.Arbitraries;
 import nuts.lib.manager.fixture_manager.FixtureGenerateSupport;
+import nuts.lib.manager.fixture_manager.FixtureManager;
 import nuts.lib.manager.fixture_manager.OrderSheet;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.request.CreateCorporationRequest;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.request.DeleteCorporationRequest;
@@ -62,5 +64,10 @@ public class CorporationUseCaseTestSupport extends FixtureGenerateSupport {
                 OrderSheet.order(orderCustom(UpdateCorporationRequest.class)
                         .set("grade", Arbitraries.of(Arrays.stream(Grade.values()).map(Enum::toString).toList()))
                         .set("corporationId", UUID.randomUUID().toString()), 1));
+    }
+
+    @Override
+    protected FixtureMonkey getFixtureMonkey() {
+        return FixtureManager.supplierDefault.get();
     }
 }

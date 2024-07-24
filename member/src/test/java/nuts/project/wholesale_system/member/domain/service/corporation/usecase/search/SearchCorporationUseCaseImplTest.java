@@ -16,8 +16,7 @@ class SearchCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
     void successSearchCorporationsUseCase() {
 
         // given
-        List<CorporationEntity> corporationEntities = getOrderedObject(CorporationEntity.class);
-        corporationRepository.saveAll(corporationEntities);
+        List<CorporationEntity> corporationEntities = corporationRepository.saveAll(getOrderedObject(CorporationEntity.class));
 
         // when
         CorporationEntity searchTargetEntity = corporationEntities.get(0);

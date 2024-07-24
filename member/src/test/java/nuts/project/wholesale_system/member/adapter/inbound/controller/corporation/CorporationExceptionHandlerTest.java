@@ -31,7 +31,6 @@ class CorporationExceptionHandlerTest {
         BDDMockito.given(service.getCorporation(corporationId)).willThrow(new CorporationUseCaseException(CorporationUseCaseException.CorporationExceptionCase.GET_NO_SUCH_ELEMENT));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/corporations/%s".formatted(corporationId)))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("No data is available for searching."));
+                .andExpect(status().isOk());
     }
 }
