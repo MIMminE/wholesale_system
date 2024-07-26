@@ -15,7 +15,7 @@ class CreateCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     @DisplayName("createCorporationUseCase 동작 성공 테스트")
     @Test
-    void SuccessCreateCorporationUseCase() {
+    void successCreateCorporationUseCase() {
         // given
         CreateCorporationRequest createCorporationRequest = getOrderedObject(CreateCorporationRequest.class).get(0);
         String corporationName = createCorporationRequest.getCorporationName();
@@ -38,7 +38,7 @@ class CreateCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     @DisplayName("createCorporationUseCase 예외 발생 테스트 (동일 기관 번호 입력시)")
     @Test
-    void ExceptionCreateCorporationUseCase() {
+    void exceptionCreateCorporationUseCase() {
         // given
         CreateCorporationRequest createCorporationRequest = getOrderedObject(CreateCorporationRequest.class).get(0);
         String corporationName = createCorporationRequest.getCorporationName();

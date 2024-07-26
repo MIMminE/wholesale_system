@@ -30,7 +30,8 @@ class MemberExceptionHandlerTest {
     void exceptionHandler() throws Exception {
         String corporationId = UUID.randomUUID().toString();
 
-        BDDMockito.given(service.getCorporation(corporationId)).willThrow(new CorporationUseCaseException(CorporationUseCaseException.CorporationExceptionCase.GET_NO_SUCH_ELEMENT));
+        BDDMockito.given(service.getCorporation(corporationId))
+                .willThrow(new CorporationUseCaseException(CorporationUseCaseException.CorporationExceptionCase.GET_NO_SUCH_ELEMENT));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/corporations/%s".formatted(corporationId)))
                 .andExpect(status().isOk());

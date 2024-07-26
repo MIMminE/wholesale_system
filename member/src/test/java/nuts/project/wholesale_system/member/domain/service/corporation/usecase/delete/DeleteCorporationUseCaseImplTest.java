@@ -17,7 +17,7 @@ class DeleteCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     @DisplayName("deleteCorporationUseCase 동작 성공 테스트")
     @Test
-    void SuccessDeleteCorporationUseCase() {
+    void successDeleteCorporationUseCase() {
         // given
         CorporationEntity corporationEntity = getOrderedObject(CorporationEntity.class).get(0);
         CorporationEntity resultEntity = corporationRepository.save(corporationEntity);
@@ -39,7 +39,7 @@ class DeleteCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     @DisplayName("deleteCorporationUseCase 동작 예외 테스트 (삭제 대상 없음)")
     @Test
-    void ExceptionDeleteCorporationUseCase() {
+    void exceptionDeleteCorporationUseCase() {
         // given
         DeleteCorporationRequest deleteCorporationRequest = getOrderedObject(DeleteCorporationRequest.class).get(0);
         String corporationId = deleteCorporationRequest.getCorporationId();

@@ -18,7 +18,7 @@ public class RepositoryConfig {
                 "localhost", 9000, "test_db", "tester", "tester");
     }
 
-    @Profile("test")
+    @Profile({"test","unit_test"})
     @Bean
     DataSource dataSource_test() {
         return DataSourceGenerator.createHikariDataSource(DataSourceType.mysql,

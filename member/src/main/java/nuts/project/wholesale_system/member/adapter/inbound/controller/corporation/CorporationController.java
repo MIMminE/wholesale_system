@@ -1,6 +1,5 @@
 package nuts.project.wholesale_system.member.adapter.inbound.controller.corporation;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.request.CreateCorporationRequest;
@@ -16,10 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/member-service")
 public class CorporationController {
 
     private final CorporationService corporationService;

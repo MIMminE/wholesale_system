@@ -35,7 +35,7 @@ import static java.util.Map.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles("unit_test")
 class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
 
     @Autowired
@@ -44,6 +44,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Mock
+
     CorporationService corporationService;
 
     RestDocsManager restDocsManager = new RestDocsManager(RequestRestDocs.class, ResponseRestDocs.class);
@@ -59,7 +60,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
 
         BDDMockito.given(corporationService.getCorporation(corporationId)).willReturn(corporation);
 
-        mockController.perform(MockMvcRequestBuilders.get("/api/v1/corporations/%s".formatted(corporationId)))
+        mockController.perform(MockMvcRequestBuilders.get("/member-service/api/v1/corporations/%s".formatted(corporationId)))
                 .andExpectAll(MockMvcSupport.mapMatchers(of(
                         "corporationId", corporation.getCorporationId(),
                         "corporationName", corporation.getCorporationName(),
@@ -73,7 +74,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("[Corporation Controller POST 요청 테스트] /api/v1/corporations/search")
+    @DisplayName("[Corporation Controller POST 요청 테스트] /member-service/api/v1/corporations/search")
     void searchCorporation() throws Exception {
 
         Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
@@ -93,7 +94,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
         BDDMockito.given(corporationService.searchCorporation(corporationId, corporationName, representative, contactNumber, businessNumber, grade))
                 .willReturn(List.of(firstCorporation, sceondCorporation));
 
-        mockController.perform(MockMvcRequestBuilders.post("/api/v1/corporations/search")
+        mockController.perform(MockMvcRequestBuilders.post("/member-service/api/v1/corporations/search")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(searchCorporationsRequest)))
                 .andExpectAll(MockMvcSupport.mapMatchers(ofEntries(
@@ -118,7 +119,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("[Corporation Controller POST 요청 테스트] /api/v1/corporations")
+    @DisplayName("[Corporation Controller POST 요청 테스트] /member-service/api/v1/corporations")
     void createCorporation() throws Exception {
 
         Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
@@ -145,7 +146,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
         BDDMockito.given(corporationService.createCorporation(corporationName, representative, contactNumber, businessNumber, grade)).willReturn(corporation);
 
 
-        mockController.perform(MockMvcRequestBuilders.post("/api/v1/corporations")
+        mockController.perform(MockMvcRequestBuilders.post("/member-service/api/v1/corporations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCorporationRequest)))
                 .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
@@ -163,7 +164,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("[Corporation Controller PUT 요청 테스트] /api/v1/corporations")
+    @DisplayName("[Corporation Controller PUT 요청 테스트] /member-service/api/v1/corporations")
     void updateCorporation() throws Exception {
 
         Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
@@ -192,7 +193,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
         BDDMockito.given(corporationService.updateCorporation(corporationId, corporationName, representative, contactNumber, businessNumber, grade))
                 .willReturn(new UpdateCorporationResultSet(beforeCorporation, expectUpdatedCorporation));
 
-        mockController.perform(MockMvcRequestBuilders.put("/api/v1/corporations")
+        mockController.perform(MockMvcRequestBuilders.put("/member-service/api/v1/corporations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateCorporationRequest)))
                 .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
@@ -217,7 +218,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("[Corporation Controller DELETE 요청 테스트] /api/v1/corporations")
+    @DisplayName("[Corporation Controller DELETE 요청 테스트] /member-service/api/v1/corporations")
     void deleteCorporation() throws Exception {
 
         Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
@@ -230,7 +231,7 @@ class CorporationControllerTest extends ExtendsFixtureRestDocsSupport {
         BDDMockito.given(corporationService.deleteCorporation(deleteCorporationRequest.getCorporationId()))
                 .willReturn(corporation);
 
-        mockController.perform(MockMvcRequestBuilders.delete("/api/v1/corporations")
+        mockController.perform(MockMvcRequestBuilders.delete("/member-service/api/v1/corporations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(deleteCorporationRequest)))
                 .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(

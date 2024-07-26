@@ -1,6 +1,7 @@
 package nuts.project.wholesale_system.member.domain.service.corporation.usecase.search;
 
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
+import nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException;
 import nuts.project.wholesale_system.member.domain.model.Corporation;
 import nuts.project.wholesale_system.member.support.CorporationUseCaseTestSupport;
 import org.assertj.core.api.Assertions;
@@ -8,6 +9,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.UUID;
+
+import static nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException.CorporationExceptionCase.*;
 
 class SearchCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
@@ -58,5 +62,19 @@ class SearchCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
         Assertions.assertThat(corporationRepository.findById(firstCorporationId).orElseThrow().toCorporation()).isEqualTo(firstCorporation);
         Assertions.assertThat(corporationRepository.findById(secondCorporationId).orElseThrow().toCorporation()).isEqualTo(secondCorporation);
+    }
+
+    @Test
+    @DisplayName("검색 조건에 맞는 데이터가 없을 때 예외 발생")
+    void exceptionSearchCorporationsUseCase() {
+
+        // given
+        String corporationId = UUID.randomUUID().toString();
+
+        // when then
+        Assertions.assertThatThrownBy(() -> searchCorporationsUseCase.execute(corporationId, null, null, null, null, null))
+                .hasMessage(SEARCH_NO_SUCH_ELEMENT.getMessage())
+                .isInstanceOf(CorporationUseCaseException.class);
+
     }
 }
