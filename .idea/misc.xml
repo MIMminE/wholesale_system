@@ -11,7 +11,7 @@
     <file type="web" url="file://$PROJECT_DIR$/stock" />
     <file type="web" url="file://$PROJECT_DIR$/web" />
   </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

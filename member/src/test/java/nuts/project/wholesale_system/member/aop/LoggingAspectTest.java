@@ -55,7 +55,7 @@ class LoggingAspectTest extends FixtureGenerateSupport {
 
     @Test
     @Order(1)
-    @DisplayName("[ Log Service Test ] : Successful Test")
+    @DisplayName("Rest Controller 요청 처리가 정상적으로 완료될 경우 응답 정보를 Log 처리 RabbitMq에 전송한다.")
     void afterAdviceSuccessLog() {
         Corporation corporation = getOrderedObject(Corporation.class).get(0);
         String corporationId = UUID.randomUUID().toString();
@@ -63,7 +63,7 @@ class LoggingAspectTest extends FixtureGenerateSupport {
 
         BDDMockito.given(corporationService.getCorporation(corporationId)).willReturn(corporation);
 
-        Map forObject = restTemplate.getForObject("http://localhost:" + port + "/api/v1/corporations/%s".formatted(corporationId), Map.class);
+        Map forObject = restTemplate.getForObject("http://localhost:" + port + "/corporation-service/api/v1/corporations/%s".formatted(corporationId), Map.class);
 
 
         Map<String, Object> requestLost = rabbitTemplate.receiveAndConvert(MEMBER_LOG_QUEUE, ParameterizedTypeReference.forType(Map.class));
@@ -75,13 +75,13 @@ class LoggingAspectTest extends FixtureGenerateSupport {
 
     @Test
     @Order(2)
-    @DisplayName("[ Log Service Test ] : Exception Test")
+    @DisplayName("Rest Controller 요청 처리 중 예외가 발생한 경우 예외 정보를 Log 처리 RabbitMq에 전송한다.")
     void afterAdviceExceptionLog() {
         String corporationId = UUID.randomUUID().toString();
 
         BDDMockito.given(corporationService.getCorporation(corporationId)).willThrow(new CorporationUseCaseException(GET_NO_SUCH_ELEMENT));
 
-        Map forObject = restTemplate.getForObject("http://localhost:" + port + "/api/v1/corporations/%s".formatted(corporationId), Map.class);
+        Map forObject = restTemplate.getForObject("http://localhost:" + port + "/corporation-service/api/v1/corporations/%s".formatted(corporationId), Map.class);
 
         Map<String, Object> requestLost = rabbitTemplate.receiveAndConvert(MEMBER_LOG_QUEUE, ParameterizedTypeReference.forType(Map.class));
         Map<String, Object> responseLog = rabbitTemplate.receiveAndConvert(MEMBER_LOG_QUEUE, ParameterizedTypeReference.forType(Map.class));
@@ -93,13 +93,13 @@ class LoggingAspectTest extends FixtureGenerateSupport {
 
     @Test
     @Order(3)
-    @DisplayName("[ Log Service Test ] : Input Log Test")
-    void afterAdvice() {
+    @DisplayName("Rest Controller 요청에 대한 정보를 Log 처리 RabbitMq에 전송한다.")
+    void requestLog() {
         String corporationId = UUID.randomUUID().toString();
 
         BDDMockito.given(corporationService.getCorporation(corporationId)).willThrow(new CorporationUseCaseException(GET_NO_SUCH_ELEMENT));
 
-        Map forObject = restTemplate.getForObject("http://localhost:" + port + "/api/v1/corporations/%s".formatted(corporationId), Map.class);
+        Map forObject = restTemplate.getForObject("http://localhost:" + port + "/corporation-service/api/v1/corporations/%s".formatted(corporationId), Map.class);
 
         Map<String, Object> requestLost = rabbitTemplate.receiveAndConvert(MEMBER_LOG_QUEUE, ParameterizedTypeReference.forType(Map.class));
         Map<String, Object> responseLog = rabbitTemplate.receiveAndConvert(MEMBER_LOG_QUEUE, ParameterizedTypeReference.forType(Map.class));

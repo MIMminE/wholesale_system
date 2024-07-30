@@ -25,7 +25,7 @@ public class MemberEntity {
     private String name;
 
     @NotBlank
-    @Column(unique = true)
+    @Column(name = "user_id", unique = true)
     private String id;
 
     @NotBlank

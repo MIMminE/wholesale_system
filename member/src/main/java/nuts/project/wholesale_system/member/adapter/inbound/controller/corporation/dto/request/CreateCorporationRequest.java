@@ -19,7 +19,6 @@ public class CreateCorporationRequest {
     @NotBlank
     String representative;
 
-    @Pattern(regexp = "^010-\\d{4}-\\d{4}$")
     String contactNumber;
 
     @NotBlank

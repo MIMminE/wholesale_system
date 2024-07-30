@@ -49,10 +49,10 @@ class MemberControllerTest extends RestDocsSupport {
     }
 
 
-    @DisplayName("[Member Controller 회원 조회 테스트] /api/v1/members/{id}")
+    @DisplayName("GET /corporation-service/api/v1/members/{id} 요청을 받아  [ MemberService ] 에게 전달한다.")
     @Test
     void getMember() throws Exception {
-        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
+//        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
 
         // given
         String requestId = UUID.randomUUID().toString();
@@ -63,7 +63,7 @@ class MemberControllerTest extends RestDocsSupport {
 
 
         // when , then
-        mockController.perform(MockMvcRequestBuilders.get("/api/v1/members/%s".formatted(requestId)))
+        mockController.perform(MockMvcRequestBuilders.get("/member-service/api/v1/members/%s".formatted(requestId)))
                 .andExpect(status().isOk())
                 .andExpectAll(MockMvcSupport.mapMatchers((Map.of(
                         "id", requestId,
@@ -73,10 +73,10 @@ class MemberControllerTest extends RestDocsSupport {
                 .andDo(restDocsManager.document("/api/v1/get_members_{id}", "getMemberResponse"));
     }
 
-    @DisplayName("[Member Controller 생성 요청 테스트] /api/v1/members")
+    @DisplayName("POST /corporation-service/api/v1/members 요청을 받아  [ MemberService ] 에게 전달한다.")
     @Test
     void createMember() throws Exception {
-        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
+//        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
         // given
         String id = UUID.randomUUID().toString();
         String name = UUID.randomUUID().toString();
@@ -98,7 +98,7 @@ class MemberControllerTest extends RestDocsSupport {
                 .willReturn(returnMember);
 
         // when then
-        mockController.perform(MockMvcRequestBuilders.post("/api/v1/members")
+        mockController.perform(MockMvcRequestBuilders.post("/member-service/api/v1/members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(createMemberRequest)))
                 .andExpect(status().isOk())
@@ -111,10 +111,10 @@ class MemberControllerTest extends RestDocsSupport {
                 .andDo(restDocsManager.document("/api/v1/create-members", "createMember", "createMemberResponse"));
     }
 
-    @DisplayName("[Member Controller 삭제 요청 테스트] /api/v1/members")
+    @DisplayName("DELETE /corporation-service/api/v1/members 요청을 받아  [ MemberService ] 에게 전달한다.")
     @Test
     void deleteMember() throws Exception {
-        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
+//        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
         // given
         String name = "test_member_name";
         String id = UUID.randomUUID().toString();
@@ -129,7 +129,7 @@ class MemberControllerTest extends RestDocsSupport {
         BDDMockito.given(memberService.deleteMember(deleteMemberRequest.getId())).willReturn(returnMember);
 
         // when then
-        mockController.perform(MockMvcRequestBuilders.delete("/api/v1/members")
+        mockController.perform(MockMvcRequestBuilders.delete("/member-service/api/v1/members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(deleteMemberRequest)))
                 .andExpect(status().isOk())
@@ -142,10 +142,10 @@ class MemberControllerTest extends RestDocsSupport {
                 .andDo(restDocsManager.document("/api/v1/delete-members", "deleteMember", "deleteMemberResponse"));
     }
 
-    @DisplayName("[Member Controller 수정 요청 테스트] /api/v1/members")
+    @DisplayName("PUT /corporation-service/api/v1/members 요청을 받아  [ MemberService ] 에게 전달한다.")
     @Test
     void updateMember() throws Exception {
-        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
+//        Assumptions.assumeTrue(Arrays.asList(env.getActiveProfiles()).contains("unit_test"));
 
         // given
         String requestId = UUID.randomUUID().toString();
@@ -169,7 +169,7 @@ class MemberControllerTest extends RestDocsSupport {
         BDDMockito.given(memberService.updateMember(requestId, updatedMember)).willReturn(updatedMember);
 
         // when then
-        mockController.perform(MockMvcRequestBuilders.put("/api/v1/members")
+        mockController.perform(MockMvcRequestBuilders.put("/member-service/api/v1/members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(updateMemberRequest)))
                 .andExpect(status().isOk())

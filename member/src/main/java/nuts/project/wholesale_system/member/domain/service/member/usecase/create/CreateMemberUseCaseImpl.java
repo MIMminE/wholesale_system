@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static nuts.project.wholesale_system.member.domain.exception.MemberUseCaseException.MemberExceptionCase.GET_NO_SUCH_ELEMENT;
+import static nuts.project.wholesale_system.member.domain.exception.MemberUseCaseException.MemberExceptionCase.*;
 
 
 @Component
@@ -29,7 +29,8 @@ public class CreateMemberUseCaseImpl implements CreateMemberUseCase {
     @Override
     public Member execute(String name, String id, String password, String contactNumber, String corporationId) {
 
-        CorporationEntity corporationEntity = corporationRepository.findById(corporationId).orElseThrow();
+        CorporationEntity corporationEntity = corporationRepository.findById(corporationId).orElseThrow(()
+                -> new MemberUseCaseException(INVALID_CORPORATION_NUMBER));
 
         String encryptedPassword = passwordEncoder.encode(password);
         MemberEntity savedEntity = memberRepository.save(
@@ -38,7 +39,7 @@ public class CreateMemberUseCaseImpl implements CreateMemberUseCase {
         try {
             memberRepository.flush();
         } catch (DataIntegrityViolationException e) {
-            throw new MemberUseCaseException(GET_NO_SUCH_ELEMENT, e);
+            throw new MemberUseCaseException(ALREADY_IN_USE_ID, e);
         }
 
         Member member = savedEntity.toMember();

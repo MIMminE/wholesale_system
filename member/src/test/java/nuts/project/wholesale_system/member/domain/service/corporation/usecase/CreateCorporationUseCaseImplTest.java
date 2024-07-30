@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.member.domain.service.corporation.usecase.create;
+package nuts.project.wholesale_system.member.domain.service.corporation.usecase;
 
 import nuts.project.wholesale_system.member.support.CorporationUseCaseTestSupport;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.request.CreateCorporationRequest;
@@ -13,11 +13,11 @@ import static nuts.project.wholesale_system.member.domain.exception.CorporationU
 
 class CreateCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
-    @DisplayName("createCorporationUseCase 동작 성공 테스트")
+    @DisplayName("요청 기관 정보를 기반으로 Corporation Repository에 데이터 저장에 성공한다.")
     @Test
     void successCreateCorporationUseCase() {
         // given
-        CreateCorporationRequest createCorporationRequest = getOrderedObject(CreateCorporationRequest.class).get(0);
+        CreateCorporationRequest createCorporationRequest = fixtureManager.getOrderObject(CreateCorporationRequest.class);
         String corporationName = createCorporationRequest.getCorporationName();
         String representative = createCorporationRequest.getRepresentative();
         String contactNumber = createCorporationRequest.getContactNumber();
@@ -36,11 +36,11 @@ class CreateCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     }
 
-    @DisplayName("createCorporationUseCase 예외 발생 테스트 (동일 기관 번호 입력시)")
+    @DisplayName("요청 기관 정보 중 [ businessNumber ] 가 일치한 기관이 이미 등록되어 있을 경우 예외를 던진다.")
     @Test
     void exceptionCreateCorporationUseCase() {
         // given
-        CreateCorporationRequest createCorporationRequest = getOrderedObject(CreateCorporationRequest.class).get(0);
+        CreateCorporationRequest createCorporationRequest = fixtureManager.getOrderObject((CreateCorporationRequest.class));
         String corporationName = createCorporationRequest.getCorporationName();
         String representative = createCorporationRequest.getRepresentative();
         String contactNumber = createCorporationRequest.getContactNumber();

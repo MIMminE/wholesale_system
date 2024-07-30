@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/corporation-service")
+@RequestMapping("/member-service")
 public class MemberController {
 
     private final MemberService memberService;
@@ -64,6 +64,8 @@ public class MemberController {
 
         Member beforeMember = memberService.getMember(request.getRequestId());
         Member updatedMember = new Member(request.getNewName(), request.getRequestId(), request.getNewPassword(), request.getNewContactNumber(), request.getNewCorporationId());
+
+
         memberService.updateMember(request.getRequestId(), updatedMember);
 
         GetMemberResponse beforeMemberResponse = GetMemberResponse.builder()

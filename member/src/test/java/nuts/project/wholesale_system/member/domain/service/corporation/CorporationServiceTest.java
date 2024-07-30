@@ -51,7 +51,7 @@ class CorporationServiceTest extends FixtureGenerateSupport {
     CorporationService corporationService;
 
     @Test
-    @DisplayName("createCorporation 성공 테스트")
+    @DisplayName("[ CorporationService ] 컴포넌트가 [ CreateCorporationUseCase ] 를 호출한다.")
     void createCorporation() {
 
         // given
@@ -85,7 +85,7 @@ class CorporationServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("deleteCorporation 성공 테스트")
+    @DisplayName("[ CorporationService ] 컴포넌트가 [ DeleteCorporationUseCase ] 를 호출한다.")
     void deleteCorporation() {
 
         // given
@@ -114,7 +114,7 @@ class CorporationServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("updateCorporation 성공 테스트")
+    @DisplayName("[ CorporationService ] 컴포넌트가 [ UpdateCorporationUseCase ] 를 호출한다.")
     void updateCorporation() {
 
         // given
@@ -152,8 +152,8 @@ class CorporationServiceTest extends FixtureGenerateSupport {
 
 
     @Test
-    @DisplayName("getCorporation 서비스 동작 테스트 성공")
-    void getCorporation() throws NoSuchFieldException, IllegalAccessException {
+    @DisplayName("[ CorporationService ] 컴포넌트가 [ GetCorporationUseCase ] 를 호출한다.")
+    void getCorporation() {
 
         // given
         String corporationId = UUID.randomUUID().toString();
@@ -181,7 +181,7 @@ class CorporationServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("searchCorporation 서비스 동작 테스트 성공")
+    @DisplayName("[ CorporationService ] 컴포넌트가 [ SearchCorporationUseCase ] 를 호출한다.")
     void searchCorporation() {
 
         // given

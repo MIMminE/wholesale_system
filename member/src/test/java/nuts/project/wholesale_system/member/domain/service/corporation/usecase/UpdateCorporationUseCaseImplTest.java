@@ -1,5 +1,6 @@
-package nuts.project.wholesale_system.member.domain.service.corporation.usecase.update;
+package nuts.project.wholesale_system.member.domain.service.corporation.usecase;
 
+import nuts.project.wholesale_system.member.domain.service.corporation.usecase.update.UpdateCorporationResultSet;
 import nuts.project.wholesale_system.member.support.CorporationUseCaseTestSupport;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException;
@@ -15,15 +16,15 @@ import static nuts.project.wholesale_system.member.domain.exception.CorporationU
 
 class UpdateCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
-    @DisplayName("updateCorporationUseCase 동작 성공 테스트")
+    @DisplayName("요청 기관 ID 정보를 전달받은 요청 정보로 변경, 반영에 성공한다.")
     @Test
     void successUpdateCorporationUseCase() {
         // given
-        CorporationEntity corporationEntity = getOrderedObject(CorporationEntity.class).get(1);
+        CorporationEntity corporationEntity = fixtureManager.getOrderObjects((CorporationEntity.class)).get(1);
         CorporationEntity beforeEntity = corporationRepository.save(corporationEntity);
         String corporationId = beforeEntity.getCorporationId();
         Corporation beforeCorporation = beforeEntity.toCorporation();
-        Corporation updatedCorporation = getOrderedObject(Corporation.class).get(0);
+        Corporation updatedCorporation = fixtureManager.getOrderObject(Corporation.class);
 
         // when
         UpdateCorporationResultSet resultSet = updateCorporationUseCase.execute(corporationId, updatedCorporation);
@@ -36,12 +37,12 @@ class UpdateCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
                 .contains(beforeCorporation, verifyCorporation);
     }
 
-    @DisplayName("updateCorporationUseCase 동작 예외 테스트")
+    @DisplayName("요청 기관 ID 가 조회되지 않을 경우 예외를 던진다.")
     @Test
     void exceptionUpdateCorporationUseCase() {
         // given
         String corporationId = UUID.randomUUID().toString();
-        Corporation updatedCorporation = getOrderedObject(Corporation.class).get(0);
+        Corporation updatedCorporation = fixtureManager.getOrderObject(Corporation.class);
 
         // when // then
         Assertions.assertThatThrownBy(() -> updateCorporationUseCase.execute(corporationId, updatedCorporation))

@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.member.domain.service.corporation.usecase.get;
+package nuts.project.wholesale_system.member.domain.service.corporation.usecase;
 
 import nuts.project.wholesale_system.member.support.CorporationUseCaseTestSupport;
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
@@ -21,7 +21,7 @@ class GetCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
     @Test
     void successGetCorporationUseCase() {
         // given
-        CorporationEntity corporationEntity = getOrderedObject(CorporationEntity.class).get(0);
+        CorporationEntity corporationEntity = fixtureManager.getOrderObject(CorporationEntity.class);
         CorporationEntity resultEntity = corporationRepository.save(corporationEntity);
         Corporation resultEntityCorporation = resultEntity.toCorporation();
 

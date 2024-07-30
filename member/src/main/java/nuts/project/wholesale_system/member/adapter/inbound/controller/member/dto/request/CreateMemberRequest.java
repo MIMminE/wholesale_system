@@ -14,20 +14,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CreateMemberRequest {
 
-    @Size(min = 2)
     private String name;
 
-    @NotBlank
-    @Size(min = 5)
     private String id;
 
-    @NotBlank
-    @Size(min = 5)
     private String password;
 
-    @NotBlank
     private String contactNumber;
 
-    @NotBlank
     private String corporationId;
 }

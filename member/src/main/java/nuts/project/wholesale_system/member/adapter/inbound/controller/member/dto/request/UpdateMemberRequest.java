@@ -21,7 +21,6 @@ public class UpdateMemberRequest {
     @Size(min = 5)
     private String newPassword;
 
-    @Pattern(regexp = "^010-\\d{4}-\\d{4}$")
     private String newContactNumber;
 
     @NotBlank

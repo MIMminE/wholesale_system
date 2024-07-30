@@ -17,7 +17,6 @@ public class SearchCorporationsRequest {
 
     private String representative;
 
-    @Pattern(regexp = "^010-\\d{4}-\\d{4}$")
     private String contactNumber;
 
     private String businessNumber;

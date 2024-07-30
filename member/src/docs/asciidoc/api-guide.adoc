@@ -1,0 +1,46 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:operation-http-request-title: Request
+:operation-http-response-title: Response
+
+[[resources]]
+= Resources
+
+[[resources-user]]
+== Member
+
+=== 회원 가입
+operation::api/v1/create-members[snippets='http-request,http-response,request-fields,response-fields']
+
+=== 회원 탈퇴
+operation::api/v1/delete-members[snippets='http-request,http-response,request-fields,response-fields']
+
+=== 회원 수정
+operation::api/v1/update-members[snippets='http-request,http-response,request-fields,response-fields']
+
+=== 회원 조회
+operation::api/v1/get_members_{id}[snippets='http-request,http-response,response-fields']
+
+== Corporation
+
+=== 기업 가입
+operation::api/v1/create-corporations[snippets='http-request,http-response,request-fields,response-fields']
+
+=== 기업 탈퇴
+operation::api/v1/delete-corporations[snippets='http-request,http-response,request-fields,response-fields']
+
+=== 기업 수정
+operation::api/v1/update-corporations[snippets='http-request,http-response,request-fields,response-fields']
+
+=== 기업 조회
+operation::api/v1/get-corporations[snippets='http-request,http-response,response-fields']
+
+=== 기업 검색
+operation::api/v1/search-corporations[snippets='http-request,http-response,request-fields,response-fields']

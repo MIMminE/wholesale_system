@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.member.domain.service.corporation.usecase.search;
+package nuts.project.wholesale_system.member.domain.service.corporation.usecase;
 
 import nuts.project.wholesale_system.member.adapter.outbound.repository.corporation.CorporationEntity;
 import nuts.project.wholesale_system.member.domain.exception.CorporationUseCaseException;
@@ -16,15 +16,14 @@ import static nuts.project.wholesale_system.member.domain.exception.CorporationU
 class SearchCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
     @Test
-    @DisplayName("corporationName 만을 사용한 조회 성공 테스트")
+    @DisplayName("전달 받은 검색 조건에 한 개의 데이터가 조회될 때 성공적으로 정보을 반환한다.")
     void successSearchCorporationsUseCase() {
 
         // given
-        List<CorporationEntity> corporationEntities = corporationRepository.saveAll(getOrderedObject(CorporationEntity.class));
+        List<CorporationEntity> corporationEntities = corporationRepository.saveAll(fixtureManager.getOrderObjects(CorporationEntity.class));
 
         // when
         CorporationEntity searchTargetEntity = corporationEntities.get(0);
-
         // then
         List<Corporation> result = searchCorporationsUseCase.execute(null, searchTargetEntity.getCorporationName(), null, null, null, null);
         String corporationId = result.get(0).getCorporationId();
@@ -34,11 +33,11 @@ class SearchCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
     }
 
     @Test
-    @DisplayName("corporationName 값이 같은 두 데이터 조회 성공 테스트")
+    @DisplayName("전달 받은 검색 조건에 두 개의 데이터가 조회될 때 성공적으로 정보들을 반환한다.")
     void successTwoItemsSearchCorporationsUseCase() {
 
         // given
-        List<CorporationEntity> corporationEntities = getOrderedObject(CorporationEntity.class);
+        List<CorporationEntity> corporationEntities = fixtureManager.getOrderObjects(CorporationEntity.class);
         CorporationEntity firstCorporationEntity = corporationEntities.get(0);
         corporationRepository.save(firstCorporationEntity);
 
@@ -65,7 +64,7 @@ class SearchCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
     }
 
     @Test
-    @DisplayName("검색 조건에 맞는 데이터가 없을 때 예외 발생")
+    @DisplayName("전달 받은 검색 조건에 맞는 데이터가 없을 경우 예외를 던진다.")
     void exceptionSearchCorporationsUseCase() {
 
         // given

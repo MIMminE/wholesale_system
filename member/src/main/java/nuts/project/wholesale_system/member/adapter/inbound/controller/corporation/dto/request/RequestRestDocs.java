@@ -33,11 +33,11 @@ public abstract class RequestRestDocs {
 
     @RestDocsSnippet(fields = {
             @FieldDescription(name = "corporationId", description = " 타겟 기관 ID", optional = true),
-            @FieldDescription(name = "corporationName", description = "변경할 기관 이름", optional = true),
-            @FieldDescription(name = "representative", description = "변경할 기관 대표자 이름", optional = true),
-            @FieldDescription(name = "contactNumber", description = "변경할 기관 대표 연락처", optional = true),
-            @FieldDescription(name = "businessNumber", description = "변경할 기관 사업자 번호", optional = true),
-            @FieldDescription(name = "grade", description = "변경할 기관 등급", optional = true)
+            @FieldDescription(name = "corporationName", description = "검색할 기관 이름", optional = true),
+            @FieldDescription(name = "representative", description = "검색할 기관 대표자 이름", optional = true),
+            @FieldDescription(name = "contactNumber", description = "검색할 기관 대표 연락처", optional = true),
+            @FieldDescription(name = "businessNumber", description = "검색할 기관 사업자 번호", optional = true),
+            @FieldDescription(name = "grade", description = "검색할 기관 등급", optional = true)
     })
     public Object searchCorporationRequest;
 }

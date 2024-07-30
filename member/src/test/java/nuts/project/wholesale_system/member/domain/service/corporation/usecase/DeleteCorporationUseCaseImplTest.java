@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.member.domain.service.corporation.usecase.delete;
+package nuts.project.wholesale_system.member.domain.service.corporation.usecase;
 
 import nuts.project.wholesale_system.member.support.CorporationUseCaseTestSupport;
 import nuts.project.wholesale_system.member.adapter.inbound.controller.corporation.dto.request.DeleteCorporationRequest;
@@ -15,11 +15,11 @@ import static nuts.project.wholesale_system.member.domain.exception.CorporationU
 
 class DeleteCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
 
-    @DisplayName("deleteCorporationUseCase 동작 성공 테스트")
+    @DisplayName("전달 받은 기관 ID 에 해당하는 기관 정보를 반환한다.")
     @Test
     void successDeleteCorporationUseCase() {
         // given
-        CorporationEntity corporationEntity = getOrderedObject(CorporationEntity.class).get(0);
+        CorporationEntity corporationEntity = fixtureManager.getOrderObject(CorporationEntity.class);
         CorporationEntity resultEntity = corporationRepository.save(corporationEntity);
 
         String corporationId = resultEntity.getCorporationId();
@@ -37,11 +37,11 @@ class DeleteCorporationUseCaseImplTest extends CorporationUseCaseTestSupport {
                 .contains(corporationId, corporationName, representative, contactNumber, businessNumber, grade);
     }
 
-    @DisplayName("deleteCorporationUseCase 동작 예외 테스트 (삭제 대상 없음)")
+    @DisplayName("전달 받은 기관 ID 에 대한 데이터가 없을 경우 예외를 던진다.")
     @Test
     void exceptionDeleteCorporationUseCase() {
         // given
-        DeleteCorporationRequest deleteCorporationRequest = getOrderedObject(DeleteCorporationRequest.class).get(0);
+        DeleteCorporationRequest deleteCorporationRequest = fixtureManager.getOrderObject(DeleteCorporationRequest.class);
         String corporationId = deleteCorporationRequest.getCorporationId();
 
         // when // then
