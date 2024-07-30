@@ -8,4 +8,6 @@ public interface AuthenticationPort {
     AuthenticationPortResult updateUser();
 
     AuthenticationPortResult deleteUser();
+
+    AuthenticationPortResult getUserTable();
 }

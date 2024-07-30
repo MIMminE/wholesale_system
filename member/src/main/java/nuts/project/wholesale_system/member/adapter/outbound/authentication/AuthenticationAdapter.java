@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class KeyClockAuthenticationAdapter implements AuthenticationPort {
+public class AuthenticationAdapter implements AuthenticationPort {
 
     @Override
     public AuthenticationPortResult registerUser(Map<String, Object> userInfo) {
@@ -21,6 +21,11 @@ public class KeyClockAuthenticationAdapter implements AuthenticationPort {
 
     @Override
     public AuthenticationPortResult deleteUser() {
+        return null;
+    }
+
+    @Override
+    public AuthenticationPortResult getUserTable() {
         return null;
     }
 }
