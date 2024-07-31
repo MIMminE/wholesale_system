@@ -17,7 +17,7 @@ public class DeleteOrderByOrderIdUseCaseImpl implements DeleteOrderIdUseCase {
     private final PaymentServicePort paymentService;
 
     @Override
-    public Order execute(String orderId) throws OrderException, PaymentException {
+    public Order execute(String orderId) throws OrderException{
 
         OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(DELETE_NO_SUCH_ELEMENT));
         orderRepository.delete(orderEntity);

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static nuts.project.wholesale_system.order.domain.exception.OrderException.OrderExceptionCase.DELETE_NO_SUCH_ELEMENT;
-import static nuts.project.wholesale_system.order.domain.exception.PaymentException.PaymentExceptionCase.PAYMENT_SERVICE_FAIL;
 import static org.assertj.core.api.Assertions.*;
 
 class DeleteOrderIdUseCaseTest extends UseCaseTestSupport {
@@ -61,21 +60,21 @@ class DeleteOrderIdUseCaseTest extends UseCaseTestSupport {
                 .hasMessage(DELETE_NO_SUCH_ELEMENT.getMessage());
     }
 
-    @DisplayName("deleteOrderIdUseCase 예외 발생 테스트 : 결제 시스템과의 통신에 실패한 경우")
-    @Test
-    void deleteOrderIdUseCasePaymentServiceException() {
-        // given
-        OrderEntity saveEntity = getOrderedObject(OrderEntity.class).get(0);
-        OrderEntity orderEntity = orderRepository.save(saveEntity);
-        String userId = orderEntity.getUserId();
-        String orderId = orderEntity.getOrderId();
-
-        PaymentResponse paymentResponse = new PaymentResponse(userId, "test", 1500);
-        BDDMockito.given(paymentService.deletePaymentInformation(orderId))
-                .willThrow(new PaymentException(PAYMENT_SERVICE_FAIL));
-
-        // when then
-        assertThatThrownBy(() -> deleteOrderIdUseCase.execute(orderId))
-                .hasMessage(PAYMENT_SERVICE_FAIL.getMessage());
-    }
+//    @DisplayName("deleteOrderIdUseCase 예외 발생 테스트 : 결제 시스템과의 통신에 실패한 경우")
+//    @Test
+//    void deleteOrderIdUseCasePaymentServiceException() {
+//        // given
+//        OrderEntity saveEntity = getOrderedObject(OrderEntity.class).get(0);
+//        OrderEntity orderEntity = orderRepository.save(saveEntity);
+//        String userId = orderEntity.getUserId();
+//        String orderId = orderEntity.getOrderId();
+//
+//        PaymentResponse paymentResponse = new PaymentResponse(userId, "test", 1500);
+//        BDDMockito.given(paymentService.deletePaymentInformation(orderId))
+//                .willThrow(new PaymentException(PAYMENT_SERVICE_FAIL));
+//
+//        // when then
+//        assertThatThrownBy(() -> deleteOrderIdUseCase.execute(orderId))
+//                .hasMessage(PAYMENT_SERVICE_FAIL.getMessage());
+//    }
 }

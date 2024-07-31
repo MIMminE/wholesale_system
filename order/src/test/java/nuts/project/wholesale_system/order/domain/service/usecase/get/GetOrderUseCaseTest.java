@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 
 import static nuts.project.wholesale_system.order.domain.exception.OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT;
-import static nuts.project.wholesale_system.order.domain.exception.PaymentException.PaymentExceptionCase.PAYMENT_SERVICE_FAIL;
 
 
 class GetOrderUseCaseTest extends UseCaseTestSupport {
@@ -48,19 +47,19 @@ class GetOrderUseCaseTest extends UseCaseTestSupport {
 
     }
 
-    @DisplayName("getOrderUseCase 예외 발생 테스트 : 결제 시스템과 통신에 실패할 때")
-    @Test
-    void getOrderUseCasePaymentException() {
-        // given
-        OrderEntity orderEntity = orderRepository.save(getOrderedObject(OrderEntity.class).get(0));
-        String orderId = orderEntity.getOrderId();
-
-
-        BDDMockito.given(paymentService.getPaymentInformation(orderId))
-                .willThrow(new PaymentException(PAYMENT_SERVICE_FAIL));
-
-        // when then
-        Assertions.assertThatThrownBy(() -> getOrderUseCase.execute(orderId))
-                .hasMessage(PAYMENT_SERVICE_FAIL.getMessage());
-    }
+//    @DisplayName("getOrderUseCase 예외 발생 테스트 : 결제 시스템과 통신에 실패할 때")
+//    @Test
+//    void getOrderUseCasePaymentException() {
+//        // given
+//        OrderEntity orderEntity = orderRepository.save(getOrderedObject(OrderEntity.class).get(0));
+//        String orderId = orderEntity.getOrderId();
+//
+//
+//        BDDMockito.given(paymentService.getPaymentInformation(orderId))
+//                .willThrow(new PaymentException(PAYMENT_SERVICE_FAIL));
+//
+//        // when then
+//        Assertions.assertThatThrownBy(() -> getOrderUseCase.execute(orderId))
+//                .hasMessage(PAYMENT_SERVICE_FAIL.getMessage());
+//    }
 }

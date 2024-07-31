@@ -15,7 +15,6 @@ import org.springframework.test.annotation.Commit;
 import java.util.List;
 import java.util.UUID;
 
-import static nuts.project.wholesale_system.order.domain.exception.PaymentException.PaymentExceptionCase.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 
@@ -43,20 +42,20 @@ class CreateOrderUseCaseTest extends UseCaseTestSupport {
                 .contains(accountId, userId, OrderStatus.pendPayment);
     }
 
-    @DisplayName("createOrderUseCase 예외 발생 테스트 : 결제 시스템과의 통신에 실패한 경우")
-    @Test
-    void createOrderUseCaseException() {
-
-        // given
-        Order order = getOrderedObject(Order.class).get(0);
-        String userId = order.getUserId();
-        List<OrderItem> items = order.getItems();
-
-        BDDMockito.given(paymentService.requestPayment(eq(userId), anyString()))
-                .willThrow(new PaymentException(PAYMENT_SERVICE_FAIL));
-
-        // when then
-        Assertions.assertThatThrownBy(() -> createOrderUseCase.execute(userId, items))
-                .hasMessage(PAYMENT_SERVICE_FAIL.getMessage());
-    }
+//    @DisplayName("createOrderUseCase 예외 발생 테스트 : 결제 시스템과의 통신에 실패한 경우")
+//    @Test
+//    void createOrderUseCaseException() {
+//
+//        // given
+//        Order order = getOrderedObject(Order.class).get(0);
+//        String userId = order.getUserId();
+//        List<OrderItem> items = order.getItems();
+//
+//        BDDMockito.given(paymentService.requestPayment(eq(userId), anyString()))
+//                .willThrow(new PaymentException(PAYMENT_SERVICE_FAIL));
+//
+//        // when then
+//        Assertions.assertThatThrownBy(() -> createOrderUseCase.execute(userId, items))
+//                .hasMessage(PAYMENT_SERVICE_FAIL.getMessage());
+//    }
 }

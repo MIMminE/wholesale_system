@@ -25,7 +25,7 @@ public class UpdateOrderUseCaseImpl implements UpdateOrderUseCase {
     private final StockServicePort stockServicePort;
 
     @Override
-    public UpdateOrderDto execute(String orderId, List<OrderItem> items) throws StockException {
+    public UpdateOrderDto execute(String orderId, List<OrderItem> items){
 
         OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(UPDATE_NO_SUCH_ELEMENT));
         Order beforeOrder = orderEntity.toOrder();

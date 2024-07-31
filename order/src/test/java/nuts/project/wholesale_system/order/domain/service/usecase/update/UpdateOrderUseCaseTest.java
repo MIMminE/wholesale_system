@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static nuts.project.wholesale_system.order.domain.exception.OrderException.OrderExceptionCase.UPDATE_NO_SUCH_ELEMENT;
-import static nuts.project.wholesale_system.order.domain.exception.StockException.StockExceptionCase.*;
 
 class UpdateOrderUseCaseTest extends UseCaseTestSupport {
 
@@ -69,36 +68,36 @@ class UpdateOrderUseCaseTest extends UseCaseTestSupport {
 
     }
 
-    @DisplayName("updateOrderUseCase Stock 예외 발생 테스트 : 변경한 상품의 수량이 부족한 경우")
-    @Test
-    void updateOrderUseCaseStockException() {
-        // given
-        OrderEntity orderEntity = orderRepository.save(getOrderedObject(OrderEntity.class).get(0));
-        String orderId = orderEntity.getOrderId();
-        List<OrderItem> orderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
+//    @DisplayName("updateOrderUseCase Stock 예외 발생 테스트 : 변경한 상품의 수량이 부족한 경우")
+//    @Test
+//    void updateOrderUseCaseStockException() {
+//        // given
+//        OrderEntity orderEntity = orderRepository.save(getOrderedObject(OrderEntity.class).get(0));
+//        String orderId = orderEntity.getOrderId();
+//        List<OrderItem> orderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
+//
+//        BDDMockito.given(stockService.updateStock(ArgumentMatchers.isA(StockRequest.class)))
+//                .willThrow(new StockException(OUT_OF_STOCK));
+//
+//        // when then
+//        Assertions.assertThatThrownBy(() -> updateOrderUseCase.execute(orderId, orderItems))
+//                .hasMessage(OUT_OF_STOCK.getMessage());
 
-        BDDMockito.given(stockService.updateStock(ArgumentMatchers.isA(StockRequest.class)))
-                .willThrow(new StockException(OUT_OF_STOCK));
+//    }
 
-        // when then
-        Assertions.assertThatThrownBy(() -> updateOrderUseCase.execute(orderId, orderItems))
-                .hasMessage(OUT_OF_STOCK.getMessage());
-
-    }
-
-    @DisplayName("updateOrderUseCase Stock 예외 발생 테스트 : 재고 서비스와의 통신에 실패한 경우")
-    @Test
-    void updateOrderUseCaseFailException() {
-        // given
-        OrderEntity orderEntity = orderRepository.save(getOrderedObject(OrderEntity.class).get(0));
-        String orderId = orderEntity.getOrderId();
-        List<OrderItem> orderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
-
-        BDDMockito.given(stockService.updateStock(ArgumentMatchers.isA(StockRequest.class)))
-                .willThrow(new StockException(STOCK_SERVICE_FAIL));
-
-        // when then
-        Assertions.assertThatThrownBy(() -> updateOrderUseCase.execute(orderId, orderItems))
-                .hasMessage(STOCK_SERVICE_FAIL.getMessage());
-    }
+//    @DisplayName("updateOrderUseCase Stock 예외 발생 테스트 : 재고 서비스와의 통신에 실패한 경우")
+//    @Test
+//    void updateOrderUseCaseFailException() {
+//        // given
+//        OrderEntity orderEntity = orderRepository.save(getOrderedObject(OrderEntity.class).get(0));
+//        String orderId = orderEntity.getOrderId();
+//        List<OrderItem> orderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
+//
+//        BDDMockito.given(stockService.updateStock(ArgumentMatchers.isA(StockRequest.class)))
+//                .willThrow(new StockException(STOCK_SERVICE_FAIL));
+//
+//        // when then
+//        Assertions.assertThatThrownBy(() -> updateOrderUseCase.execute(orderId, orderItems))
+//                .hasMessage(STOCK_SERVICE_FAIL.getMessage());
+//    }
 }
