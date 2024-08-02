@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @SpringBootTest
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 @Profile("integration_test")
 class StockServiceAdapterTest {
 

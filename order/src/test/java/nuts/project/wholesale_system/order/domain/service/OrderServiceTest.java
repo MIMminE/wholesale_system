@@ -55,7 +55,7 @@ class OrderServiceTest extends FixtureGenerateSupport {
     OrderService orderService;
 
     @Test
-    @DisplayName("createOrder 성공")
+    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 상품 정보를 CreateOrderUseCase 에게 전달하고 결과를 반환한다.")
     void createOrder() {
         // given
         Order order = getOrderedObject(Order.class).get(0);
@@ -77,7 +77,7 @@ class OrderServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("deleteOrder 성공")
+    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 주문 번호를 DeleteOrderUseCase 에게 전달하고 결과를 반환한다.")
     void deleteOrder() {
 
         // given
@@ -101,7 +101,7 @@ class OrderServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("updateOrder 성공")
+    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 상품 수정 정보를 UpdateOrderUseCase 에게 전달하고 결과를 반환한다.")
     void updateOrder() {
         // given
         Order beforeOrder = getOrderedObject(Order.class).get(0);
@@ -127,7 +127,7 @@ class OrderServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("updateOrderStatus 성공")
+    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 주문 상태 변경 정보를 UpdateOrderStatusUseCase에게 전달하고 결과를 반환한다.")
     void updateOrderStatus() {
 
         Order beforeOrder = getOrderedObject(Order.class).get(0);
@@ -150,7 +150,24 @@ class OrderServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("getOrders 성공")
+    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 주문 번호를 GetOrderUseCase 에게 전달하고 결과를 반환한다.")
+    void getOrder() {
+
+        Order order = getOrderedObject(Order.class).get(0);
+        String orderId = order.getOrderId();
+
+        BDDMockito.given(getOrderUseCase.execute(orderId))
+                .willReturn(new OrderProcessDto(null, order));
+
+        OrderProcessDto resultOrderDto = orderService.getOrderByOrderId(orderId);
+
+        Assertions.assertThat(resultOrderDto)
+                .extracting("order.orderId", "order.userId")
+                .contains(order.getOrderId(), order.getUserId());
+    }
+
+    @Test
+    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 회원 번호를 GetOrdersUseCase 에게 전달하고 결과를 반환한다.")
     void getOrders() {
 
         Order firstOrder = getOrderedObject(Order.class).get(0);
@@ -167,23 +184,6 @@ class OrderServiceTest extends FixtureGenerateSupport {
         Assertions.assertThat(returnedOrderDto)
                 .extracting("order")
                 .containsExactly(firstOrder, secondOrder);
-    }
-
-    @Test
-    @DisplayName("getOrderByOrderId 성공")
-    void getOrderByOrderId() {
-
-        Order order = getOrderedObject(Order.class).get(0);
-        String orderId = order.getOrderId();
-
-        BDDMockito.given(getOrderUseCase.execute(orderId))
-                .willReturn(new OrderProcessDto(null, order));
-
-        OrderProcessDto resultOrderDto = orderService.getOrderByOrderId(orderId);
-
-        Assertions.assertThat(resultOrderDto)
-                .extracting("order.orderId", "order.userId")
-                .contains(order.getOrderId(), order.getUserId());
     }
 
     @Override
