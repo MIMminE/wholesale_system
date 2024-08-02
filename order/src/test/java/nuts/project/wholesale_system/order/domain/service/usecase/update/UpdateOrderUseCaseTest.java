@@ -22,7 +22,7 @@ import static nuts.project.wholesale_system.order.domain.exception.OrderExceptio
 
 class UpdateOrderUseCaseTest extends UseCaseTestSupport {
 
-    @DisplayName("updateOrderUseCase 성공 테스트")
+    @DisplayName("인증 정보 기반으로 인증 서비스 검증 요청에 성공할 경우 상품 수정 정보에 대한 주문을 수정하고 결과를 반환한다.")
     @Test
     void updateOrderUseCaseSuccess() {
         // given
@@ -54,9 +54,9 @@ class UpdateOrderUseCaseTest extends UseCaseTestSupport {
                         .map(e -> Tuple.tuple(e.getProductId(), e.getQuantity())).toArray(Tuple[]::new));
     }
 
-    @DisplayName("updateOrderUseCase Order 예외 발생 테스트 : 입력된 주문번호에 해당하는 주문이 없을때")
+    @DisplayName("상품 수정 요청 정보의 주문번호에 해당하는 주문이 없을 경우 예외를 던진다. ")
     @Test
-    void updateOrderUseCaseOrderException() {
+    void updateOrderUseCaseNotFoundOrderId() {
         // given
         OrderEntity orderEntity = getOrderedObject(OrderEntity.class).get(0);
         String orderId = orderEntity.getOrderId();

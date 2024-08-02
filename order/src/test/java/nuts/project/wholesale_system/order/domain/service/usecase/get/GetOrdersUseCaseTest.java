@@ -14,7 +14,7 @@ import java.util.List;
 import static nuts.project.wholesale_system.order.domain.exception.OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT;
 
 class GetOrdersUseCaseTest extends UseCaseTestSupport {
-    @DisplayName("getOrdersUseCase 성공 테스트")
+    @DisplayName("인증 정보 기반으로 인증 서비스 검증 요청에 성공할 경우 회원 번호에 해당하는 주문 정보들을 반환한다.")
     @Test
     void getOrdersUseCaseSuccess() {
         // given
@@ -34,9 +34,9 @@ class GetOrdersUseCaseTest extends UseCaseTestSupport {
                 .contains("testAccount", orderId);
     }
 
-    @DisplayName("getOrdersUseCase 예외 발생 테스트 : 조회한 유저에 대한 주문 정보가 없을 때")
+    @DisplayName("잘못된 회원 번호로 요청을 보냈을 경우 예외를 던진다.")
     @Test
-    void getOrdersUseCaseUserIdNotFoundException() {
+    void getOrdersUseCaseUserIdNotFoundOrderId() {
         // given
         OrderEntity orderEntity = getOrderedObject(OrderEntity.class).get(0);
         String userId = orderEntity.getUserId();

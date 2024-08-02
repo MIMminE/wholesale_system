@@ -38,7 +38,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    @DisplayName("createOrder Controller 성공 테스트")
+    @DisplayName("상품 주문 요청 정보와 유저 토큰 정보를 POST /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
     void createOrder() throws Exception {
         // given
         CreateOrderRequest createOrderRequest = getOrderedObject(CreateOrderRequest.class).get(0);
@@ -53,7 +53,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                 .willReturn(orderProcessDto);
 
         // when // then
-        mockController.perform(MockMvcRequestBuilders.post("/api/v1/orders")
+        mockController.perform(MockMvcRequestBuilders.post("/order-service/api/v1/orders")
                         .header("jwtUserId", userId)
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(createOrderRequest)))
@@ -69,7 +69,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("deleteOrder Controller 성공 테스트")
+    @DisplayName("상품 삭제 요청 정보와 유저 토큰 정보를 DELETE /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
     void deleteOrder() throws Exception {
         DeleteOrderRequest deleteOrderRequest = getOrderedObject(DeleteOrderRequest.class).get(0);
         Order order = getOrderedObject(Order.class).get(0);
@@ -79,18 +79,18 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
 
         BDDMockito.given(orderService.deleteOrder(orderId)).willReturn(order);
 
-        mockController.perform(MockMvcRequestBuilders.delete("/api/v1/orders")
-                        .header("jwtUserId", userId) // TODO :: jwt
+        mockController.perform(MockMvcRequestBuilders.delete("/order-service/api/v1/orders")
+                        .header("jwtUserId", userId)
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(deleteOrderRequest))
                 ).andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
-                        entry("deleteOrderId", orderId) // TODO:: 도메인 객체에서의 객체 커스텀
+                        entry("deleteOrderId", orderId)
                 )))
                 .andDo(print());
     }
 
     @Test
-    @DisplayName("updateOrder Controller 성공 테스트")
+    @DisplayName("상품 수정 요청 정보와 유저 토큰 정보를 PUT /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
     void updateOrder() throws Exception {
         UpdateOrderRequest updateOrderRequest = getOrderedObject(UpdateOrderRequest.class).get(0);
         String orderId = updateOrderRequest.getOrderId();
@@ -106,7 +106,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
         BDDMockito.given(orderService.updateOrder(orderId, orderItems))
                 .willReturn(returnedOrderDto);
 
-        mockController.perform(MockMvcRequestBuilders.put("/api/v1/orders")
+        mockController.perform(MockMvcRequestBuilders.put("/order-service/api/v1/orders")
                         .header("jwtUserId", userId) // TODO :: jwt
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(updateOrderRequest)))
@@ -122,7 +122,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("updateOrderStatus Controller 성공 테스트")
+    @DisplayName("주문 상태 변경 요청 정보와 유저 토큰 정보를 PUT /order-service/api/v1/orders /status 로 전송하고 결과를 반환한다.")
     void updateOrderStatus() throws Exception {
         UpdateOrderStatusRequest updateOrderStatusRequest = getOrderedObject(UpdateOrderStatusRequest.class).get(0);
         Order targetOrder = getOrderedObject(Order.class).get(0);
@@ -138,7 +138,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
         BDDMockito.given(orderService.updateOrderStatus(orderId, orderStatus))
                 .willReturn(updateOrderStatusDto);
 
-        mockController.perform(MockMvcRequestBuilders.put("/api/v1/orders/status")
+        mockController.perform(MockMvcRequestBuilders.put("/order-service/api/v1/orders/status")
                         .header("jwtUserId", userId) // TODO :: jwt
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(updateOrderStatusRequest)))
@@ -150,8 +150,33 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                 .andDo(print());
     }
 
+
     @Test
-    @DisplayName("getOrders Controller 성공 테스트")
+    @DisplayName("주문 번호와 유저 토큰 정보를 GET /order-service/api/v1/orders/user/%s 로 전송하고 결과를 반환한다.")
+    void getOrder() throws Exception {
+
+        Order order = getOrderedObject(Order.class).get(0);
+
+        String orderId = order.getOrderId();
+        String userId = order.getUserId();
+        PaymentInformation testPaymentInfo = new PaymentInformation("test_payment_info");
+
+        BDDMockito.given(orderService.getOrderByOrderId(orderId)).willReturn(new OrderProcessDto(testPaymentInfo, order));
+
+        mockController.perform(MockMvcRequestBuilders.get("/order-service/api/v1/orders/{orderId}", orderId).header("jwtUserId", userId))
+                .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
+                        entry("orderId", orderId),
+                        entry("userId", userId),
+                        entry("orderItems[0].productId", order.getItems().get(0).getProductId()),
+                        entry("orderItems[0].quantity", order.getItems().get(0).getQuantity()),
+                        entry("orderItems[1].productId", order.getItems().get(1).getProductId()),
+                        entry("orderItems[1].quantity", order.getItems().get(1).getQuantity())
+                )))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("회원 번호와 유저 토큰 정보를 GET /order-service/api/v1/orders/{orderId} 로 전송하고 결과를 반환한다.")
     void getOrders() throws Exception {
         Order firetOrder = getOrderedObject(Order.class).get(0);
         Order secondOrder = getOrderedObject(Order.class).get(1);
@@ -167,7 +192,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
 
         BDDMockito.given(orderService.getOrders(userId)).willReturn(List.of(firstOrderDto, secondOrderDto));
 
-        mockController.perform(MockMvcRequestBuilders.get("/api/v1/orders/user/%s".formatted(userId))
+        mockController.perform(MockMvcRequestBuilders.get("/order-service/api/v1/orders/user/%s".formatted(userId))
                         .header("jwtUserId", userId))
                 .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
                                 entry("count", 2),
@@ -177,31 +202,6 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                 ))
                 .andDo(print());
     }
-
-    @Test
-    @DisplayName("getOrder Controller 성공 테스트")
-    void getOrder() throws Exception {
-
-        Order order = getOrderedObject(Order.class).get(0);
-
-        String orderId = order.getOrderId();
-        String userId = order.getUserId();
-        PaymentInformation testPaymentInfo = new PaymentInformation("test_payment_info");
-
-        BDDMockito.given(orderService.getOrderByOrderId(orderId)).willReturn(new OrderProcessDto(testPaymentInfo, order));
-
-        mockController.perform(MockMvcRequestBuilders.get("/api/v1/orders/{orderId}", orderId).header("jwtUserId", userId))
-                .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
-                        entry("orderId", orderId),
-                        entry("userId", userId),
-                        entry("orderItems[0].productId", order.getItems().get(0).getProductId()),
-                        entry("orderItems[0].quantity", order.getItems().get(0).getQuantity()),
-                        entry("orderItems[1].productId", order.getItems().get(1).getProductId()),
-                        entry("orderItems[1].quantity", order.getItems().get(1).getQuantity())
-                )))
-                .andDo(print());
-    }
-
 
     @Override
     protected Object initController() {

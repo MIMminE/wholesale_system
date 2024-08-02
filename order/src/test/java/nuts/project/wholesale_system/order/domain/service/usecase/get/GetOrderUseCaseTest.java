@@ -13,7 +13,7 @@ import static nuts.project.wholesale_system.order.domain.exception.OrderExceptio
 
 
 class GetOrderUseCaseTest extends UseCaseTestSupport {
-    @DisplayName("getOrderUseCase 성공 테스트")
+    @DisplayName("인정 정보 기반으로 인증 서비스 검증 요청에 성공할 경우 주문 번호에 해당하는 주문 정보를 반환한다.")
     @Test
     void getOrderUseCaseSuccess() {
         // given
@@ -34,9 +34,9 @@ class GetOrderUseCaseTest extends UseCaseTestSupport {
 
     }
 
-    @DisplayName("getOrderUseCase 예외 발생 테스트 : 조회한 주문 번호에 대한 정보가 없을 때")
+    @DisplayName("주문번호에 해당하는 주문이 없을 경우 예외를 던진다.")
     @Test
-    void getOrderUseCaseOrderIdNotFoundException() {
+    void getOrderUseCaseOrderIdNotFoundOrderId() {
         // given
         OrderEntity orderEntity = getOrderedObject(OrderEntity.class).get(0);
         String orderId = orderEntity.getOrderId();
