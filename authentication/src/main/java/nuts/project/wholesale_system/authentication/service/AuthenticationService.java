@@ -39,4 +39,13 @@ public class AuthenticationService {
     public Map<String, Object> getUserTable() {
         return restTemplate.getForObject(authServerUrl + "/users", Map.class);
     }
+
+
+    /**
+     * Bring up jwkset for verification.
+     * @return JWK set
+     */
+    public Object getJwtSet(){
+        return restTemplate.getForObject(authServerUrl + "/set", Map.class);
+    }
 }
