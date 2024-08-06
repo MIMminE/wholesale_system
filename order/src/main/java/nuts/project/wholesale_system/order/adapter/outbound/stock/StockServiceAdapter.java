@@ -37,9 +37,9 @@ public class StockServiceAdapter implements StockServicePort {
             Map<String, ? extends Serializable> requestObject = Map.of("stockId", productId,
                     "quantity", quantity);
 
+
             ResponseEntity<Map> exchange = restTemplate.exchange(stockSeverUrl + "stocks/deduct",
-                    HttpMethod.PUT,
-                    new HttpEntity<>(requestObject), Map.class);
+                    HttpMethod.PUT, new HttpEntity<>(requestObject), Map.class);
         }
 
 
