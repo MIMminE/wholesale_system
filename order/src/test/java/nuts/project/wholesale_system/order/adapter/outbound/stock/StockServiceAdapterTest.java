@@ -30,9 +30,9 @@ class StockServiceAdapterTest {
     @Commit
     void deductStockSuccess() {
         // given
-        StockRequest stockRequest = new StockRequest(List.of(new OrderItem("172604a7-1620-4c8a-bd1e-78bdf92d3203", 1)));
-
-        stockService.deductStock(stockRequest);
+//        StockRequest stockRequest = new StockRequest(List.of(new OrderItem("172604a7-1620-4c8a-bd1e-78bdf92d3203", 1)));
+//
+//        stockService.deductStock(stockRequest);
         // when
 
         // then

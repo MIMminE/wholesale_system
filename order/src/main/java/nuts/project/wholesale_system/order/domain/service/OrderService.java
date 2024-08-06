@@ -6,14 +6,12 @@ import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
-import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderDto;
 import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderStatusDto;
 import nuts.project.wholesale_system.order.domain.service.usecase.create.CreateOrderUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.delete.DeleteOrderIdUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrderUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrdersUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.update.UpdateOrderStatusUseCase;
-import nuts.project.wholesale_system.order.domain.service.usecase.update.UpdateOrderUseCase;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +24,6 @@ public class OrderService {
 
     private final CreateOrderUseCase createOrderUseCase;
     private final DeleteOrderIdUseCase deleteOrderIdUseCase;
-    private final UpdateOrderUseCase updateOrderUseCase;
     private final UpdateOrderStatusUseCase updateOrderStatusUseCase;
     private final GetOrdersUseCase getOrdersUseCase;
     private final GetOrderUseCase getOrderUseCase;
@@ -37,10 +34,6 @@ public class OrderService {
 
     public Order deleteOrder(String orderId) {
         return deleteOrderIdUseCase.execute(orderId);
-    }
-
-    public UpdateOrderDto updateOrder(String orderId, List<OrderItem> orderItems) {
-        return updateOrderUseCase.execute(orderId, orderItems);
     }
 
     /**

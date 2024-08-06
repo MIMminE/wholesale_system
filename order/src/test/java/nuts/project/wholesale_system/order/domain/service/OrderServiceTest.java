@@ -7,14 +7,12 @@ import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.domain.service.dto.PaymentInformation;
-import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderDto;
 import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderStatusDto;
 import nuts.project.wholesale_system.order.domain.service.usecase.create.CreateOrderUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.delete.DeleteOrderIdUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrderUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrdersUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.update.UpdateOrderStatusUseCase;
-import nuts.project.wholesale_system.order.domain.service.usecase.update.UpdateOrderUseCase;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,8 +25,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest extends FixtureGenerateSupport {
@@ -48,14 +44,12 @@ class OrderServiceTest extends FixtureGenerateSupport {
     @Mock
     UpdateOrderStatusUseCase updateOrderStatusUseCase;
 
-    @Mock
-    UpdateOrderUseCase updateOrderUseCase;
 
     @InjectMocks
     OrderService orderService;
 
     @Test
-    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 상품 정보를 CreateOrderUseCase 에게 전달하고 결과를 반환한다.")
+    @DisplayName("컨트롤러에게 전달 받은 상품 주문 요청 정보와 User-Id 정보를 CreateOrderUseCase 에게 전달하고 결과를 반환한다.")
     void createOrder() {
         // given
         Order order = getOrderedObject(Order.class).get(0);
@@ -77,7 +71,7 @@ class OrderServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 주문 번호를 DeleteOrderUseCase 에게 전달하고 결과를 반환한다.")
+    @DisplayName("컨트롤러에게 전달 받은 주문 번호를 DeleteOrderUseCase 에게 전달하고 결과를 반환한다.")
     void deleteOrder() {
 
         // given
@@ -100,34 +94,9 @@ class OrderServiceTest extends FixtureGenerateSupport {
                 .contains(orderId, userId, items, orderStatus);
     }
 
-    @Test
-    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 상품 수정 정보를 UpdateOrderUseCase 에게 전달하고 결과를 반환한다.")
-    void updateOrder() {
-        // given
-        Order beforeOrder = getOrderedObject(Order.class).get(0);
-        String orderId = beforeOrder.getOrderId();
-        String userId = beforeOrder.getUserId();
-
-        Order afterOrder = getOrderedObject(Order.class).get(1);
-
-        changeFieldValue(afterOrder, "orderId", orderId);
-
-        UpdateOrderDto updateOrderDto = new UpdateOrderDto(orderId, userId, beforeOrder.getItems(), afterOrder.getItems());
-
-        BDDMockito.given(updateOrderUseCase.execute(orderId, afterOrder.getItems()))
-                .willReturn(updateOrderDto);
-
-        // when
-        UpdateOrderDto resultUpdateOrderDto = orderService.updateOrder(orderId, afterOrder.getItems());
-
-        // then
-        Assertions.assertThat(resultUpdateOrderDto)
-                .extracting("orderId", "userId", "beforeOrderItems", "afterOrderItems")
-                .contains(orderId, userId, beforeOrder.getItems(), afterOrder.getItems());
-    }
 
     @Test
-    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 주문 상태 변경 정보를 UpdateOrderStatusUseCase에게 전달하고 결과를 반환한다.")
+    @DisplayName("컨트롤러에게 전달 받은 주문 번호와 변경 상태를 UpdateOrderStatusUseCase에게 전달하고 결과를 반환한다.")
     void updateOrderStatus() {
 
         Order beforeOrder = getOrderedObject(Order.class).get(0);
@@ -150,7 +119,7 @@ class OrderServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 주문 번호를 GetOrderUseCase 에게 전달하고 결과를 반환한다.")
+    @DisplayName("컨트롤러에게 전달 받은 주문 번호를 GetOrderUseCase 에게 전달하고 결과를 반환한다.")
     void getOrder() {
 
         Order order = getOrderedObject(Order.class).get(0);
@@ -167,7 +136,7 @@ class OrderServiceTest extends FixtureGenerateSupport {
     }
 
     @Test
-    @DisplayName("컨트롤러에게 전달 받은 인증 정보, 회원 번호를 GetOrdersUseCase 에게 전달하고 결과를 반환한다.")
+    @DisplayName("컨트롤러에게 전달 받은 회원 번호를 GetOrdersUseCase 에게 전달하고 결과를 반환한다.")
     void getOrders() {
 
         Order firstOrder = getOrderedObject(Order.class).get(0);

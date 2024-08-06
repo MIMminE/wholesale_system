@@ -8,5 +8,4 @@ import lombok.Getter;
 public class StockResponse {
     private StockRequestType responseType;
     private boolean result;
-
 }

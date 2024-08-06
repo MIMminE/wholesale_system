@@ -13,7 +13,6 @@ import nuts.project.wholesale_system.order.domain.model.OrderStatus;
 import nuts.project.wholesale_system.order.domain.service.OrderService;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.domain.service.dto.PaymentInformation;
-import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderDto;
 import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderStatusDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +37,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    @DisplayName("상품 주문 요청 정보와 유저 토큰 정보를 POST /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
+    @DisplayName("상품 주문 요청 정보와 User-Id 헤더 값을 POST /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
     void createOrder() throws Exception {
         // given
         CreateOrderRequest createOrderRequest = getOrderedObject(CreateOrderRequest.class).get(0);
@@ -69,7 +68,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("상품 삭제 요청 정보와 유저 토큰 정보를 DELETE /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
+    @DisplayName("상품 삭제 요청 정보를 DELETE /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
     void deleteOrder() throws Exception {
         DeleteOrderRequest deleteOrderRequest = getOrderedObject(DeleteOrderRequest.class).get(0);
         Order order = getOrderedObject(Order.class).get(0);
@@ -90,39 +89,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("상품 수정 요청 정보와 유저 토큰 정보를 PUT /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
-    void updateOrder() throws Exception {
-        UpdateOrderRequest updateOrderRequest = getOrderedObject(UpdateOrderRequest.class).get(0);
-        String orderId = updateOrderRequest.getOrderId();
-        Order beforeOrder = getOrderedObject(Order.class).get(0);
-        String userId = beforeOrder.getUserId();
-        List<OrderItem> orderItems = updateOrderRequest.getOrderItems().stream().map(OrderItemRequest::toOrderItem).toList();
-
-        changeFieldValue(beforeOrder, "orderId", orderId);
-        Order afterOrder = new Order(orderId, userId, orderItems, OrderStatus.pendPayment);
-
-        UpdateOrderDto returnedOrderDto = new UpdateOrderDto(orderId, userId, beforeOrder.getItems(), afterOrder.getItems());
-
-        BDDMockito.given(orderService.updateOrder(orderId, orderItems))
-                .willReturn(returnedOrderDto);
-
-        mockController.perform(MockMvcRequestBuilders.put("/order-service/api/v1/orders")
-                        .header("jwtUserId", userId) // TODO :: jwt
-                        .contentType(APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(updateOrderRequest)))
-                .andDo(print())
-                .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
-                        entry("orderId", orderId),
-                        entry("userId", userId),
-                        entry("beforeOrderItems[0].productId", beforeOrder.getItems().get(0).getProductId()),
-                        entry("beforeOrderItems[0].quantity", beforeOrder.getItems().get(0).getQuantity()),
-                        entry("afterOrderItems[0].productId", afterOrder.getItems().get(0).getProductId()),
-                        entry("afterOrderItems[0].quantity", afterOrder.getItems().get(0).getQuantity())
-                )));
-    }
-
-    @Test
-    @DisplayName("주문 상태 변경 요청 정보와 유저 토큰 정보를 PUT /order-service/api/v1/orders /status 로 전송하고 결과를 반환한다.")
+    @DisplayName("주문 상태 변경 요청 정보를 PUT /order-service/api/v1/orders /status 로 전송하고 결과를 반환한다.")
     void updateOrderStatus() throws Exception {
         UpdateOrderStatusRequest updateOrderStatusRequest = getOrderedObject(UpdateOrderStatusRequest.class).get(0);
         Order targetOrder = getOrderedObject(Order.class).get(0);

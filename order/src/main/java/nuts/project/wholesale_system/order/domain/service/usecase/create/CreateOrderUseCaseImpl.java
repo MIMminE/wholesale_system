@@ -10,6 +10,8 @@ import nuts.project.wholesale_system.order.domain.model.OrderStatus;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentRequest;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentServicePort;
+import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
+import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.domain.service.dto.PaymentInformation;
 import org.springframework.stereotype.Component;
@@ -21,13 +23,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
     private final OrderRepository orderRepository;
+    private final StockServicePort stockService;
     private final PaymentServicePort paymentService;
 
     @Override
     public OrderProcessDto execute(String userId, List<OrderItem> items) {
 
         OrderEntity orderEntity = orderRepository.save(createOrderEntity(userId, items));
-
+        stockService.deductStock(new StockRequest(items));
         Order resultOrder = orderEntity.toOrder();
         String orderId = resultOrder.getOrderId();
         PaymentInformation payResponse = getPaymentInformation(userId, orderId);

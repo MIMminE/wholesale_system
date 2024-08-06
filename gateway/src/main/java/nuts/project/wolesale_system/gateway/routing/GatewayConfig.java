@@ -15,7 +15,10 @@ public class GatewayConfig {
                 .route("order-service", r -> r.path("/order-service/**")
                         .filters(f -> f.filter(((exchange, chain) -> {
                             String simpleJwt = exchange.getRequest().getHeaders().get("Simple-Jwt").get(0);
-                            exchange.getRequest().mutate().header("Jwt-Token-id", simpleJwt);
+                            exchange.getRequest().mutate().header("User-Id", simpleJwt);
+                            exchange.getRequest().mutate().header("Gateway-Pass", "pass");
+
+
                             System.out.println("filter On");
                             return chain.filter(exchange);
                         })))

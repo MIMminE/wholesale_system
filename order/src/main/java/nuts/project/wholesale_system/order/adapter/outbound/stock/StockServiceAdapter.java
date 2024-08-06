@@ -5,6 +5,9 @@ import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.RequestItem;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockDeductRequest;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockReturnRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -28,10 +31,9 @@ public class StockServiceAdapter implements StockServicePort {
     private String stockSeverUrl;
 
     @Override
-    public Optional<StockResponse> deductStock(StockRequest request) {
-
-        List<OrderItem> requestItems = request.getRequestItems();
-        for (OrderItem requestItem : requestItems) {
+    public StockResponse deductStock(StockDeductRequest request) {
+        List<RequestItem> requestItems = request.getRequestItems();
+        for (RequestItem requestItem : requestItems) {
 
             String productId = requestItem.getProductId();
             int quantity = requestItem.getQuantity();
@@ -46,18 +48,12 @@ public class StockServiceAdapter implements StockServicePort {
 
         //TODO
         System.out.println("stock deduct");
-        return Optional.empty();
+        return null;
     }
 
     @Override
-    public Optional<StockResponse> returnStock(StockRequest request) {
-        //TODO
-        System.out.println("stock return");
-        return Optional.empty();
-    }
+    public StockResponse returnStock(StockReturnRequest request) {
 
-    @Override
-    public Optional<StockResponse> updateStock(StockRequest request) {
-        return Optional.empty();
+        return null;
     }
 }

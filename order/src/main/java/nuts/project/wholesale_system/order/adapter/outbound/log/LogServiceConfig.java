@@ -20,7 +20,7 @@ public class LogServiceConfig {
 
     @Bean
     Queue memberLogQueue() {
-        return new Queue(ORDER_LOG_QUEUE, false);
+        return new Queue(ORDER_LOG_QUEUE, true);
     }
 
     @Bean

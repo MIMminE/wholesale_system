@@ -15,7 +15,6 @@ import nuts.project.wholesale_system.order.domain.service.usecase.delete.DeleteO
 import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrderUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrdersUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.update.UpdateOrderStatusUseCase;
-import nuts.project.wholesale_system.order.domain.service.usecase.update.UpdateOrderUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -50,9 +49,6 @@ public class UseCaseTestSupport extends FixtureGenerateSupport {
 
     @Autowired
     protected UpdateOrderStatusUseCase updateOrderStatusUseCase;
-
-    @Autowired
-    protected UpdateOrderUseCase updateOrderUseCase;
 
     @Autowired
     protected OrderItemRepository orderItemRepository;

@@ -20,7 +20,9 @@ import static org.mockito.ArgumentMatchers.eq;
 
 class CreateOrderUseCaseTest extends UseCaseTestSupport {
 
-    @DisplayName("인증 정보와 상품 정보 기반으로 인증, 재고 서비스에게 검증 요청이 성공적일 경우 주문을 생성하고 결과를 반환한다.")
+    @DisplayName("상품 주문 정보를 기반으로 재고 서비스" +
+            "" +
+            "상품 정보 기반으로 인증, 재고 서비스에게 검증 요청이 성공적일 경우 주문을 생성하고 결과를 반환한다.")
     @Commit
     @Test
     void createOrderUseCaseSuccess() {
