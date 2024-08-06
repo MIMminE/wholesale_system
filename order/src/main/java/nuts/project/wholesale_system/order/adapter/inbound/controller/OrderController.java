@@ -21,20 +21,29 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    /**
+     *
+     * @param request About Requesting Order Creation
+     * @param userId If the gateway server successfully verifies the JWT token, it sends the user ID of the token in the header.
+     */
     @PostMapping("/api/v1/orders")
-    public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody @Valid CreateOrderRequest request, @RequestHeader("jwtUserId") String jwtUserId) {
+    public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody @Valid CreateOrderRequest request, @RequestHeader("User-Id") String userId) {
 
         List<OrderItemRequest> orderItems = request.getOrderItems();
 
-        OrderProcessDto createOrderDto = orderService.createOrder(jwtUserId, orderItems.stream()
+        OrderProcessDto createOrderDto = orderService.createOrder(userId, orderItems.stream()
                 .map(OrderItemRequest::toOrderItem).toList());
 
         CreateOrderResponse createOrderResponse = CreateOrderResponse.fromOrder(createOrderDto);
         return ResponseEntity.ok().body(createOrderResponse);
     }
 
+    /**
+     *
+     * @param request About Order Deletion Requests
+     */
     @DeleteMapping("/api/v1/orders")
-    public ResponseEntity<DeleteOrderResponse> deleteOrder(@RequestBody @Valid DeleteOrderRequest request, @RequestHeader("jwtUserId") String jwtUserId) {
+    public ResponseEntity<DeleteOrderResponse> deleteOrder(@RequestBody @Valid DeleteOrderRequest request) {
 
         Order order = orderService.deleteOrder(request.getOrderId());
 
@@ -42,7 +51,7 @@ public class OrderController {
     }
 
     @PutMapping("/api/v1/orders")
-    public ResponseEntity<UpdateOrderResponse> updateOrder(@RequestBody @Valid UpdateOrderRequest request, @RequestHeader("jwtUserId") String jwtUserId) {
+    public ResponseEntity<UpdateOrderResponse> updateOrder(@RequestBody @Valid UpdateOrderRequest request) {
 
         UpdateOrderDto updateOrderDto = orderService.updateOrder(request.getOrderId(),
                 request.getOrderItems().stream().map(OrderItemRequest::toOrderItem).toList());
@@ -51,7 +60,7 @@ public class OrderController {
     }
 
     @PutMapping("/api/v1/orders/status")
-    public ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(@RequestBody @Valid UpdateOrderStatusRequest request, @RequestHeader("jwtUserId") String jwtUserId) {
+    public ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(@RequestBody @Valid UpdateOrderStatusRequest request) {
 
         String orderId = request.getOrderId();
         String orderStatus = request.getOrderStatus();
@@ -62,7 +71,7 @@ public class OrderController {
     }
 
     @GetMapping("/api/v1/orders/user/{userId}")
-    public ResponseEntity<GetOrdersByUserIdResponse> getOrders(@PathVariable("userId") String userId, @RequestHeader("jwtUserId") String jwtUserId) {
+    public ResponseEntity<GetOrdersByUserIdResponse> getOrders(@PathVariable("userId") String userId) {
 
         List<OrderProcessDto> orderProcessDtoList = orderService.getOrders(userId);
 
@@ -70,8 +79,9 @@ public class OrderController {
     }
 
     @GetMapping("/api/v1/orders/{orderId}")
-    public ResponseEntity<GetOrderByOrderIdResponse> getOrder(@PathVariable("orderId") String orderId, @RequestHeader("jwtUserId") String jwtUserId) {
+    public ResponseEntity<GetOrderByOrderIdResponse> getOrder(@PathVariable("orderId") String orderId, @RequestHeader("Jwt-Token-id") String jwtTokenId) {
 
+        System.out.println(jwtTokenId);
         OrderProcessDto orderProcessDto = orderService.getOrderByOrderId(orderId);
 
         return ResponseEntity.ok().body(GetOrderByOrderIdResponse.fromOrderProcessDto(orderProcessDto));
