@@ -1,10 +1,8 @@
 package nuts.project.wholesale_system.order.adapter.outbound.stock;
 
 import lombok.RequiredArgsConstructor;
-import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
 import nuts.project.wholesale_system.order.domain.ports.stock.request.RequestItem;
 import nuts.project.wholesale_system.order.domain.ports.stock.request.StockDeductRequest;
 import nuts.project.wholesale_system.order.domain.ports.stock.request.StockReturnRequest;
@@ -18,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 
 @Component
@@ -32,8 +29,8 @@ public class StockServiceAdapter implements StockServicePort {
 
     @Override
     public StockResponse deductStock(StockDeductRequest request) {
-        List<RequestItem> requestItems = request.getRequestItems();
-        for (RequestItem requestItem : requestItems) {
+        List<RequestItem> items = request.getItems();
+        for (RequestItem requestItem : items) {
 
             String productId = requestItem.getProductId();
             int quantity = requestItem.getQuantity();

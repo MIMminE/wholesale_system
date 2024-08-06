@@ -1,17 +1,11 @@
 package nuts.project.wholesale_system.order.adapter.outbound.stock;
 
-import nuts.lib.manager.fixture_manager.FixtureGenerateSupport;
-import nuts.lib.manager.fixture_manager.OrderSheet;
-import nuts.project.wholesale_system.order.domain.model.OrderItem;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.annotation.Commit;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 

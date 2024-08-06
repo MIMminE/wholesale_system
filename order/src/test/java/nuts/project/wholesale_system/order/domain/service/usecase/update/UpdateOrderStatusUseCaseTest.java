@@ -3,8 +3,9 @@ package nuts.project.wholesale_system.order.domain.service.usecase.update;
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order.OrderEntity;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockDeductRequest;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockReturnRequest;
 import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderStatusDto;
 import nuts.project.wholesale_system.order.support.UseCaseTestSupport;
 import org.assertj.core.api.Assertions;
@@ -23,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 class UpdateOrderStatusUseCaseTest extends UseCaseTestSupport {
 
     @Commit
-    @DisplayName("인증 정보 기반으로 인증 서비스 검증 요청에 성공할 경우 주문 상태를 수정하고 결과를 반환한다.")
+    @DisplayName("주문 번호에 해당하는 주문의 상태를 수정하고 결과를 반환한다.")
     @Test
     void updateOrderStatusUseCaseSuccess() {
         // given
@@ -32,8 +33,8 @@ class UpdateOrderStatusUseCaseTest extends UseCaseTestSupport {
 
         String updateOrderStatus = OrderStatus.values()[new Random().nextInt(OrderStatus.values().length)].toString();
 
-        BDDMockito.given(stockService.returnStock(any(StockRequest.class)))
-                .willReturn(Optional.of(new StockResponse(StockRequestType.Return, true)));
+        BDDMockito.given(stockService.returnStock(any(StockReturnRequest.class)))
+                .willReturn(new StockResponse(StockRequestType.Return, true));
 
         // when
         UpdateOrderStatusDto statusDto = updateOrderStatusUseCase.execute(orderId, OrderStatus.valueOf(updateOrderStatus));
@@ -44,24 +45,6 @@ class UpdateOrderStatusUseCaseTest extends UseCaseTestSupport {
                 .contains(orderId, orderEntity.getOrderStatus().toString(), updateOrderStatus);
 
     }
-
-    @DisplayName("updateOrderStatusUseCase 예외 발생 테스트 : 주문 취소 시 재고 시스템과 통신에 실패할 때")
-    @Test
-    void updateOrderStatusUseCaseStockException() {
-        // given
-        OrderEntity orderEntity = orderRepository.save(getOrderedObject(OrderEntity.class).get(0));
-        String orderId = orderEntity.getOrderId();
-
-        String updateOrderStatus = OrderStatus.cancelled.toString();
-//
-//        BDDMockito.given(stockService.returnStock(any(StockRequest.class)))
-//                .willThrow(new StockException(STOCK_SERVICE_FAIL));
-//
-//        // when then
-//        Assertions.assertThatThrownBy(() -> updateOrderStatusUseCase.execute(orderId, OrderStatus.valueOf(updateOrderStatus)))
-//                .hasMessage(STOCK_SERVICE_FAIL.getMessage());
-    }
-
 
     @DisplayName("주문 상태 변경 요청 정보의 주문번호에 해당하는 주문이 없을 경우 예외를 던진다.")
     @Test

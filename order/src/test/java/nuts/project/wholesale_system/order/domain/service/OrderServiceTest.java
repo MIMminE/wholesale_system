@@ -49,12 +49,11 @@ class OrderServiceTest extends FixtureGenerateSupport {
     OrderService orderService;
 
     @Test
-    @DisplayName("컨트롤러에게 전달 받은 상품 주문 요청 정보와 User-Id 정보를 CreateOrderUseCase 에게 전달하고 결과를 반환한다.")
+    @DisplayName("컨트롤러에게 전달 받은 주문 상품 리스트와 User-Id 정보를 CreateOrderUseCase 에게 전달하고 결과를 반환한다.")
     void createOrder() {
         // given
         Order order = getOrderedObject(Order.class).get(0);
 
-        String orderId = order.getOrderId();
         String userId = order.getUserId();
         List<OrderItem> items = order.getItems();
 

@@ -46,6 +46,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
         List<OrderItem> orderItems = createOrderRequest.getOrderItems().stream().map(OrderItemRequest::toOrderItem).toList();
         PaymentInformation testPaymentInfo = new PaymentInformation("test_payment_info");
         OrderProcessDto orderProcessDto = new OrderProcessDto(testPaymentInfo, new Order(orderId, userId, orderItems, OrderStatus.pendPayment));
+        System.out.println(orderProcessDto);
         CreateOrderResponse createOrderResponse = CreateOrderResponse.fromOrder(orderProcessDto);
 
         BDDMockito.given(orderService.createOrder(userId, orderItems))
@@ -53,7 +54,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
 
         // when // then
         mockController.perform(MockMvcRequestBuilders.post("/order-service/api/v1/orders")
-                        .header("jwtUserId", userId)
+                        .header("User-Id", userId)
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(createOrderRequest)))
                 .andExpectAll(MockMvcSupport.mapMatchers(ofEntries(
@@ -119,7 +120,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
 
 
     @Test
-    @DisplayName("주문 번호와 유저 토큰 정보를 GET /order-service/api/v1/orders/user/%s 로 전송하고 결과를 반환한다.")
+    @DisplayName("주문 번호를 GET /order-service/api/v1/orders/user/%s 로 전송하고 결과를 반환한다.")
     void getOrder() throws Exception {
 
         Order order = getOrderedObject(Order.class).get(0);
@@ -143,7 +144,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     }
 
     @Test
-    @DisplayName("회원 번호와 유저 토큰 정보를 GET /order-service/api/v1/orders/{orderId} 로 전송하고 결과를 반환한다.")
+    @DisplayName("회원 번호를 GET /order-service/api/v1/orders/user/%s 로 전송하고 결과를 반환한다.")
     void getOrders() throws Exception {
         Order firetOrder = getOrderedObject(Order.class).get(0);
         Order secondOrder = getOrderedObject(Order.class).get(1);
@@ -178,10 +179,8 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     @Override
     protected List<OrderSheet> ordersObject() {
         return List.of(
-                OrderSheet.order(CreateOrderRequest.class, 1),
+                OrderSheet.order(orderCustom(CreateOrderRequest.class).minSize("orderItems", 1), 1),
                 OrderSheet.order(DeleteOrderRequest.class, 1),
-                OrderSheet.order(orderCustom(UpdateOrderRequest.class)
-                        .minSize("orderItems", 2).set("orderId", UUID.randomUUID().toString()), 1),
                 OrderSheet.order(orderCustom(UpdateOrderStatusRequest.class)
                         .set("orderId", UUID.randomUUID().toString())
                         .set("orderStatus", Arbitraries.of(Arrays.stream(OrderStatus.values()).map(Enum::toString).toList())), 1),

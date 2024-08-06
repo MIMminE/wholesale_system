@@ -7,11 +7,11 @@ import nuts.project.wholesale_system.order.adapter.outbound.repository.order_ite
 import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
-import nuts.project.wholesale_system.order.domain.ports.payment.PaymentRequest;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentServicePort;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.RequestItem;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockDeductRequest;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.domain.service.dto.PaymentInformation;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,9 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
     public OrderProcessDto execute(String userId, List<OrderItem> items) {
 
         OrderEntity orderEntity = orderRepository.save(createOrderEntity(userId, items));
-        stockService.deductStock(new StockRequest(items));
+
+        List<RequestItem> requestItems = items.stream().map(e -> new RequestItem(e.getProductId(), e.getQuantity())).toList();
+        stockService.deductStock(new StockDeductRequest(requestItems));
         Order resultOrder = orderEntity.toOrder();
         String orderId = resultOrder.getOrderId();
         PaymentInformation payResponse = getPaymentInformation(userId, orderId);

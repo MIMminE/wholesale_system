@@ -21,7 +21,8 @@ public class OrderException extends RuntimeException {
         UPDATE_NO_MATCH_STATUS("Invalid status change request."),
         UNKNOWN_EXCEPTION("It's an unknown exception."),
 
-        PAYMENT_SERVICE_FAIL("Payment Service fail");
+        PAYMENT_SERVICE_FAIL("Payment Service fail"),
+        STOCK_SERVICE_FAIL("Stock Service fail");
 
         private final String message;
     }

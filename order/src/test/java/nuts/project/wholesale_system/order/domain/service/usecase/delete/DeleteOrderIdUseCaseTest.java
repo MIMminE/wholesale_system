@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class DeleteOrderIdUseCaseTest extends UseCaseTestSupport {
 
-    @DisplayName("인증 정보와 주문 번호를 기반으로 인증 서비스 검증 요청이 성공적일 경우 주문을 삭제하고 결과를 반환한다.")
+    @DisplayName("주문 번호에 해당하는 주문이 존재할 경우 주문을 삭제하고 결과를 반환한다.")
     @Test
     void deleteOrderIdUseCaseSuccess() {
 
@@ -59,22 +59,4 @@ class DeleteOrderIdUseCaseTest extends UseCaseTestSupport {
         assertThatThrownBy(() -> deleteOrderIdUseCase.execute(NonExistentOrderId))
                 .hasMessage(DELETE_NO_SUCH_ELEMENT.getMessage());
     }
-
-//    @DisplayName("deleteOrderIdUseCase 예외 발생 테스트 : 결제 시스템과의 통신에 실패한 경우")
-//    @Test
-//    void deleteOrderIdUseCasePaymentServiceException() {
-//        // given
-//        OrderEntity saveEntity = getOrderedObject(OrderEntity.class).get(0);
-//        OrderEntity orderEntity = orderRepository.save(saveEntity);
-//        String userId = orderEntity.getUserId();
-//        String orderId = orderEntity.getOrderId();
-//
-//        PaymentResponse paymentResponse = new PaymentResponse(userId, "test", 1500);
-//        BDDMockito.given(paymentService.deletePaymentInformation(orderId))
-//                .willThrow(new PaymentException(PAYMENT_SERVICE_FAIL));
-//
-//        // when then
-//        assertThatThrownBy(() -> deleteOrderIdUseCase.execute(orderId))
-//                .hasMessage(PAYMENT_SERVICE_FAIL.getMessage());
-//    }
 }
