@@ -11,6 +11,7 @@ import nuts.project.wholesale_system.order.domain.exception.OrderException;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
 import nuts.project.wholesale_system.order.domain.service.usecase.delete.DeleteOrderIdUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrderUseCase;
+import nuts.project.wholesale_system.order.domain.service.usecase.get.GetOrdersUseCase;
 import nuts.project.wholesale_system.order.domain.service.usecase.update.UpdateOrderStatusUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,9 @@ public class OrderUseCaseExceptionHandlerTest {
 
     @MockBean
     private GetOrderUseCase getOrderUseCase;
+
+    @MockBean
+    private GetOrdersUseCase getOrdersUseCase;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -107,8 +111,26 @@ public class OrderUseCaseExceptionHandlerTest {
     @Test
     void getOrderExceptionHandler() throws Exception {
         // given
+        String orderId = UUID.randomUUID().toString();
+        BDDMockito.given(getOrderUseCase.execute(orderId))
+                .willThrow(new OrderException(OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT));
+
+        // when
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/order-service/api/v1/orders/{orderId}", orderId)
+                .header("Gateway-Pass", "pass"));
+
+        // then
+        resultActions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value(OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT.getMessage()));
+    }
+
+    @DisplayName("회원 주문 전체 조회에서 잘못된 회원 번호로 요청을 보냈을 경우 발생한 예외를 핸들링한다.")
+    @Test
+    void getOrdersByMemberIdExceptionHandler() throws Exception {
+        // given
         String userId = UUID.randomUUID().toString();
-        BDDMockito.given(getOrderUseCase.execute(userId))
+        BDDMockito.given(getOrdersUseCase.execute(userId))
                 .willThrow(new OrderException(OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT));
 
         // when
@@ -120,5 +142,4 @@ public class OrderUseCaseExceptionHandlerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value(OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT.getMessage()));
     }
-
 }
