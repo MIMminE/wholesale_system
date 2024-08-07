@@ -9,9 +9,6 @@ import nuts.project.wholesale_system.order.domain.model.Order;
 @Getter
 @ToString
 public class OrderProcessDto {
-
-    private PaymentInformation paymentInformation;
-
+    private PaymentInformation payment;
     private Order order;
-
 }

@@ -32,7 +32,7 @@ public class CreateOrderResponse {
     public static CreateOrderResponse fromOrder(OrderProcessDto createOrderDto) {
 
         return new CreateOrderResponse(createOrderDto.getOrder().getOrderId(), createOrderDto.getOrder().getUserId(),
-                createOrderDto.getPaymentInformation(),
+                createOrderDto.getPayment(),
                 createOrderDto.getOrder().getItems()
                         .stream().map(OrderItemResponse::fromOrderItem).toList());
     }
