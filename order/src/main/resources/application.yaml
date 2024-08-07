@@ -28,3 +28,4 @@ server:
 
 
 stock_server_url: http://localhost:9811/
+payment_server_url: http://localhost:9812/

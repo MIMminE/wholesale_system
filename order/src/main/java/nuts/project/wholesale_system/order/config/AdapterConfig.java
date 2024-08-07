@@ -17,7 +17,7 @@ public class AdapterConfig {
         return new RestTemplate();
     }
 
-    @Profile("dev")
+    @Profile("prod")
     @Bean
     DataSource dataSource() {
         return DataSourceGenerator.createHikariDataSource(DataSourceType.mysql,

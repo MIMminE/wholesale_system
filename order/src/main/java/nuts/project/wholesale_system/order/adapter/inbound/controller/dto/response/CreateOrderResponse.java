@@ -23,7 +23,7 @@ public class CreateOrderResponse {
     private String userId;
 
     @NotEmpty
-    private PaymentInformation paymentInformation;
+    private PaymentInformation payment;
 
     @NotEmpty
     private List<OrderItemResponse> orderItems;
@@ -32,7 +32,7 @@ public class CreateOrderResponse {
     public static CreateOrderResponse fromOrder(OrderProcessDto createOrderDto) {
 
         return new CreateOrderResponse(createOrderDto.getOrder().getOrderId(), createOrderDto.getOrder().getUserId(),
-                createOrderDto.getPaymentInformation(),
+                createOrderDto.getPayment(),
                 createOrderDto.getOrder().getItems()
                         .stream().map(OrderItemResponse::fromOrderItem).toList());
     }

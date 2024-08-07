@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.authentication.controller.request.RequestAuthenticationToken;
 import nuts.project.wholesale_system.authentication.controller.response.AuthTokenInformation;
 import nuts.project.wholesale_system.authentication.controller.response.AuthUsers;
+import nuts.project.wholesale_system.authentication.controller.response.JWTSetInformation;
 import nuts.project.wholesale_system.authentication.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,5 +58,11 @@ public class AuthenticationController {
         Map<String, Object> userTable = authenticationService.getUserTable();
 
         return ResponseEntity.ok(new AuthUsers(List.of()));
+    }
+
+    @GetMapping("/authentication-service/jwt-sets")
+    ResponseEntity<JWTSetInformation> getJWTSetInformation() {
+        Object jwtSet = authenticationService.getJwtSet();
+        return ResponseEntity.ok((JWTSetInformation) jwtSet);
     }
 }

@@ -8,5 +8,7 @@ import lombok.*;
 @ToString
 @Getter
 public class PaymentInformation {
-    private String payInfo;
+    private String userId;
+    private String orderId;
+    private String accountNumber;
 }

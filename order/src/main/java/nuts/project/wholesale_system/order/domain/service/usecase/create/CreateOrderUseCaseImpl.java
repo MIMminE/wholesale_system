@@ -7,9 +7,12 @@ import nuts.project.wholesale_system.order.adapter.outbound.repository.order_ite
 import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
-import nuts.project.wholesale_system.order.domain.ports.payment.PaymentRequest;
-import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
+import nuts.project.wholesale_system.order.domain.ports.payment.request.PaymentCreateRequest;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentServicePort;
+import nuts.project.wholesale_system.order.domain.ports.payment.response.PaymentCreateResponse;
+import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.RequestItem;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockDeductRequest;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.domain.service.dto.PaymentInformation;
 import org.springframework.stereotype.Component;
@@ -21,6 +24,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
     private final OrderRepository orderRepository;
+    private final StockServicePort stockService;
     private final PaymentServicePort paymentService;
 
     @Override
@@ -28,6 +32,8 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
 
         OrderEntity orderEntity = orderRepository.save(createOrderEntity(userId, items));
 
+        List<RequestItem> requestItems = items.stream().map(e -> new RequestItem(e.getProductId(), e.getQuantity())).toList();
+        stockService.deductStock(new StockDeductRequest(requestItems));
         Order resultOrder = orderEntity.toOrder();
         String orderId = resultOrder.getOrderId();
         PaymentInformation payResponse = getPaymentInformation(userId, orderId);
@@ -36,8 +42,9 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
     }
 
     private PaymentInformation getPaymentInformation(String userId, String orderId) {
-        PaymentResponse paymentInformation = paymentService.requestPayment(userId, orderId);
-        return new PaymentInformation(paymentInformation.getAccountId());
+        PaymentCreateRequest paymentRequest = new PaymentCreateRequest(userId, orderId);
+        PaymentCreateResponse paymentCreateResponse = paymentService.requestPayment(paymentRequest);
+        return new PaymentInformation(userId, orderId, paymentCreateResponse.getAccountNumber());
     }
 
     private OrderEntity createOrderEntity(String userId, List<OrderItem> items) {

@@ -9,8 +9,8 @@ import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.RequestItem;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockReturnRequest;
 import nuts.project.wholesale_system.order.domain.service.dto.UpdateOrderStatusDto;
 import org.springframework.stereotype.Component;
 
@@ -32,10 +32,10 @@ public class UpdateOrderStatusUseCaseImpl implements UpdateOrderStatusUseCase {
         OrderStatus beforeOrderStatus = orderEntity.getOrderStatus();
         orderEntity.setOrderStatus(orderStatus);
 
-        List<OrderItem> orderItems = orderEntity.getItems().stream().map(OrderItemEntity::toOrderItem).toList();
+        List<RequestItem> requestItems = orderEntity.getItems().stream().map(e -> new RequestItem(e.getProductId(), e.getQuantity())).toList();
 
         if (orderStatus.equals(OrderStatus.cancelled)) {
-            StockResponse stockResponse = stockService.returnStock(new StockRequest(orderItems)).orElseThrow();
+            StockResponse stockResponse = stockService.returnStock(new StockReturnRequest(requestItems));
         }
 
         return new UpdateOrderStatusDto(orderId, beforeOrderStatus.toString(), orderStatus.toString());

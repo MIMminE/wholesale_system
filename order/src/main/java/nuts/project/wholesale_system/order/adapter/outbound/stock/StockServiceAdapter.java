@@ -1,21 +1,22 @@
 package nuts.project.wholesale_system.order.adapter.outbound.stock;
 
 import lombok.RequiredArgsConstructor;
-import nuts.project.wholesale_system.order.domain.model.OrderItem;
+import nuts.project.wholesale_system.order.domain.exception.OrderException;
+import nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
-import nuts.project.wholesale_system.order.domain.ports.stock.StockRequest;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockDeductRequest;
+import nuts.project.wholesale_system.order.domain.ports.stock.request.StockReturnRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 
 
 @Component
@@ -28,36 +29,35 @@ public class StockServiceAdapter implements StockServicePort {
     private String stockSeverUrl;
 
     @Override
-    public Optional<StockResponse> deductStock(StockRequest request) {
+    public StockResponse deductStock(StockDeductRequest request) {
 
-        List<OrderItem> requestItems = request.getRequestItems();
-        for (OrderItem requestItem : requestItems) {
+        try {
+            ResponseEntity<Map> result = restTemplate.exchange(stockSeverUrl + "stocks/deduct",
+                    HttpMethod.PUT, new HttpEntity<>(request), Map.class);
 
-            String productId = requestItem.getProductId();
-            int quantity = requestItem.getQuantity();
-            Map<String, ? extends Serializable> requestObject = Map.of("stockId", productId,
-                    "quantity", quantity);
+            Boolean resultBoolean = (Boolean) Objects.requireNonNull(result.getBody()).get("result");
 
-            ResponseEntity<Map> exchange = restTemplate.exchange(stockSeverUrl + "stocks/deduct",
-                    HttpMethod.PUT,
-                    new HttpEntity<>(requestObject), Map.class);
+            if (resultBoolean)
+                return new StockResponse(StockRequestType.Deduct, true);
+            else
+                throw new OrderException(OrderException.OrderExceptionCase.OUT_OF_STOCK);
+
+        } catch (ResourceAccessException e) {
+            throw new OrderException(OrderException.OrderExceptionCase.STOCK_SERVICE_FAIL);
         }
-
-
-        //TODO
-        System.out.println("stock deduct");
-        return Optional.empty();
     }
 
     @Override
-    public Optional<StockResponse> returnStock(StockRequest request) {
-        //TODO
-        System.out.println("stock return");
-        return Optional.empty();
-    }
+    public StockResponse returnStock(StockReturnRequest request) {
+        try {
+            ResponseEntity<Map> result = restTemplate.exchange(stockSeverUrl + "stocks/add",
+                    HttpMethod.PUT, new HttpEntity<>(request), Map.class);
 
-    @Override
-    public Optional<StockResponse> updateStock(StockRequest request) {
-        return Optional.empty();
+            Boolean resultBoolean = (Boolean) Objects.requireNonNull(result.getBody()).get("result");
+            return new StockResponse(StockRequestType.Return, true);
+
+        } catch (ResourceAccessException e) {
+            throw new OrderException(OrderException.OrderExceptionCase.STOCK_SERVICE_FAIL);
+        }
     }
 }
