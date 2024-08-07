@@ -23,7 +23,7 @@ public class CreateOrderResponse {
     private String userId;
 
     @NotEmpty
-    private PaymentInformation paymentInformation;
+    private PaymentInformation payment;
 
     @NotEmpty
     private List<OrderItemResponse> orderItems;
