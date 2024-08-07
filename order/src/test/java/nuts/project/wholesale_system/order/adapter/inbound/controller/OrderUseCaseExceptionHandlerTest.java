@@ -92,8 +92,7 @@ public class OrderUseCaseExceptionHandlerTest {
     void updateOrderStatusExceptionHandler() throws Exception {
         // given
         UpdateOrderStatusRequest updateOrderStatusRequest = fixtureManager.getOrderObject(UpdateOrderStatusRequest.class);
-
-        BDDMockito.given(updateOrderStatusUseCase.execute(updateOrderStatusRequest.getOrderId(), OrderStatus.delivering))
+        BDDMockito.given(updateOrderStatusUseCase.execute(BDDMockito.eq(updateOrderStatusRequest.getOrderId()), BDDMockito.any(OrderStatus.class)))
                 .willThrow(new OrderException(OrderException.OrderExceptionCase.UPDATE_NO_SUCH_ELEMENT));
 
         // when
