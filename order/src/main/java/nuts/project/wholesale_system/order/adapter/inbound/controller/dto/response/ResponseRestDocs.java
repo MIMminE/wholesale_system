@@ -41,22 +41,23 @@ public abstract class ResponseRestDocs {
     public Object getOrderResponse;
 
     @RestDocsSnippet(fields = {
-            @FieldDescription(name = "corporationId", description = "삭제된 기관에 부여된 ID"),
-            @FieldDescription(name = "corporationName", description = "삭제된 기관 이름"),
-            @FieldDescription(name = "representative", description = "삭제된 기관 대표자 이름"),
-            @FieldDescription(name = "businessNumber", description = "삭제된 기관 사업자 번호"),
+            @FieldDescription(name = "count", description = "조회된 주문 개수"),
+            @FieldDescription(name = "orderResponses", description = "주문 리스트"),
+            @FieldDescription(name = "orderResponses[].orderId", description = "주문 ID"),
+            @FieldDescription(name = "orderResponses[].userId", description = "유저 ID"),
+            @FieldDescription(name = "orderResponses[].payment.userId", description = "결제 정보에 포함된 유저 ID"),
+            @FieldDescription(name = "orderResponses[].payment.orderId", description = "결제 정보에 포함된 주문 ID"),
+            @FieldDescription(name = "orderResponses[].payment.accountNumber", description = "결제 계좌 번호"),
+            @FieldDescription(name = "orderResponses[].orderItems", description = "주문 상품 리스트"),
+            @FieldDescription(name = "orderResponses[].orderItems[].productId", description = "주문 상품 ID"),
+            @FieldDescription(name = "orderResponses[].orderItems[].quantity", description = "주문 상품 개수")
     })
     public Object getOrdersResponse;
 
     @RestDocsSnippet(fields = {
-            @FieldDescription(name = "resultCount", description = "조회된 기관 개수"),
-            @FieldDescription(name = "corporationResponses", description = "조회된 기관 정보 목록"),
-            @FieldDescription(name = "corporationResponses[].corporationId", description = "조회된 기관 ID"),
-            @FieldDescription(name = "corporationResponses[].corporationName", description = "조회된 기관 이름"),
-            @FieldDescription(name = "corporationResponses[].representative", description = "조회된 기관 대표자 이름"),
-            @FieldDescription(name = "corporationResponses[].contactNumber", description = "조회된 기관 대표 연락처"),
-            @FieldDescription(name = "corporationResponses[].businessNumber", description = "조회된 기관 사업자 번호"),
-            @FieldDescription(name = "corporationResponses[].grade", description = "조회된 기관 등급")
+            @FieldDescription(name = "orderId", description = "주문 ID"),
+            @FieldDescription(name = "beforeStatus", description = "변경 전 상태"),
+            @FieldDescription(name = "afterStatus", description = "변경 후 상태")
     })
-    public Object searchCorporationResponse;
+    public Object updateOrderStatusResponse;
 }
