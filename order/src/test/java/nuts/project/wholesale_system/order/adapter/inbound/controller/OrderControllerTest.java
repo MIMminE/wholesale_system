@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.jqwik.api.Arbitraries;
 import nuts.lib.manager.fixture_manager.OrderSheet;
 import nuts.lib.manager.restdocs_manager.MockMvcSupport;
+import nuts.lib.manager.restdocs_manager.RestDocsManager;
 import nuts.lib.manager.restdocs_manager.support.ExtendsFixtureRestDocsSupport;
 import nuts.project.wholesale_system.order.adapter.inbound.controller.dto.reqeust.*;
 import nuts.project.wholesale_system.order.adapter.inbound.controller.dto.response.CreateOrderResponse;
+import nuts.project.wholesale_system.order.adapter.inbound.controller.dto.response.ResponseRestDocs;
 import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
@@ -18,6 +20,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
@@ -35,6 +39,8 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
     private OrderService orderService;
 
     private ObjectMapper mapper = new ObjectMapper();
+
+    private final RestDocsManager restDocsManager = new RestDocsManager(RequestRestDocs.class, ResponseRestDocs.class);
 
     @Test
     @DisplayName("상품 주문 요청 정보와 User-Id 헤더 값을 POST /order-service/api/v1/orders 로 전송하고 결과를 반환한다.")
@@ -67,6 +73,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                         entry("orderItems[0].productId", createOrderResponse.getOrderItems().get(0).getProductId()),
                         entry("orderItems[0].quantity", createOrderResponse.getOrderItems().get(0).getQuantity()))
                 ))
+                .andDo(restDocsManager.document("create-order", "createOrderRequest", "createOrderResponse"))
                 .andDo(print());
     }
 
@@ -82,7 +89,6 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
         BDDMockito.given(orderService.deleteOrder(orderId)).willReturn(order);
 
         mockController.perform(MockMvcRequestBuilders.delete("/order-service/api/v1/orders")
-                        .header("jwtUserId", userId)
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(deleteOrderRequest))
                 ).andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
@@ -109,7 +115,6 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                 .willReturn(updateOrderStatusDto);
 
         mockController.perform(MockMvcRequestBuilders.put("/order-service/api/v1/orders/status")
-                        .header("jwtUserId", userId) // TODO :: jwt
                         .contentType(APPLICATION_JSON)
                         .content(mapper.writeValueAsString(updateOrderStatusRequest)))
                 .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
@@ -165,8 +170,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
 
         BDDMockito.given(orderService.getOrders(userId)).willReturn(List.of(firstOrderDto, secondOrderDto));
 
-        mockController.perform(MockMvcRequestBuilders.get("/order-service/api/v1/orders/user/%s".formatted(userId))
-                        .header("jwtUserId", userId))
+        mockController.perform(MockMvcRequestBuilders.get("/order-service/api/v1/orders/user/%s".formatted(userId)))
                 .andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
                                 entry("count", 2),
                                 entry("orderResponses[0].orderId", firetOrder.getOrderId()),
