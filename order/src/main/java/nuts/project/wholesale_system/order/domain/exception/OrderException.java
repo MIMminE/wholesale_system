@@ -22,6 +22,7 @@ public class OrderException extends RuntimeException {
         UNKNOWN_EXCEPTION("It's an unknown exception."),
 
         PAYMENT_SERVICE_FAIL("Payment Service fail"),
+        PAYMENT_NOT_FOUND("Payment not found."),
         STOCK_SERVICE_FAIL("Stock Service fail"),
         OUT_OF_STOCK("Out of stock"),;
 

@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order.OrderEntity;
 import nuts.project.wholesale_system.order.adapter.outbound.repository.order.OrderRepository;
 import nuts.project.wholesale_system.order.domain.exception.OrderException;
-import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentServicePort;
+import nuts.project.wholesale_system.order.domain.ports.payment.response.PaymentResponse;
 import nuts.project.wholesale_system.order.domain.service.dto.OrderProcessDto;
 import nuts.project.wholesale_system.order.domain.service.dto.PaymentInformation;
 import org.springframework.stereotype.Component;
@@ -19,11 +19,13 @@ public class GetOrderUserCaseImpl implements GetOrderUseCase {
 
     @Override
     public OrderProcessDto execute(String orderId) {
-
-        PaymentResponse paymentResponse = paymentService.getPaymentInformation(orderId);
+        PaymentResponse paymentResponse = paymentService.getPayment(orderId);
         OrderEntity orderEntity = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderException(OrderException.OrderExceptionCase.GET_NO_SUCH_ELEMENT));
 
-        return new OrderProcessDto(new PaymentInformation(paymentResponse.getAccountId()), orderEntity.toOrder());
+        String userId = paymentResponse.getUserId();
+        String accountNumber = paymentResponse.getAccountNumber();
+
+        return new OrderProcessDto(new PaymentInformation(userId, orderId, accountNumber), orderEntity.toOrder());
     }
 }

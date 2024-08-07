@@ -1,23 +1,21 @@
 package nuts.project.wholesale_system.order.adapter.inbound.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nuts.lib.manager.fixture_manager.FixtureManager;
 import nuts.lib.manager.fixture_manager.OrderSheet;
 import nuts.project.wholesale_system.order.adapter.inbound.controller.dto.reqeust.CreateOrderRequest;
 import nuts.project.wholesale_system.order.adapter.inbound.controller.dto.reqeust.DeleteOrderRequest;
 import nuts.project.wholesale_system.order.domain.exception.OrderException;
-import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
+import nuts.project.wholesale_system.order.domain.ports.payment.request.PaymentCreateRequest;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentServicePort;
+import nuts.project.wholesale_system.order.domain.ports.payment.response.PaymentCreateResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockRequestType;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
 import nuts.project.wholesale_system.order.domain.ports.stock.request.StockDeductRequest;
-import nuts.project.wholesale_system.order.domain.service.OrderService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,7 +31,6 @@ import java.util.UUID;
 
 import static nuts.lib.manager.fixture_manager.FixtureManager.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -65,8 +62,8 @@ class OrderExceptionHandlerTest {
     void stockServiceExceptionHandler() throws Exception {
         // given
         CreateOrderRequest createOrderRequest = fixtureManager.getOrderObject(CreateOrderRequest.class);
-        BDDMockito.given(paymentService.requestPayment(anyString(), anyString()))
-                .willReturn(new PaymentResponse(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 30));
+        BDDMockito.given(paymentService.requestPayment(any(PaymentCreateRequest.class)))
+                .willReturn(new PaymentCreateResponse(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), 10000));
 
         BDDMockito.given(stockService.deductStock(any(StockDeductRequest.class)))
                 .willThrow(new OrderException(OrderException.OrderExceptionCase.STOCK_SERVICE_FAIL));
@@ -89,7 +86,7 @@ class OrderExceptionHandlerTest {
     void paymentServiceExceptionHandler() throws Exception {
         // given
         CreateOrderRequest createOrderRequest = fixtureManager.getOrderObject(CreateOrderRequest.class);
-        BDDMockito.given(paymentService.requestPayment(anyString(), anyString()))
+        BDDMockito.given(paymentService.requestPayment(any(PaymentCreateRequest.class)))
                 .willThrow(new OrderException(OrderException.OrderExceptionCase.PAYMENT_SERVICE_FAIL));
 
         BDDMockito.given(stockService.deductStock(any(StockDeductRequest.class)))

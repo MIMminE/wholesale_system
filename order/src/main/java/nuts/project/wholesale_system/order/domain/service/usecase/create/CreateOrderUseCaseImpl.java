@@ -7,8 +7,9 @@ import nuts.project.wholesale_system.order.adapter.outbound.repository.order_ite
 import nuts.project.wholesale_system.order.domain.model.Order;
 import nuts.project.wholesale_system.order.domain.model.OrderItem;
 import nuts.project.wholesale_system.order.domain.model.OrderStatus;
-import nuts.project.wholesale_system.order.domain.ports.payment.PaymentResponse;
+import nuts.project.wholesale_system.order.domain.ports.payment.request.PaymentCreateRequest;
 import nuts.project.wholesale_system.order.domain.ports.payment.PaymentServicePort;
+import nuts.project.wholesale_system.order.domain.ports.payment.response.PaymentCreateResponse;
 import nuts.project.wholesale_system.order.domain.ports.stock.StockServicePort;
 import nuts.project.wholesale_system.order.domain.ports.stock.request.RequestItem;
 import nuts.project.wholesale_system.order.domain.ports.stock.request.StockDeductRequest;
@@ -41,8 +42,9 @@ public class CreateOrderUseCaseImpl implements CreateOrderUseCase {
     }
 
     private PaymentInformation getPaymentInformation(String userId, String orderId) {
-        PaymentResponse paymentInformation = paymentService.requestPayment(userId, orderId);
-        return new PaymentInformation(paymentInformation.getAccountId());
+        PaymentCreateRequest paymentRequest = new PaymentCreateRequest(userId, orderId);
+        PaymentCreateResponse paymentCreateResponse = paymentService.requestPayment(paymentRequest);
+        return new PaymentInformation(userId, orderId, paymentCreateResponse.getAccountNumber());
     }
 
     private OrderEntity createOrderEntity(String userId, List<OrderItem> items) {

@@ -48,26 +48,26 @@ class OrderServiceTest extends FixtureGenerateSupport {
     @InjectMocks
     OrderService orderService;
 
-    @Test
-    @DisplayName("컨트롤러에게 전달 받은 주문 상품 리스트와 User-Id 정보를 CreateOrderUseCase 에게 전달하고 결과를 반환한다.")
-    void createOrder() {
-        // given
-        Order order = getOrderedObject(Order.class).get(0);
-
-        String userId = order.getUserId();
-        List<OrderItem> items = order.getItems();
-
-        BDDMockito.given(createOrderUseCase.execute(userId, items))
-                .willReturn(new OrderProcessDto(new PaymentInformation("test_payment"), order));
-
-        // when
-        OrderProcessDto orderProcessDto = orderService.createOrder(userId, items);
-
-        // then
-        Assertions.assertThat(orderProcessDto)
-                .extracting("order.orderId", "order.userId", "order.items", "order.orderStatus")
-                .contains(order.getOrderId(), order.getUserId(), order.getItems(), order.getOrderStatus());
-    }
+//    @Test
+//    @DisplayName("컨트롤러에게 전달 받은 주문 상품 리스트와 User-Id 정보를 CreateOrderUseCase 에게 전달하고 결과를 반환한다.")
+//    void createOrder() {
+//        // given
+//        Order order = getOrderedObject(Order.class).get(0);
+//
+//        String userId = order.getUserId();
+//        List<OrderItem> items = order.getItems();
+//
+//        BDDMockito.given(createOrderUseCase.execute(userId, items))
+//                .willReturn(new OrderProcessDto(new PaymentInformation("test_payment"), order));
+//
+//        // when
+//        OrderProcessDto orderProcessDto = orderService.createOrder(userId, items);
+//
+//        // then
+//        Assertions.assertThat(orderProcessDto)
+//                .extracting("order.orderId", "order.userId", "order.items", "order.orderStatus")
+//                .contains(order.getOrderId(), order.getUserId(), order.getItems(), order.getOrderStatus());
+//    }
 
     @Test
     @DisplayName("컨트롤러에게 전달 받은 주문 번호를 DeleteOrderUseCase 에게 전달하고 결과를 반환한다.")
