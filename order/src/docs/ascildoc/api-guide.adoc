@@ -14,7 +14,7 @@ endif::[]
 = Resources
 
 [[resources-user]]
-== Member
+== Order
 
 === 주문 생성
 operation::create-order[snippets='http-request,http-response,request-fields,response-fields']
