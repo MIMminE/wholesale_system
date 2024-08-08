@@ -20,8 +20,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
@@ -94,6 +92,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                 ).andExpectAll(MockMvcSupport.mapMatchers(Map.ofEntries(
                         entry("deleteOrderId", orderId)
                 )))
+                .andDo(restDocsManager.document("delete-order", "deleteOrderRequest", "deleteOrderResponse"))
                 .andDo(print());
     }
 
@@ -122,12 +121,13 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                         entry("beforeStatus", targetOrder.getOrderStatus().toString()),
                         entry("afterStatus", orderStatus)
                 )))
+                .andDo(restDocsManager.document("update-order", "updateOrderStatusRequest", "updateOrderStatusResponse"))
                 .andDo(print());
     }
 
 
     @Test
-    @DisplayName("주문 번호를 GET /order-service/api/v1/orders/user/%s 로 전송하고 결과를 반환한다.")
+    @DisplayName("주문 번호를 GET /order-service/api/v1/orders/%s 로 전송하고 결과를 반환한다.")
     void getOrder() throws Exception {
 
         Order order = getOrderedObject(Order.class).get(0);
@@ -149,6 +149,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                         entry("orderItems[1].productId", order.getItems().get(1).getProductId()),
                         entry("orderItems[1].quantity", order.getItems().get(1).getQuantity())
                 )))
+                .andDo(restDocsManager.document("getOrder", "getOrderResponse"))
                 .andDo(print());
     }
 
@@ -177,6 +178,7 @@ class OrderControllerTest extends ExtendsFixtureRestDocsSupport {
                                 entry("orderResponses[1].orderId", secondOrder.getOrderId())
                         )
                 ))
+                .andDo(restDocsManager.document("getOrders", "getOrdersResponse"))
                 .andDo(print());
     }
 

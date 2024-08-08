@@ -31,7 +31,6 @@ import java.util.UUID;
 
 import static nuts.lib.manager.fixture_manager.FixtureManager.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Profile("test")
