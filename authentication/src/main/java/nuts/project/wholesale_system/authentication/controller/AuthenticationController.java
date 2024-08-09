@@ -3,7 +3,7 @@ package nuts.project.wholesale_system.authentication.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.authentication.controller.request.RequestAuthenticationToken;
-import nuts.project.wholesale_system.authentication.controller.response.AuthTokenInformation;
+import nuts.project.wholesale_system.authentication.controller.response.TokenResponse;
 import nuts.project.wholesale_system.authentication.controller.response.AuthUsers;
 import nuts.project.wholesale_system.authentication.controller.response.JWTSetInformation;
 import nuts.project.wholesale_system.authentication.service.AuthenticationService;
@@ -30,20 +30,18 @@ public class AuthenticationController {
      * @param request Login User Information
      * @return About Authenticated JWT Tokens
      */
-    @PostMapping("/authentication-service/requestToken")
-    ResponseEntity<AuthTokenInformation> requestToken(@RequestBody @Valid RequestAuthenticationToken request) {
+    @PostMapping("/authentication-service/login")
+    ResponseEntity<TokenResponse> login(@RequestBody @Valid RequestAuthenticationToken request) {
 
         String userName = request.getUserName();
         String password = request.getPassword();
 
-        Map<String, Object> requestTokenResult = authenticationService.requestToken(userName, password);
+        TokenResponse tokenResponse = authenticationService.requestToken(userName, password);
 
 
         // TODO
-        String token = requestTokenResult.get("token").toString();
 
-
-        return ResponseEntity.ok(new AuthTokenInformation(token));
+        return ResponseEntity.ok(tokenResponse);
     }
 
 
