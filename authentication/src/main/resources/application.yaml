@@ -5,3 +5,12 @@ spring:
 
 server:
   port: 9001
+
+
+
+
+auth-server:
+  url: http://localhost:8888
+  realms: auth-service
+  client-id: auth-service-client
+  client_secret: iBnKyxhwMPcY7PcXDyBHqZFO6gRawg8C

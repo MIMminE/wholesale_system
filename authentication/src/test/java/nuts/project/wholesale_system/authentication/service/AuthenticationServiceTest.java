@@ -34,7 +34,8 @@ class AuthenticationServiceTest {
     void registerUserSuccess() {
 
         // when
-        authenticationService.registerUser("haasdrunut", "harun1uts@naver.com", "123456");
+        UserInformation haasdrunut = authenticationService.registerUser("haasdrunut", "harun1uts@naver.com", "123456");
+        System.out.println(haasdrunut);
 
         // then
     }
@@ -46,6 +47,23 @@ class AuthenticationServiceTest {
         List<UserInformation> userTable = authenticationService.getUserTable();
 
         // when
+        for (UserInformation userInformation : userTable) {
+            System.out.println(userInformation);
+        }
+
+
+        // then
+    }
+
+    //
+    @DisplayName("유저 이름과 패스워드를 인증 서버로 보내 토큰을 발급받고 반환한다.")
+    @Test
+    void getUserSuccess() {
+
+        UserInformation harunut = authenticationService.getUser("haasdrunut");
+        System.out.println(harunut);
+
+        // when
 
 
         // then
@@ -53,10 +71,11 @@ class AuthenticationServiceTest {
 
     @DisplayName("유저 이름과 패스워드를 인증 서버로 보내 토큰을 발급받고 반환한다.")
     @Test
-    void getUserSuccess() {
+    void deleteUserSuccess() {
 
-        UserInformation harunut = authenticationService.getUser("harunutㄴㅇㄴㅇㄴ");
-        System.out.println(harunut);
+        boolean haasdrunut = authenticationService.deleteUser("haasdrunut");
+        System.out.println(haasdrunut);
+
 
         // when
 
