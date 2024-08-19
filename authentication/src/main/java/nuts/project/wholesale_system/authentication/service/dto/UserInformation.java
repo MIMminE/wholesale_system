@@ -1,4 +1,4 @@
-package nuts.project.wholesale_system.authentication.controller.response;
+package nuts.project.wholesale_system.authentication.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

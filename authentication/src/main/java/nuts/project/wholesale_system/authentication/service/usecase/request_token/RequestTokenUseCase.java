@@ -1,6 +1,6 @@
 package nuts.project.wholesale_system.authentication.service.usecase.request_token;
 
-import nuts.project.wholesale_system.authentication.controller.response.TokenResponse;
+import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 
 public interface RequestTokenUseCase {
 

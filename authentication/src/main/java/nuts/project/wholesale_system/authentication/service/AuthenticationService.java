@@ -2,9 +2,9 @@ package nuts.project.wholesale_system.authentication.service;
 
 
 import lombok.RequiredArgsConstructor;
-import nuts.project.wholesale_system.authentication.controller.response.JwkSet;
-import nuts.project.wholesale_system.authentication.controller.response.TokenResponse;
-import nuts.project.wholesale_system.authentication.controller.response.UserInformation;
+import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
+import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import nuts.project.wholesale_system.authentication.service.usecase.delete_user.DeleteUserUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.get_jwks.GetJwkSetUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.get_user.GetUserUseCase;

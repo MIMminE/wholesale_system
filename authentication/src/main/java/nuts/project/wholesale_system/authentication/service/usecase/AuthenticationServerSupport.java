@@ -2,7 +2,7 @@ package nuts.project.wholesale_system.authentication.service.usecase;
 
 import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.authentication.config.AuthServerProperties;
-import nuts.project.wholesale_system.authentication.controller.response.TokenResponse;
+import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

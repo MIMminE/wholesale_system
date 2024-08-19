@@ -1,8 +1,8 @@
 package nuts.project.wholesale_system.authentication.service;
 
-import nuts.project.wholesale_system.authentication.controller.response.JwkSet;
-import nuts.project.wholesale_system.authentication.controller.response.TokenResponse;
-import nuts.project.wholesale_system.authentication.controller.response.UserInformation;
+import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
+import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import nuts.project.wholesale_system.authentication.exception.AuthenticationException;
 import nuts.project.wholesale_system.authentication.service.cache.UserAuthenticationTableCache;
 import org.assertj.core.api.Assertions;

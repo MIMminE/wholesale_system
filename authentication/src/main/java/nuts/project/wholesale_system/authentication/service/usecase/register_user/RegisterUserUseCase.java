@@ -1,6 +1,6 @@
 package nuts.project.wholesale_system.authentication.service.usecase.register_user;
 
-import nuts.project.wholesale_system.authentication.controller.response.UserInformation;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 
 public interface RegisterUserUseCase {
 

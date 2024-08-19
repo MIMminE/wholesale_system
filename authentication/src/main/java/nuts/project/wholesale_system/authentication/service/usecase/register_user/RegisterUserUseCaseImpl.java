@@ -1,7 +1,7 @@
 package nuts.project.wholesale_system.authentication.service.usecase.register_user;
 
 import nuts.project.wholesale_system.authentication.config.AuthServerProperties;
-import nuts.project.wholesale_system.authentication.controller.response.UserInformation;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import nuts.project.wholesale_system.authentication.service.cache.UserAuthenticationTableCache;
 import nuts.project.wholesale_system.authentication.service.usecase.AuthenticationServerSupport;
 import org.springframework.http.*;

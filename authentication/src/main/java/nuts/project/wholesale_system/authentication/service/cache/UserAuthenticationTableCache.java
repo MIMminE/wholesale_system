@@ -3,7 +3,7 @@ package nuts.project.wholesale_system.authentication.service.cache;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import nuts.project.wholesale_system.authentication.controller.response.UserInformation;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import nuts.project.wholesale_system.authentication.service.usecase.get_user_table.GetUserTableUseCase;
 import org.springframework.stereotype.Component;
 

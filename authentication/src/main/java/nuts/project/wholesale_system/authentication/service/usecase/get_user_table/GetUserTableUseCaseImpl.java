@@ -1,7 +1,7 @@
 package nuts.project.wholesale_system.authentication.service.usecase.get_user_table;
 
 import nuts.project.wholesale_system.authentication.config.AuthServerProperties;
-import nuts.project.wholesale_system.authentication.controller.response.UserInformation;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import nuts.project.wholesale_system.authentication.service.usecase.AuthenticationServerSupport;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;

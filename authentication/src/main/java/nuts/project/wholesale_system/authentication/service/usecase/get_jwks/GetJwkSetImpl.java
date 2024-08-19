@@ -1,7 +1,7 @@
 package nuts.project.wholesale_system.authentication.service.usecase.get_jwks;
 
 import nuts.project.wholesale_system.authentication.config.AuthServerProperties;
-import nuts.project.wholesale_system.authentication.controller.response.JwkSet;
+import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 

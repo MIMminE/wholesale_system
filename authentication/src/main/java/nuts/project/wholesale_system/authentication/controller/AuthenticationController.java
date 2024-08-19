@@ -1,7 +1,7 @@
 package nuts.project.wholesale_system.authentication.controller;
 
 import lombok.RequiredArgsConstructor;
-import nuts.project.wholesale_system.authentication.controller.response.TokenResponse;
+import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
