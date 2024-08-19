@@ -1,11 +1,19 @@
 package nuts.project.wholesale_system.authentication.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import nuts.project.wholesale_system.authentication.controller.request.RequestCreateToken;
+import nuts.project.wholesale_system.authentication.controller.request.RequestCreateUsers;
+import nuts.project.wholesale_system.authentication.controller.request.RequestDeleteUsers;
+import nuts.project.wholesale_system.authentication.controller.response.UserTableResponse;
+import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
 import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.AuthenticationService;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -14,34 +22,57 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/authentication-service/login")
-    ResponseEntity<TokenResponse> login() {
+    @PostMapping("/authentication-service/token")
+    ResponseEntity<TokenResponse> createToken(@RequestBody @Valid RequestCreateToken request) {
 
-        TokenResponse tokenResponse = authenticationService.requestToken("testUser", "password");
+        String userName = request.getUserName();
+        String password = request.getPassword();
 
-
-        // TODO
+        TokenResponse tokenResponse = authenticationService.createToken(userName, password);
 
         return ResponseEntity.ok(tokenResponse);
     }
 
 
-    /**
-     * API to use the user information service registered on the authentication server
-     *
-     * @return List of User Information
-     */
-//    @GetMapping("/authentication-service/users")
-//    ResponseEntity<AuthUsers> getUsers() {
-//
-//        authenticationService.getUserTable();
-//
-//        return ResponseEntity.ok(new AuthUsers(List.of()));
-//    }
-//
-//    @GetMapping("/authentication-service/jwt-sets")
-//    ResponseEntity<JWTSetInformation> getJWTSetInformation() {
-//        Object jwtSet = authenticationService.getJwkSet();
-//        return ResponseEntity.ok((JWTSetInformation) jwtSet);
-//    }
+    @PostMapping("/authentication-service/users")
+    ResponseEntity<UserInformation> createUsers(@RequestBody @Valid RequestCreateUsers request) {
+
+        String userName = request.getUserName();
+        String firstName = request.getFirstName();
+        String lastName = request.getLastName();
+        String email = request.getEmail();
+        String password = request.getPassword();
+
+        UserInformation userInformation = authenticationService.registerUser(userName, firstName, lastName, email, password);
+
+
+        return ResponseEntity.ok(userInformation);
+    }
+
+    @DeleteMapping("/authentication-service/users")
+    ResponseEntity<Boolean> deleteUsers(@RequestBody @Valid RequestDeleteUsers request) {
+
+        String username = request.getUsername();
+        boolean result = authenticationService.deleteUser(username);
+
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/authentication-service/users")
+    ResponseEntity<UserTableResponse> getUserTable() {
+        List<UserInformation> userInformationList = authenticationService.getUserTable();
+
+        return ResponseEntity.ok(new UserTableResponse(userInformationList.size(), userInformationList));
+    }
+
+    @GetMapping("/authentication-service/users/{username}")
+    ResponseEntity<UserInformation> getUser(@PathVariable String username) {
+
+        return ResponseEntity.ok(authenticationService.getUser(username));
+    }
+
+    @GetMapping("/authentication-service/certs")
+    ResponseEntity<JwkSet> getJwkSet() {
+        return ResponseEntity.ok(authenticationService.getJwkSet());
+    }
 }

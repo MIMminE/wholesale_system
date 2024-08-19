@@ -36,7 +36,7 @@ class AuthenticationServiceTest {
 
         try {
             // when
-            TokenResponse tokenResponse = authenticationService.requestToken(testUserName, testPassword);
+            TokenResponse tokenResponse = authenticationService.createToken(testUserName, testPassword);
             // then
             Assertions.assertThat(tokenResponse.getTokenType()).isEqualTo("Bearer");
             Assertions.assertThat(tokenResponse.getAccessToken()).isNotBlank();

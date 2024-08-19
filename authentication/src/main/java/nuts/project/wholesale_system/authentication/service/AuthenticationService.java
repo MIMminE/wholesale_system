@@ -26,7 +26,7 @@ public class AuthenticationService {
     private final DeleteUserUseCase deleteUserUseCase;
     private final GetJwkSetUseCase jwkSetUseCase;
 
-    public TokenResponse requestToken(String userName, String password) {
+    public TokenResponse createToken(String userName, String password) {
 
         return requestTokenUseCase.execute(userName, password);
     }
