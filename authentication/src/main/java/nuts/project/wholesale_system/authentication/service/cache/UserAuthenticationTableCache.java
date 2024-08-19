@@ -26,4 +26,10 @@ public class UserAuthenticationTableCache {
         userTable = userInfoList.stream()
                 .collect(Collectors.toConcurrentMap(UserInformation::getUserName, UserInformation::getUserId));
     }
+
+    public void reload() {
+        userTable = getUserTableUseCase.execute().stream()
+                .collect(Collectors.toConcurrentMap(UserInformation::getUserName, UserInformation::getUserId));
+    }
+
 }

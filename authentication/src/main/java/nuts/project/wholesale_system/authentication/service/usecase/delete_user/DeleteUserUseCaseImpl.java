@@ -16,11 +16,13 @@ public class DeleteUserUseCaseImpl implements DeleteUserUseCase {
     private final RestTemplate restTemplate;
     private final AuthServerProperties authServerConfig;
     private final AuthenticationServerSupport authServerSupport;
+    private final UserAuthenticationTableCache userAuthenticationTableCache;
 
-    public DeleteUserUseCaseImpl(RestTemplate restTemplate, AuthServerProperties authServerConfig) {
+    public DeleteUserUseCaseImpl(RestTemplate restTemplate, AuthServerProperties authServerConfig, UserAuthenticationTableCache userAuthenticationTableCache) {
         this.restTemplate = restTemplate;
         this.authServerConfig = authServerConfig;
         this.authServerSupport = new AuthenticationServerSupport(authServerConfig, restTemplate);
+        this.userAuthenticationTableCache = userAuthenticationTableCache;
     }
 
 
@@ -37,6 +39,8 @@ public class DeleteUserUseCaseImpl implements DeleteUserUseCase {
         String requestUrl = String.format("%s/admin/realms/%s/users/%s", authServerConfig.getUrl(), authServerConfig.getRealms(), userId);
 
         restTemplate.exchange(requestUrl, HttpMethod.DELETE, request, String.class);
+
+        userAuthenticationTableCache.reload();
 
         return true;
     }

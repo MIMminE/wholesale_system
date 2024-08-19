@@ -4,6 +4,6 @@ import nuts.project.wholesale_system.authentication.controller.response.UserInfo
 
 public interface RegisterUserUseCase {
 
-    UserInformation execute(String userName, String email, String password);
+    UserInformation execute(String userName, String email, String password, String firstName, String lastName);
 
 }

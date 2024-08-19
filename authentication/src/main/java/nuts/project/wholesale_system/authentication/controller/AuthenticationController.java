@@ -2,7 +2,7 @@ package nuts.project.wholesale_system.authentication.controller;
 
 import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.authentication.controller.response.TokenResponse;
-import nuts.project.wholesale_system.authentication.service.AuthenticationServiceImpl;
+import nuts.project.wholesale_system.authentication.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationController {
 
-    private final AuthenticationServiceImpl authenticationService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/authentication-service/login")
     ResponseEntity<TokenResponse> login() {

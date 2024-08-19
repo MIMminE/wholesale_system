@@ -2,9 +2,11 @@ package nuts.project.wholesale_system.authentication.service;
 
 
 import lombok.RequiredArgsConstructor;
+import nuts.project.wholesale_system.authentication.controller.response.JwkSet;
 import nuts.project.wholesale_system.authentication.controller.response.TokenResponse;
 import nuts.project.wholesale_system.authentication.controller.response.UserInformation;
 import nuts.project.wholesale_system.authentication.service.usecase.delete_user.DeleteUserUseCase;
+import nuts.project.wholesale_system.authentication.service.usecase.get_jwks.GetJwkSetUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.get_user.GetUserUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.get_user_table.GetUserTableUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.register_user.RegisterUserUseCase;
@@ -15,13 +17,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl {
+public class AuthenticationService {
 
     private final RequestTokenUseCase requestTokenUseCase;
     private final RegisterUserUseCase registerUserUseCase;
     private final GetUserTableUseCase getUserTableUseCase;
     private final GetUserUseCase getUserUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
+    private final GetJwkSetUseCase jwkSetUseCase;
 
     public TokenResponse requestToken(String userName, String password) {
 
@@ -37,17 +40,16 @@ public class AuthenticationServiceImpl {
     }
 
 
-    public UserInformation registerUser(String username, String email, String password) {
-        return registerUserUseCase.execute(username, email, password);
+    public UserInformation registerUser(String username, String firstName, String lastName, String email, String password) {
+        return registerUserUseCase.execute(username, email, password, firstName, lastName);
     }
 
     public boolean deleteUser(String username) {
         return deleteUserUseCase.execute(username);
     }
 
-
-//    public Object getJwkSet() {
-//        return restTemplate.getForObject(authServerUrl + "/set", Map.class);
-//    }
+    public JwkSet getJwkSet() {
+        return jwkSetUseCase.execute();
+    }
 
 }
