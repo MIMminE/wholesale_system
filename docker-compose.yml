@@ -3,7 +3,7 @@ version: '3.7'
 services:
   rabbitmq:
     image: harunuts/rabbittest1
-#    image: rabbitmq:management
+    #    image: rabbitmq:management
     container_name: rabbitmq
     ports:
       - "5672:5672"
@@ -15,7 +15,7 @@ services:
     volumes:
       - ./init/rabbitmq:/init/rabbitmq
 
-#    entrypoint: ["/bin/sh", "/init/rabbitmq/setup.sh"]
+  #    entrypoint: ["/bin/sh", "/init/rabbitmq/setup.sh"]
 
   log_db:
     image: mysql
@@ -36,3 +36,13 @@ services:
     environment:
       MYSQL_DATABASE: test_db
       MYSQL_ROOT_PASSWORD: tester
+
+  keycloak:
+    container_name: keycloak
+    image: keycloak/keycloak
+    ports:
+      - "8888:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    command: start-dev

@@ -2,19 +2,18 @@ package nuts.project.wholesale_system.authentication.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import nuts.project.wholesale_system.authentication.controller.request.RequestAuthenticationToken;
-import nuts.project.wholesale_system.authentication.controller.response.AuthTokenInformation;
-import nuts.project.wholesale_system.authentication.controller.response.AuthUsers;
-import nuts.project.wholesale_system.authentication.controller.response.JWTSetInformation;
+import nuts.project.wholesale_system.authentication.controller.request.RequestCreateToken;
+import nuts.project.wholesale_system.authentication.controller.request.RequestCreateUsers;
+import nuts.project.wholesale_system.authentication.controller.request.RequestDeleteUsers;
+import nuts.project.wholesale_system.authentication.controller.response.UserTableResponse;
+import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
+import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.AuthenticationService;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -23,46 +22,57 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-
-    /**
-     * API for authentication attempts with username and password
-     *
-     * @param request Login User Information
-     * @return About Authenticated JWT Tokens
-     */
-    @PostMapping("/authentication-service/requestToken")
-    ResponseEntity<AuthTokenInformation> requestToken(@RequestBody @Valid RequestAuthenticationToken request) {
+    @PostMapping("/authentication-service/token")
+    ResponseEntity<TokenResponse> createToken(@RequestBody @Valid RequestCreateToken request) {
 
         String userName = request.getUserName();
         String password = request.getPassword();
 
-        Map<String, Object> requestTokenResult = authenticationService.requestToken(userName, password);
+        TokenResponse tokenResponse = authenticationService.createToken(userName, password);
 
-
-        // TODO
-        String token = requestTokenResult.get("token").toString();
-
-
-        return ResponseEntity.ok(new AuthTokenInformation(token));
+        return ResponseEntity.ok(tokenResponse);
     }
 
 
-    /**
-     * API to use the user information service registered on the authentication server
-     *
-     * @return List of User Information
-     */
+    @PostMapping("/authentication-service/users")
+    ResponseEntity<UserInformation> createUsers(@RequestBody @Valid RequestCreateUsers request) {
+
+        String userName = request.getUserName();
+        String firstName = request.getFirstName();
+        String lastName = request.getLastName();
+        String email = request.getEmail();
+        String password = request.getPassword();
+
+        UserInformation userInformation = authenticationService.registerUser(userName, firstName, lastName, email, password);
+
+
+        return ResponseEntity.ok(userInformation);
+    }
+
+    @DeleteMapping("/authentication-service/users")
+    ResponseEntity<Boolean> deleteUsers(@RequestBody @Valid RequestDeleteUsers request) {
+
+        String username = request.getUsername();
+        boolean result = authenticationService.deleteUser(username);
+
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/authentication-service/users")
-    ResponseEntity<AuthUsers> getUsers() {
+    ResponseEntity<UserTableResponse> getUserTable() {
+        List<UserInformation> userInformationList = authenticationService.getUserTable();
 
-        Map<String, Object> userTable = authenticationService.getUserTable();
-
-        return ResponseEntity.ok(new AuthUsers(List.of()));
+        return ResponseEntity.ok(new UserTableResponse(userInformationList.size(), userInformationList));
     }
 
-    @GetMapping("/authentication-service/jwt-sets")
-    ResponseEntity<JWTSetInformation> getJWTSetInformation() {
-        Object jwtSet = authenticationService.getJwtSet();
-        return ResponseEntity.ok((JWTSetInformation) jwtSet);
+    @GetMapping("/authentication-service/users/{username}")
+    ResponseEntity<UserInformation> getUser(@PathVariable("username") String username) {
+
+        return ResponseEntity.ok(authenticationService.getUser(username));
+    }
+
+    @GetMapping("/authentication-service/certs")
+    ResponseEntity<JwkSet> getJwkSet() {
+        return ResponseEntity.ok(authenticationService.getJwkSet());
     }
 }

@@ -2,50 +2,54 @@ package nuts.project.wholesale_system.authentication.service;
 
 
 import lombok.RequiredArgsConstructor;
+import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
+import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
+import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
+import nuts.project.wholesale_system.authentication.service.usecase.delete_user.DeleteUserUseCase;
+import nuts.project.wholesale_system.authentication.service.usecase.get_jwks.GetJwkSetUseCase;
+import nuts.project.wholesale_system.authentication.service.usecase.get_user.GetUserUseCase;
+import nuts.project.wholesale_system.authentication.service.usecase.get_user_table.GetUserTableUseCase;
+import nuts.project.wholesale_system.authentication.service.usecase.register_user.RegisterUserUseCase;
+import nuts.project.wholesale_system.authentication.service.usecase.request_token.RequestTokenUseCase;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final RestTemplate restTemplate;
+    private final RequestTokenUseCase requestTokenUseCase;
+    private final RegisterUserUseCase registerUserUseCase;
+    private final GetUserTableUseCase getUserTableUseCase;
+    private final GetUserUseCase getUserUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
+    private final GetJwkSetUseCase jwkSetUseCase;
 
-    private String authServerUrl = "http://localhost:8080/test";
+    public TokenResponse createToken(String userName, String password) {
 
-    /**
-     * It communicates with the authentication server and issues a token
-     *
-     * @param username The username that you send to the authentication server
-     * @param password Passwords sent to the authentication server
-     *                                 TODO
-     * @return Token Info Map
-     */
-    public Map<String, Object> requestToken(String username, String password) {
+        return requestTokenUseCase.execute(userName, password);
+    }
 
+    public List<UserInformation> getUserTable() {
+        return getUserTableUseCase.execute();
+    }
 
-        return restTemplate.postForObject(authServerUrl + "/token", null, Map.class);
+    public UserInformation getUser(String username) {
+        return getUserUseCase.execute(username);
     }
 
 
-    /**
-     * Retrieve the user information registered on the authentication server
-     * TODO
-     *
-     * @return userInfo
-     */
-    public Map<String, Object> getUserTable() {
-        return restTemplate.getForObject(authServerUrl + "/users", Map.class);
+    public UserInformation registerUser(String username, String firstName, String lastName, String email, String password) {
+        return registerUserUseCase.execute(username, email, password, firstName, lastName);
     }
 
-
-    /**
-     * Bring up jwkset for verification.
-     * @return JWK set
-     */
-    public Object getJwtSet(){
-        return restTemplate.getForObject(authServerUrl + "/set", Map.class);
+    public boolean deleteUser(String username) {
+        return deleteUserUseCase.execute(username);
     }
+
+    public JwkSet getJwkSet() {
+        return jwkSetUseCase.execute();
+    }
+
 }

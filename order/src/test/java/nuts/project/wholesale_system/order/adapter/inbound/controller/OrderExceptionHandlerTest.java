@@ -103,6 +103,4 @@ class OrderExceptionHandlerTest {
                 .andExpect(jsonPath("$.message").value(OrderException.OrderExceptionCase.PAYMENT_SERVICE_FAIL.getMessage()));
 
     }
-
-
 }
