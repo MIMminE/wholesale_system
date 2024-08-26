@@ -27,6 +27,7 @@ repositories {
 dependencies {
 
     implementation 'com.github.MIMminE:manager_library:1.0.22'
+    implementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.14'
     implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.40'
 
 //    implementation 'org.keycloak:keycloak-spring-boot-starter:15.1.1'
@@ -42,6 +43,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
 //    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation'com.navercorp.fixturemonkey:fixture-monkey-starter:1.0.14'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
