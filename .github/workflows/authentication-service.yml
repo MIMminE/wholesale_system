@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: ["master"]
     paths:
-      - 'log/*'
+      - 'authentication/*'
 
 jobs:
   authentication-service-pull-request:

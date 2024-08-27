@@ -18,7 +18,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class AuthenticationService {
 
     private final RequestTokenUseCase requestTokenUseCase;
