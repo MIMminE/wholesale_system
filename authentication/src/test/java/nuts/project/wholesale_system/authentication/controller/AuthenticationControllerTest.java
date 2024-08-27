@@ -135,7 +135,7 @@ class AuthenticationControllerTest extends RestDocsSupport {
         ));
 
         if (Arrays.asList(environment.getActiveProfiles()).contains("integration-test")) {
-            resultActions.andDo(restDocsManager.document("test", "requestCreateUsers", "responseCreateUsers"));
+            resultActions.andDo(restDocsManager.document("request-create-user", "requestCreateUsers", "responseCreateUsers"));
         }
     }
 
