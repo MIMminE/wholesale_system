@@ -39,7 +39,7 @@ services:
 
   keycloak:
     container_name: keycloak
-    image: keycloak/keycloak
+    image: harunuts/my-keyclock
     ports:
       - "8888:8080"
     environment:
