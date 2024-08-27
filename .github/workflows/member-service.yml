@@ -1,13 +1,12 @@
-name: log-service-update
+name: member-service-pull-request
 on:
   pull_request:
     branches: ["master"]
-#    paths:
-#      - '.github/workflows/pull-request-log-service.yml'
-#      - 'log/src/**'
+    paths:
+      - 'member/*'
 
 jobs:
-  pull-request-test:
+  member-service-pull-request:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,13 +36,15 @@ jobs:
       - name: Verify Java version
         run: java -version
 
-      - name: Grant execute permission for gradlew
-        run: |
-          cd log
-          chmod +x ./gradlew
+#      - name: restdocs folder generate
+#        run: |
+#          mkdir -p member/build/generated-snippets/api/v1/create-members
+#          mkdir -p member/build/generated-snippets/api/v1/delete-members
+#          mkdir -p member/build/generated-snippets/api/v1/get_members_{id}
+#          mkdir -p member/build/generated-snippets/api/v1/update_members
 
-      # Gradle test 실행 (특정 모듈)
-      - name: Test module A with Gradle
-        run: | 
-          cd log
-          ./gradlew --info test
+      - name: Grant execute permission for gradlew && test
+        run: |
+          cd member
+          chmod +x ./gradlew
+           ./gradlew test -Dspring.profiles.active=test

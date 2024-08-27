@@ -1,13 +1,12 @@
-name: log-service-update
+name: order-service-pull-request
 on:
   pull_request:
     branches: [ "master" ]
-#    paths:
-#      - '.github/workflows/pull-request-log-service.yml'
-#      - 'log/src/**'
+    paths:
+      - 'order/*'
 
 jobs:
-  pull-request-test:
+  order-service-pull-request:
     runs-on: ubuntu-latest
 
     steps:
