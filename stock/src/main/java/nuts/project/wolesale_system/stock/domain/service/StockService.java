@@ -23,8 +23,9 @@ public class StockService {
     private final CreateStockUseCase createStockUseCase;
     private final DeleteStockUseCase deleteStockUseCase;
     private final GetStockUseCase getStockUseCase;
-    private final DeductStockUseCase deductStockUseCase;
     private final AddStockUseCase addStockUseCase;
+    private final DeductStockUseCase deductStockUseCase;
+
 
     public CreateStockResultDto createStock(String stockName, String category) {
         String stockId = UUID.randomUUID().toString();
