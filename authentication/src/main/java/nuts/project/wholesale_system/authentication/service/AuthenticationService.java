@@ -2,6 +2,7 @@ package nuts.project.wholesale_system.authentication.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
 import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationService {
 
     private final RequestTokenUseCase requestTokenUseCase;
