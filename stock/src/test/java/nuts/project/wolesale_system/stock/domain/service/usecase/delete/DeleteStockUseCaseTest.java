@@ -14,7 +14,7 @@ import static nuts.project.wolesale_system.stock.domain.exception.StockException
 
 class DeleteStockUseCaseTest extends StockUseCaseTestSupport {
 
-    @DisplayName("deleteStockUseCase 동작 성공 테스트")
+    @DisplayName("재고 id를 입력받아 해당되는 id에 대한 데이터가 있다면 재고를 삭제한다.")
     @Test
     void deleteStockUseCaseSuccess() {
         // given
@@ -29,7 +29,7 @@ class DeleteStockUseCaseTest extends StockUseCaseTestSupport {
                 .isInstanceOf(NoSuchElementException.class);
     }
 
-    @DisplayName("deleteStockUseCase 예외 테스트 : 입력한 stockId에 해당하는 재고 데이터가 없을 때")
+    @DisplayName("입력받은 재고 id에 해당되는 데이터가 없어 재고 데이터 삭제에 실패하면 예외를 던진다.")
     @Test
     void deleteStockUseCaseNotFoundStockId() {
         // given

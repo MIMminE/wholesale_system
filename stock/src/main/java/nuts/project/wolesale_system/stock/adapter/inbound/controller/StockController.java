@@ -67,3 +67,4 @@ public class StockController {
         return ResponseEntity.ok().body(new DeleteStockResponse(request.getStockId(), true));
     }
 }
+

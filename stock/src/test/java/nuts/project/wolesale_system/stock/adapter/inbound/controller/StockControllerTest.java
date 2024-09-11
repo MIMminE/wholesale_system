@@ -37,6 +37,7 @@ import java.util.*;
 
 import static java.util.Map.entry;
 import static java.util.Map.ofEntries;
+import static nuts.lib.manager.fixture_manager.FixtureManager.changeFieldValue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -45,44 +46,57 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @ActiveProfiles("test")
 class StockControllerTest extends RestDocsSupport {
 
-
     FixtureManager fixtureManager = new FixtureManager(List.of(
             OrderSheet.order(FixtureManager.orderCustom(CreateStockRequest.class)
                     .set("stockName", Arbitraries.strings().alpha().ofMinLength(3))
-                    .set("category", Arbitraries.of(Arrays.stream(StockCategory.values()).map(Objects::toString).toArray())), 1)
+                    .set("category", Arbitraries.of(Arrays.stream(StockCategory.values()).map(Objects::toString).toArray())), 1),
+
+            OrderSheet.order(FixtureManager.orderCustom(DeleteStockRequest.class)
+                    .set("stockId", UUID.randomUUID().toString()), 1),
+
+            OrderSheet.order(FixtureManager.orderCustom(Stock.class)
+                    .set("stockId", UUID.randomUUID().toString())
+                    .set("stockName", Arbitraries.strings().alpha().ofMinLength(3))
+                    .set("category", Arbitraries.of(StockCategory.values()))
+                    .set("quantity", Arbitraries.integers().between(2, 10)), 1),
+
+            OrderSheet.order(FixtureManager.orderCustom(UpdateStockRequest.class)
+                    .set("stockId", UUID.randomUUID().toString())
+                    .set("quantity", Arbitraries.integers().between(2, 10)), 1)
+
     ));
 
 
     @Mock
     StockService stockService;
     ObjectMapper mapper = new ObjectMapper();
-//
-//    @Test
-//    @DisplayName("GET /stocks/{stockId} : stockId 정보 조회 성공 테스트")
-//    void getStock() throws Exception {
-//
-//        // given
-//        Stock stock = getOrderedObject(Stock.class).get(0);
-//
-//        String stockId = stock.getStockId();
-//        String stockName = stock.getStockName();
-//        StockCategory category = stock.getCategory();
-//        int quantity = stock.getQuantity();
-//
-//        BDDMockito.given(getStockUseCase.execute(stockId))
-//                .willReturn(new GetStockResultDto(stockId, stockName, category.name(), quantity));
-//
-//        // when
-//        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.get("/stocks/{stockId}", stockId));
-//
-//        // then
-//        resultActions.andExpectAll(MockMvcSupport.mapMatchers(ofEntries(
-//                entry("stockId", stockId),
-//                entry("stockName", stockName),
-//                entry("category", category.name()),
-//                entry("quantity", quantity)
-//        )));
-//    }
+
+    @Test
+    @DisplayName("Get /stock-service/stocks/{stockId} 요청을 받아 StockService의 재고 조회 메서드를 호출하고 결과를 반환한다.")
+    void getStock() throws Exception {
+
+        // given
+        Stock stock = fixtureManager.getOrderObject(Stock.class);
+
+        String stockId = stock.getStockId();
+        String stockName = stock.getStockName();
+        StockCategory category = stock.getCategory();
+        int quantity = stock.getQuantity();
+
+        BDDMockito.given(stockService.getStock(stockId))
+                .willReturn(new GetStockResultDto(stockId, stockName, category.name(), quantity));
+
+        // when
+        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.get("/stock-service/stocks/{stockId}", stockId));
+
+        // then
+        resultActions.andExpectAll(MockMvcSupport.mapMatchers(ofEntries(
+                entry("stockId", stockId),
+                entry("stockName", stockName),
+                entry("category", category.name()),
+                entry("quantity", quantity)
+        )));
+    }
 
     @Test
     @DisplayName("Post /stock-service/stocks 요청을 받아 StockService의 재고 생성 메서드를 호출하고 결과를 반환한다.")
@@ -93,8 +107,6 @@ class StockControllerTest extends RestDocsSupport {
         String stockName = createStockRequest.getStockName();
         String category = createStockRequest.getCategory();
         String stockId = UUID.randomUUID().toString();
-
-        System.out.println(category);
 
         BDDMockito.given(stockService.createStock(stockName, category))
                 .willReturn(new CreateStockResultDto(stockId, stockName, category));
@@ -114,109 +126,111 @@ class StockControllerTest extends RestDocsSupport {
     }
 
 
-//    @Test
-//    @DisplayName("PUT /stocks/add : stock 재고 추가 성공 테스트")
-//    void addStock() throws Exception {
-//        // given
-//        Stock stock = getOrderedObject(Stock.class).get(0);
-//        UpdateStockRequest updateStockRequest = getOrderedObject(UpdateStockRequest.class).get(0);
-//
-//        String stockId = updateStockRequest.getStockId();
-//        changeFieldValue(stock, "stockId", stockId);
-//        int addQuantity = updateStockRequest.getQuantity();
-//
-//        int quantity = stock.getQuantity();
-//        String stockName = stock.getStockName();
-//        StockCategory category = stock.getCategory();
-//
-//        BDDMockito.given(addStockUseCase.execute(stockId, addQuantity))
-//                .willReturn(new UpdateStockResultDto(stockId, stockName, category.name(), quantity, quantity + addQuantity));
-//
-//        // when
-//        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.put("/stocks/add")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(mapper.writeValueAsString(updateStockRequest)));
-//
-//        // then
-//        resultActions
-//                .andExpectAll(MockMvcSupport.mapMatchers(
-//                        ofEntries(
-//                                entry("stockId", stockId),
-//                                entry("stockName", stockName),
-//                                entry("category", category.name()),
-//                                entry("beforeQuantity", quantity),
-//                                entry("afterQuantity", quantity + addQuantity)
-//                        )))
-//        ;
-//    }
-//
-//    @Test
-//    @DisplayName("PUT /stocks/deduct : stock 재고 차감 성공 테스트")
-//    void deductStock() throws Exception {
-//
-//        // given
-//        Stock stock = getOrderedObject(Stock.class).get(0);
-//        UpdateStockRequest updateStockRequest = getOrderedObject(UpdateStockRequest.class).get(0);
-//        changeFieldValue(updateStockRequest, "quantity", new Random().nextInt(stock.getQuantity()));
-//
-//        String stockId = updateStockRequest.getStockId();
-//        changeFieldValue(stock, "stockId", stockId);
-//        int deductQuantity = updateStockRequest.getQuantity();
-//
-//        int quantity = stock.getQuantity();
-//        String stockName = stock.getStockName();
-//        StockCategory category = stock.getCategory();
-//
-//        BDDMockito.given(deductStockUseCase.execute(stockId, deductQuantity))
-//                .willReturn(new UpdateStockResultDto(stockId, stockName, category.name(), quantity, quantity - deductQuantity));
-//
-//        // when
-//        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.put("/stocks/deduct")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(mapper.writeValueAsString(updateStockRequest)));
-//
-//        // then
-//        resultActions
-//                .andExpectAll(MockMvcSupport.mapMatchers(
-//                        ofEntries(
-//                                entry("stockId", stockId),
-//                                entry("stockName", stockName),
-//                                entry("category", category.name()),
-//                                entry("beforeQuantity", quantity),
-//                                entry("afterQuantity", quantity - deductQuantity)
-//                        )))
-//        ;
-//    }
-//
-//
-//    @Test
-//    @DisplayName("DELETE /stocks : stock 삭제 성공 테스트")
-//    void deleteStock() throws Exception {
-//
-//        // given
-//        DeleteStockRequest deleteStockRequest = getOrderedObject(DeleteStockRequest.class).get(0);
-//
-//        String stockId = deleteStockRequest.getStockId();
-//
-//        BDDMockito.willDoNothing().given(deleteStockUseCase).execute(stockId);
-//
-//        // when
-//        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.delete("/stocks")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(mapper.writeValueAsString(deleteStockRequest)));
-//
-//        // then
-//        verify(deleteStockUseCase).execute(stockId);
-//
-//        resultActions
-//                .andDo(print())
-//                .andExpectAll(MockMvcSupport.mapMatchers(
-//                        ofEntries(
-//                                entry("requestStockId", stockId),
-//                                entry("result", true)
-//                        )))
-//        ;
-//    }
+    @Test
+    @DisplayName("Put /stock-service/add 요청을 받아 StockService의 재고 추가 메서드를 호출하고 결과를 반환한다.")
+    void addStock() throws Exception {
+
+        // given
+        Stock stock = fixtureManager.getOrderObject(Stock.class);
+        UpdateStockRequest updateStockRequest = fixtureManager.getOrderObject(UpdateStockRequest.class);
+
+        String stockId = updateStockRequest.getStockId();
+        changeFieldValue(stock, "stockId", stockId);
+        int addQuantity = updateStockRequest.getQuantity();
+
+        int quantity = stock.getQuantity();
+        String stockName = stock.getStockName();
+        StockCategory category = stock.getCategory();
+
+        BDDMockito.given(stockService.addStock(stockId, quantity))
+                .willReturn(new UpdateStockResultDto(stockId, stockName, category.name(), quantity, quantity + addQuantity));
+
+        // when
+        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.put("/stock-service/stocks/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(updateStockRequest)));
+
+        // then
+        resultActions
+                .andExpectAll(MockMvcSupport.mapMatchers(
+                        ofEntries(
+                                entry("stockId", stockId),
+                                entry("stockName", stockName),
+                                entry("category", category.name()),
+                                entry("beforeQuantity", quantity),
+                                entry("afterQuantity", quantity + addQuantity)
+                        )))
+        ;
+    }
+
+
+    @Test
+    @DisplayName("Put /stock-service/deduct 요청을 받아 StockService의 재고 삭제 메서드를 호출하고 결과를 반환한다.")
+    void deductStock() throws Exception {
+
+        // given
+        Stock stock = fixtureManager.getOrderObject(Stock.class);
+        UpdateStockRequest updateStockRequest = fixtureManager.getOrderObject(UpdateStockRequest.class);
+
+        changeFieldValue(updateStockRequest, "quantity", new Random().nextInt(stock.getQuantity()));
+
+        String stockId = updateStockRequest.getStockId();
+        changeFieldValue(stock, "stockId", stockId);
+        int deductQuantity = updateStockRequest.getQuantity();
+
+        int quantity = stock.getQuantity();
+        String stockName = stock.getStockName();
+        StockCategory category = stock.getCategory();
+
+        BDDMockito.given(stockService.deductStock(stockId, deductQuantity))
+                .willReturn(new UpdateStockResultDto(stockId, stockName, category.name(), quantity, quantity - deductQuantity));
+
+        // when
+        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.put("/stock-service/stocks/deduct")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(updateStockRequest)));
+
+        // then
+        resultActions
+                .andExpectAll(MockMvcSupport.mapMatchers(
+                        ofEntries(
+                                entry("stockId", stockId),
+                                entry("stockName", stockName),
+                                entry("category", category.name()),
+                                entry("beforeQuantity", quantity),
+                                entry("afterQuantity", quantity - deductQuantity)
+                        )))
+        ;
+    }
+
+
+    @Test
+    @DisplayName("Delete /stock-service/stocks 요청을 받아 StockService의 재고 삭제 메서드를 호출하고 결과를 반환한다.")
+    void deleteStock() throws Exception {
+
+        // given
+        DeleteStockRequest deleteStockRequest = fixtureManager.getOrderObject(DeleteStockRequest.class);
+
+        String stockId = deleteStockRequest.getStockId();
+
+        BDDMockito.willDoNothing().given(stockService).deleteStock(stockId);
+        // when
+        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.delete("/stock-service/stocks")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(deleteStockRequest)));
+
+        // then
+        verify(stockService).deleteStock(stockId);
+
+        resultActions
+                .andDo(print())
+                .andExpectAll(MockMvcSupport.mapMatchers(
+                        ofEntries(
+                                entry("requestStockId", stockId),
+                                entry("result", true)
+                        )))
+        ;
+    }
 
 
     @Override

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class CreateStockUseCaseTest extends StockUseCaseTestSupport {
 
-    @DisplayName("createStockUseCase 동작 성공 테스트")
+    @DisplayName("재고 id, 재고 이름, 카테고리값을 입력 받아 재고를 생성하고 결과를 반환한다.")
     @Test
     void createStockUseCaseSuccess() {
         // given
