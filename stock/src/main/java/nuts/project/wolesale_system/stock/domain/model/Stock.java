@@ -16,4 +16,5 @@ public class Stock {
     private StockCategory category;
 
     private int quantity;
+
 }
