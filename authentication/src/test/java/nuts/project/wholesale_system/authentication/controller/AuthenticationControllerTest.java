@@ -10,8 +10,8 @@ import nuts.lib.manager.restdocs_manager.support.RestDocsSupport;
 import nuts.project.wholesale_system.authentication.controller.request.RequestCreateToken;
 import nuts.project.wholesale_system.authentication.controller.request.RequestCreateUsers;
 import nuts.project.wholesale_system.authentication.controller.request.RequestDeleteUsers;
-import nuts.project.wholesale_system.authentication.controller.request.RequestRestDocs;
-import nuts.project.wholesale_system.authentication.controller.response.ResponseRestDocs;
+import nuts.project.wholesale_system.authentication.controller.restdocs.RequestRestDocs;
+import nuts.project.wholesale_system.authentication.controller.restdocs.ResponseRestDocs;
 import nuts.project.wholesale_system.authentication.service.AuthenticationService;
 import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
 import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
@@ -22,7 +22,6 @@ import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -100,7 +99,7 @@ class AuthenticationControllerTest extends RestDocsSupport {
         ));
 
         if (Arrays.asList(environment.getActiveProfiles()).contains("integration-test")) {
-            resultActions.andDo(restDocsManager.document("test", "requestCreateToken", "tokenResponse"));
+            resultActions.andDo(restDocsManager.document("createToken", "createToken", "createToken"));
         }
     }
 
@@ -136,7 +135,7 @@ class AuthenticationControllerTest extends RestDocsSupport {
         ));
 
         if (Arrays.asList(environment.getActiveProfiles()).contains("integration-test")) {
-            resultActions.andDo(restDocsManager.document("request-create-user", "requestCreateUsers", "responseCreateUsers"));
+            resultActions.andDo(restDocsManager.document("request-create-user", "createUsers", "createUsers"));
         }
     }
 
@@ -170,14 +169,16 @@ class AuthenticationControllerTest extends RestDocsSupport {
 
         // then
         resultActions.andExpectAll(MockMvcSupport.mapMatchers(
-                Map.of("count", 2,
-                        "userInformationList[0].id", firstUserInformation.getUserId(),
-                        "userInformationList[0].username", firstUserInformation.getUserName(),
-                        "userInformationList[0].email", firstUserInformation.getEmail(),
-                        "userInformationList[1].id", secondUserInformation.getUserId(),
-                        "userInformationList[1].username", secondUserInformation.getUserName(),
-                        "userInformationList[1].email", secondUserInformation.getEmail())
-        ));
+                        Map.of("count", 2,
+                                "userInformationList[0].id", firstUserInformation.getUserId(),
+                                "userInformationList[0].username", firstUserInformation.getUserName(),
+                                "userInformationList[0].email", firstUserInformation.getEmail(),
+                                "userInformationList[1].id", secondUserInformation.getUserId(),
+                                "userInformationList[1].username", secondUserInformation.getUserName(),
+                                "userInformationList[1].email", secondUserInformation.getEmail())
+                ))
+//                .andDo(restDocsManager.document("get-user-table", "getUserTable"))
+        ;
     }
 
     @DisplayName("GET /authentication-service/users/{username} 경로로 요청이 들어오면 서비스 계층의 유저 정보 조회 메서드로 전달하고 결과를 반환한다.")
@@ -193,10 +194,12 @@ class AuthenticationControllerTest extends RestDocsSupport {
 
         // then
         resultActions.andExpectAll(MockMvcSupport.mapMatchers(Map.of(
-                "id", userInformation.getUserId(),
-                "username", userInformation.getUserName(),
-                "email", userInformation.getEmail()
-        )));
+                        "id", userInformation.getUserId(),
+                        "username", userInformation.getUserName(),
+                        "email", userInformation.getEmail()
+                )))
+//                .andDo(restDocsManager.document("get-user", "getUser"))
+        ;
     }
 
     @DisplayName("GET /authentication-service/certs 경로로 요청이 들어오면 서비스 계층의 jwkset 조회 메서드로 전달하고 결과를 반환한다.")
@@ -210,7 +213,7 @@ class AuthenticationControllerTest extends RestDocsSupport {
         ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.get("/authentication-service/certs"));
 
         // then
-        resultActions.andDo(print());
+//        resultActions.andDo(restDocsManager.document("get-jwk-set", "getJwkSet"));
     }
 
     @Override
