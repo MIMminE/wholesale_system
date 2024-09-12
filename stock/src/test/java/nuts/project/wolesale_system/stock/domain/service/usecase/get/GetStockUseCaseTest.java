@@ -14,7 +14,7 @@ import static nuts.project.wolesale_system.stock.domain.exception.StockException
 
 class GetStockUseCaseTest extends StockUseCaseTestSupport {
 
-    @DisplayName("getStockUseCase 동작 성공 테스트")
+    @DisplayName("재고 id를 입력받아 해당되는 id에 대한 데이터를 조회하고 결과를 반환한다.")
     @Test
     void getStockUseCaseSuccess() {
         // given
@@ -34,7 +34,7 @@ class GetStockUseCaseTest extends StockUseCaseTestSupport {
 
     }
 
-    @DisplayName("getStockUseCase 예외 테스트 : 입력한 stockId에 해당하는 재고 데이터가 없을 때")
+    @DisplayName("입력받은 재고 id에 해당되는 데이터가 없으면 예외를 던진다.")
     @Test
     void getStockUseCaseNotFoundStockId() {
         // given

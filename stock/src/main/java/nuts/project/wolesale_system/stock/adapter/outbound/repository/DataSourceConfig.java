@@ -15,7 +15,7 @@ public class DataSourceConfig {
     @Bean
     DataSource dataSource() {
         return DataSourceGenerator.createHikariDataSource(DataSourceType.mysql,
-                "localhost", 9000, "test_db", "tester", "tester");
+                "localhost", 8501, "test_db", "tester", "tester");
     }
 
     @Profile("test")

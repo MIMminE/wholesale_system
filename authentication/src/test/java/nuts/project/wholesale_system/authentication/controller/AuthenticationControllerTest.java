@@ -19,6 +19,7 @@ import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -59,7 +60,7 @@ class AuthenticationControllerTest extends RestDocsSupport {
                             .set("keys[].x5ts256", Arbitraries.strings().alpha().ofMinLength(3).ofMaxLength(10)), 1))
     );
 
-    @MockBean
+    @Mock
     AuthenticationService authenticationService;
 
     @Autowired

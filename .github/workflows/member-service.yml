@@ -1,12 +1,12 @@
 name: member-service-pull-request
 on:
   pull_request:
-    branches: ["master"]
+    branches: [ "master" ]
     paths:
       - 'member/*'
 
 jobs:
-  member-service-pull-request:
+  pull-request-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,12 +36,12 @@ jobs:
       - name: Verify Java version
         run: java -version
 
-#      - name: restdocs folder generate
-#        run: |
-#          mkdir -p member/build/generated-snippets/api/v1/create-members
-#          mkdir -p member/build/generated-snippets/api/v1/delete-members
-#          mkdir -p member/build/generated-snippets/api/v1/get_members_{id}
-#          mkdir -p member/build/generated-snippets/api/v1/update_members
+      #      - name: restdocs folder generate
+      #        run: |
+      #          mkdir -p member/build/generated-snippets/api/v1/create-members
+      #          mkdir -p member/build/generated-snippets/api/v1/delete-members
+      #          mkdir -p member/build/generated-snippets/api/v1/get_members_{id}
+      #          mkdir -p member/build/generated-snippets/api/v1/update_members
 
       - name: Grant execute permission for gradlew && test
         run: |

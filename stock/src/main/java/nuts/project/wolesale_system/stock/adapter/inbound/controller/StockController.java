@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/stock-service")
 public class StockController {
 
     private final StockService stockService;
-
 
     @GetMapping("/stocks/{stockId}")
     public ResponseEntity<GetStockResponse> getStock(@PathVariable("stockId") String stockId) {
@@ -30,7 +30,6 @@ public class StockController {
         return ResponseEntity.ok()
                 .body(new GetStockResponse(getResult.getStockId(), getResult.getStockName(),
                         getResult.getCategory(), getResult.getQuantity()));
-
     }
 
     @PostMapping("/stocks")
@@ -68,3 +67,4 @@ public class StockController {
         return ResponseEntity.ok().body(new DeleteStockResponse(request.getStockId(), true));
     }
 }
+

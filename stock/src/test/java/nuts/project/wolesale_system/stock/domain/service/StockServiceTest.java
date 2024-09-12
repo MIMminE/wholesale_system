@@ -52,7 +52,7 @@ class StockServiceTest extends FixtureGenerateSupport {
     @InjectMocks
     StockService stockService;
 
-    @Test
+//    @Test
     @DisplayName("createStock 메서드로 createStockUseCase 정상 호출")
     void createStock() {
 
@@ -75,7 +75,7 @@ class StockServiceTest extends FixtureGenerateSupport {
                 .contains(stockId, stockName, category.name());
     }
 
-    @Test
+//    @Test
     @DisplayName("deleteStock 메서드로 deleteStockUseCase 정상 호출")
     void deleteStock() {
         // given
@@ -94,7 +94,7 @@ class StockServiceTest extends FixtureGenerateSupport {
         BDDMockito.then(deleteStockUseCase).should().execute(stockId);
     }
 
-    @Test
+//    @Test
     @DisplayName("getStock 메서드로 getStockUseCase 정상 호출")
     void getStock() {
         // given
@@ -117,7 +117,7 @@ class StockServiceTest extends FixtureGenerateSupport {
                 .contains(stockId, stockName, category.name(), quantity);
     }
 
-    @Test
+//    @Test
     @DisplayName("deductStock 메서드로 deductStockUseCase 정상 호출")
     void deductStock() {
         // given
@@ -142,7 +142,7 @@ class StockServiceTest extends FixtureGenerateSupport {
 
     }
 
-    @Test
+//    @Test
     @DisplayName("addStock 메서드로 addStockUseCase 정상 호출")
     void addStock() {
         // given

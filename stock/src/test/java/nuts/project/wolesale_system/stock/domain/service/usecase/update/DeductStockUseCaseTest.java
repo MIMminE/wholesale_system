@@ -39,7 +39,7 @@ class DeductStockUseCaseTest extends StockUseCaseTestSupport {
 
     @DisplayName("deductStockUseCase 예외 테스트 : 입력한 stockId에 해당하는 재고 데이터가 없을 때")
     @Test
-    void deductStockUseCaseQuantityException() {
+    void deductStockUseCaseNotFoundStockId() {
         // given
         StockEntity stockEntity = getOrderedObject(StockEntity.class).get(0);
         String stockId = stockEntity.getStockId();
@@ -53,7 +53,7 @@ class DeductStockUseCaseTest extends StockUseCaseTestSupport {
 
     @DisplayName("deductStockUseCase 예외 테스트 : 요청 개수보다 남아있는 재고가 적을 때")
     @Test
-    void deductStockUseCaseNotFoundStockId() {
+    void deductStockUseCaseQuantityException() {
         // given
         StockEntity stockEntity = stockRepository.save(getOrderedObject(StockEntity.class).get(0));
         String stockId = stockEntity.getStockId();
