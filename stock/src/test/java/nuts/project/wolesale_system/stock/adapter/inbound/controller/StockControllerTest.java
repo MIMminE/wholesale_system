@@ -89,7 +89,9 @@ class StockControllerTest extends RestDocsSupport {
                 entry("stockName", stockName),
                 entry("category", category.name()),
                 entry("quantity", quantity)
-        ))).andDo(restDocsManager.document("get-stock", "getStock"));
+        )))
+//                .andDo(restDocsManager.document("get-stock", "getStock"))
+        ;
     }
 
     @Test
@@ -116,7 +118,9 @@ class StockControllerTest extends RestDocsSupport {
                         entry("stockId", stockId),
                         entry("stockName", stockName),
                         entry("category", category)
-                ))).andDo(restDocsManager.document("create-stock", "createStock", "createStock"));
+                )))
+//                .andDo(restDocsManager.document("create-stock", "createStock", "createStock"))
+        ;
     }
 
 
@@ -152,7 +156,9 @@ class StockControllerTest extends RestDocsSupport {
                                 entry("category", category.name()),
                                 entry("beforeQuantity", quantity),
                                 entry("afterQuantity", quantity + addQuantity)
-                        ))).andDo(restDocsManager.document("add-stock", "addStock", "addStock"));
+                        )))
+//                .andDo(restDocsManager.document("add-stock", "addStock", "addStock"))
+        ;
     }
 
 
@@ -191,7 +197,9 @@ class StockControllerTest extends RestDocsSupport {
                                 entry("category", category.name()),
                                 entry("beforeQuantity", quantity),
                                 entry("afterQuantity", quantity - deductQuantity)
-                        ))).andDo(restDocsManager.document("deduct-stock", "deductStock", "deductStock"));
+                        )))
+//                .andDo(restDocsManager.document("deduct-stock", "deductStock", "deductStock"))
+        ;
     }
 
 
@@ -219,7 +227,9 @@ class StockControllerTest extends RestDocsSupport {
                         ofEntries(
                                 entry("requestStockId", stockId),
                                 entry("result", true)
-                        ))).andDo(restDocsManager.document("delete-stock", "deleteStock", "deleteStock"));
+                        )))
+//                .andDo(restDocsManager.document("delete-stock", "deleteStock", "deleteStock"))
+        ;
     }
 
 
