@@ -6,7 +6,7 @@ on:
       - 'order/*'
 
 jobs:
-  order-service-pull-request:
+  pull-request-test:
     runs-on: ubuntu-latest
 
     steps:
