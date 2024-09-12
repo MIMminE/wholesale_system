@@ -5,29 +5,24 @@ import net.jqwik.api.Arbitraries;
 import nuts.lib.manager.fixture_manager.FixtureManager;
 import nuts.lib.manager.fixture_manager.OrderSheet;
 import nuts.lib.manager.restdocs_manager.MockMvcSupport;
+import nuts.lib.manager.restdocs_manager.RestDocsManager;
 import nuts.lib.manager.restdocs_manager.support.RestDocsSupport;
 import nuts.project.wolesale_system.stock.adapter.inbound.controller.request.CreateStockRequest;
 import nuts.project.wolesale_system.stock.adapter.inbound.controller.request.DeleteStockRequest;
 import nuts.project.wolesale_system.stock.adapter.inbound.controller.request.UpdateStockRequest;
+import nuts.project.wolesale_system.stock.adapter.inbound.controller.restdocs.RequestRestDocs;
+import nuts.project.wolesale_system.stock.adapter.inbound.controller.restdocs.ResponseRestDocs;
 import nuts.project.wolesale_system.stock.domain.model.Stock;
 import nuts.project.wolesale_system.stock.domain.model.StockCategory;
 import nuts.project.wolesale_system.stock.domain.service.StockService;
 import nuts.project.wolesale_system.stock.domain.service.dto.CreateStockResultDto;
 import nuts.project.wolesale_system.stock.domain.service.dto.GetStockResultDto;
 import nuts.project.wolesale_system.stock.domain.service.dto.UpdateStockResultDto;
-import nuts.project.wolesale_system.stock.domain.service.usecase.create.CreateStockUseCase;
-import nuts.project.wolesale_system.stock.domain.service.usecase.delete.DeleteStockUseCase;
-import nuts.project.wolesale_system.stock.domain.service.usecase.get.GetStockUseCase;
-import nuts.project.wolesale_system.stock.domain.service.usecase.update.AddStockUseCase;
-import nuts.project.wolesale_system.stock.domain.service.usecase.update.DeductStockUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.ResultActions;
@@ -38,7 +33,6 @@ import java.util.*;
 import static java.util.Map.entry;
 import static java.util.Map.ofEntries;
 import static nuts.lib.manager.fixture_manager.FixtureManager.changeFieldValue;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -63,9 +57,9 @@ class StockControllerTest extends RestDocsSupport {
             OrderSheet.order(FixtureManager.orderCustom(UpdateStockRequest.class)
                     .set("stockId", UUID.randomUUID().toString())
                     .set("quantity", Arbitraries.integers().between(2, 10)), 1)
-
     ));
 
+    RestDocsManager restDocsManager = new RestDocsManager(RequestRestDocs.class, ResponseRestDocs.class);
 
     @Mock
     StockService stockService;
@@ -95,7 +89,7 @@ class StockControllerTest extends RestDocsSupport {
                 entry("stockName", stockName),
                 entry("category", category.name()),
                 entry("quantity", quantity)
-        )));
+        ))).andDo(restDocsManager.document("get-stock", "getStock"));
     }
 
     @Test
@@ -122,7 +116,7 @@ class StockControllerTest extends RestDocsSupport {
                         entry("stockId", stockId),
                         entry("stockName", stockName),
                         entry("category", category)
-                )));
+                ))).andDo(restDocsManager.document("create-stock", "createStock", "createStock"));
     }
 
 
@@ -141,8 +135,7 @@ class StockControllerTest extends RestDocsSupport {
         int quantity = stock.getQuantity();
         String stockName = stock.getStockName();
         StockCategory category = stock.getCategory();
-
-        BDDMockito.given(stockService.addStock(stockId, quantity))
+        BDDMockito.given(stockService.addStock(stockId, addQuantity))
                 .willReturn(new UpdateStockResultDto(stockId, stockName, category.name(), quantity, quantity + addQuantity));
 
         // when
@@ -159,8 +152,7 @@ class StockControllerTest extends RestDocsSupport {
                                 entry("category", category.name()),
                                 entry("beforeQuantity", quantity),
                                 entry("afterQuantity", quantity + addQuantity)
-                        )))
-        ;
+                        ))).andDo(restDocsManager.document("add-stock", "addStock", "addStock"));
     }
 
 
@@ -199,8 +191,7 @@ class StockControllerTest extends RestDocsSupport {
                                 entry("category", category.name()),
                                 entry("beforeQuantity", quantity),
                                 entry("afterQuantity", quantity - deductQuantity)
-                        )))
-        ;
+                        ))).andDo(restDocsManager.document("deduct-stock", "deductStock", "deductStock"));
     }
 
 
@@ -228,8 +219,7 @@ class StockControllerTest extends RestDocsSupport {
                         ofEntries(
                                 entry("requestStockId", stockId),
                                 entry("result", true)
-                        )))
-        ;
+                        ))).andDo(restDocsManager.document("delete-stock", "deleteStock", "deleteStock"));
     }
 
 
