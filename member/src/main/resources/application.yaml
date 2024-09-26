@@ -12,7 +12,7 @@ spring:
     generate-ddl: true
     show-sql: true
 
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
 server:
   port: 9001

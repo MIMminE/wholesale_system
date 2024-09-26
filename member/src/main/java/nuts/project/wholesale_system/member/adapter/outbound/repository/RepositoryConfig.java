@@ -11,14 +11,12 @@ import javax.sql.DataSource;
 @Configuration
 public class RepositoryConfig {
 
-    @Profile("dev")
-    @Bean
-    DataSource dataSource() {
-        return DataSourceGenerator.createHikariDataSource(DataSourceType.mysql,
-                "localhost", 9000, "test_db", "tester", "tester");
-    }
+//    @Bean
+//    DataSource dataSource() {
+//        return DataSourceGenerator.createHikariDataSource(DataSourceType.mysql,
+//                "localhost", 9000, "test_db", "tester", "tester");
+//    }
 
-    @Profile("test")
     @Bean
     DataSource dataSource_test() {
         return DataSourceGenerator.createHikariDataSource(DataSourceType.mysql,
