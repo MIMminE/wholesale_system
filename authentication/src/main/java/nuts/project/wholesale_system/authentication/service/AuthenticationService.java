@@ -1,6 +1,7 @@
 package nuts.project.wholesale_system.authentication.service;
 
 
+import com.nimbusds.jose.jwk.JWKSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
@@ -14,6 +15,8 @@ import nuts.project.wholesale_system.authentication.service.usecase.register_use
 import nuts.project.wholesale_system.authentication.service.usecase.request_token.RequestTokenUseCase;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -50,7 +53,7 @@ public class AuthenticationService {
         return deleteUserUseCase.execute(username);
     }
 
-    public JwkSet getJwkSet() {
+    public JWKSet getJwkSet() throws IOException, ParseException {
         return jwkSetUseCase.execute();
     }
 

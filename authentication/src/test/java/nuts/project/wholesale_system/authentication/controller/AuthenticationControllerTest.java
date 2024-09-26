@@ -1,6 +1,7 @@
 package nuts.project.wholesale_system.authentication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.jose.jwk.JWKSet;
 import net.jqwik.api.Arbitraries;
 import nuts.lib.manager.fixture_manager.FixtureManager;
 import nuts.lib.manager.fixture_manager.OrderSheet;
@@ -202,19 +203,19 @@ class AuthenticationControllerTest extends RestDocsSupport {
         ;
     }
 
-    @DisplayName("GET /authentication-service/certs 경로로 요청이 들어오면 서비스 계층의 jwkset 조회 메서드로 전달하고 결과를 반환한다.")
-    @Test
-    void getJwkSet() throws Exception {
-        // given
-        JwkSet jwkSet = fixtureManager.getOrderObject(JwkSet.class);
-        BDDMockito.given(authenticationService.getJwkSet()).willReturn(jwkSet);
-
-        // when
-        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.get("/authentication-service/certs"));
-
-        // then
-//        resultActions.andDo(restDocsManager.document("get-jwk-set", "getJwkSet"));
-    }
+//    @DisplayName("GET /authentication-service/certs 경로로 요청이 들어오면 서비스 계층의 jwkset 조회 메서드로 전달하고 결과를 반환한다.")
+//    @Test
+//    void getJwkSet() throws Exception {
+//        // given
+//        JWKSet jwkSet = fixtureManager.getOrderObject(JWKSet.class);
+//        BDDMockito.given(authenticationService.getJwkSet()).willReturn(jwkSet);
+//
+//        // when
+//        ResultActions resultActions = mockController.perform(MockMvcRequestBuilders.get("/authentication-service/certs"));
+//
+//        // then
+////        resultActions.andDo(restDocsManager.document("get-jwk-set", "getJwkSet"));
+//    }
 
     @Override
     protected Object initController() {

@@ -1,5 +1,6 @@
 package nuts.project.wholesale_system.authentication.controller;
 
+import com.nimbusds.jose.jwk.JWKSet;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.authentication.controller.request.RequestCreateToken;
@@ -13,6 +14,8 @@ import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 
@@ -77,7 +80,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/authentication-service/certs")
-    ResponseEntity<JwkSet> getJwkSet() {
+    ResponseEntity<JWKSet> getJwkSet() throws IOException, ParseException {
         return ResponseEntity.ok(authenticationService.getJwkSet());
     }
 }

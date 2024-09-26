@@ -1,5 +1,6 @@
 package nuts.project.wholesale_system.authentication.service;
 
+import com.nimbusds.jose.jwk.JWKSet;
 import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
 import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
@@ -169,7 +170,7 @@ class AuthenticationServiceTest {
     void getJwkSet() {
 
         // when
-        JwkSet jwkSet = authenticationService.getJwkSet();
+        JWKSet jwkSet = authenticationService.getJwkSet();
 
         // then
         Assertions.assertThat(jwkSet).isNotNull();
