@@ -1,6 +1,13 @@
 spring:
   application:
     name: gateway
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: username
+    password: password
+
 #  cloud:
 #    gateway:
 #      routes:
@@ -9,7 +16,20 @@ spring:
 #          predicates:
 #            - Path=/test
 
+routing:
+  routing-table:
+    member-service:
+      url: localhost
+      port: 9001
+
+    order-service:
+      url: localhost
+      port: 9002
+
+    stock-service:
+      url: localhost
+      port: 9003
 
 server:
-  port: 9006
+  port: 9000
 

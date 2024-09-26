@@ -28,8 +28,14 @@ ext {
 }
 
 dependencies {
+
+    implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.40'
+
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

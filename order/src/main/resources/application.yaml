@@ -24,7 +24,7 @@ logging:
     nuts.lib.manager.broker_manager.rabbitmq: debug
 
 server:
-  port:  9004
+  port: 9002
 
 
 stock_server_url: http://localhost:9811/

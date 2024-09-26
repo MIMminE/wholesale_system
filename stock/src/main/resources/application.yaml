@@ -8,4 +8,4 @@ spring:
     default: dev
 
 server:
-  port: 9811
+  port: 9003
