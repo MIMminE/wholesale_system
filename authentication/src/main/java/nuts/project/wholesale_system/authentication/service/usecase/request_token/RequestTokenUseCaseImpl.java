@@ -34,7 +34,6 @@ public class RequestTokenUseCaseImpl implements RequestTokenUseCase {
 
         String authServerUrl = authServerConfig.getUrl();
 
-
         return restTemplate.postForObject(authServerUrl + "/realms/auth-service/protocol/openid-connect/token", request, TokenResponse.class);
     }
 }

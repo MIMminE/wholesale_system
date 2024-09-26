@@ -25,12 +25,17 @@ public class AuthenticationController {
     @PostMapping("/authentication-service/token")
     ResponseEntity<TokenResponse> createToken(@RequestBody @Valid RequestCreateToken request) {
 
+        System.out.println("hello");
         String userName = request.getUserName();
         String password = request.getPassword();
+        try {
+            TokenResponse tokenResponse = authenticationService.createToken(userName, password);
+            return ResponseEntity.ok(tokenResponse);
 
-        TokenResponse tokenResponse = authenticationService.createToken(userName, password);
-
-        return ResponseEntity.ok(tokenResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

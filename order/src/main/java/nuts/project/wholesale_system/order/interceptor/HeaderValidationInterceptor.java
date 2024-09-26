@@ -7,7 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-public class HeaderValidationInterceptor implements HandlerInterceptor {
+public class  HeaderValidationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -16,6 +16,7 @@ public class HeaderValidationInterceptor implements HandlerInterceptor {
 
         System.out.println(role);
         System.out.println(sign);
+        System.out.println("interceptor !!");
 
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
