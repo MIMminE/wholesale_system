@@ -1,6 +1,9 @@
 package nuts.project.wholesale_system.authentication.controller;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jwt.SignedJWT;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.authentication.controller.request.RequestCreateToken;
@@ -79,8 +82,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.getUser(username));
     }
 
-    @GetMapping("/authentication-service/certs")
-    ResponseEntity<JWKSet> getJwkSet() throws IOException, ParseException {
-        return ResponseEntity.ok(authenticationService.getJwkSet());
+    @GetMapping("/authentication-service/validation/{token}")
+    ResponseEntity<Boolean> isValid(@PathVariable("token") String token) throws JOSEException {
+        boolean validationResult = authenticationService.validationToken(token);
+        return ResponseEntity.ok(validationResult);
     }
 }

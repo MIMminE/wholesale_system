@@ -14,19 +14,15 @@ import java.text.ParseException;
 @Component
 public class GetJwkSetImpl implements GetJwkSetUseCase {
 
-    private final RestTemplate restTemplate;
     private final AuthServerProperties authServerConfig;
 
-    public GetJwkSetImpl(RestTemplate restTemplate, AuthServerProperties authServerConfig) {
-        this.restTemplate = restTemplate;
+    public GetJwkSetImpl(AuthServerProperties authServerConfig) {
         this.authServerConfig = authServerConfig;
     }
 
     @Override
     public JWKSet execute() throws IOException, ParseException {
-        String requestUrl = String.format("%s/realms/master/protocol/openid-connect/certs", authServerConfig.getUrl());
-        JWKSet jwkSet = JWKSet.load(new URL(requestUrl));
-        jwkSet.getKeyByKeyId()
-        return null;
+        String requestUrl = String.format("%s/realms/auth-service/protocol/openid-connect/certs", authServerConfig.getUrl());
+        return JWKSet.load(new URL(requestUrl));
     }
 }

@@ -1,22 +1,18 @@
 package nuts.project.wholesale_system.authentication.service;
 
 
-import com.nimbusds.jose.jwk.JWKSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
 import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import nuts.project.wholesale_system.authentication.service.usecase.delete_user.DeleteUserUseCase;
-import nuts.project.wholesale_system.authentication.service.usecase.get_jwks.GetJwkSetUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.get_user.GetUserUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.get_user_table.GetUserTableUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.register_user.RegisterUserUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.request_token.RequestTokenUseCase;
+import nuts.project.wholesale_system.authentication.service.usecase.validation_token.ValidationTokenUseCase;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -29,7 +25,8 @@ public class AuthenticationService {
     private final GetUserTableUseCase getUserTableUseCase;
     private final GetUserUseCase getUserUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
-    private final GetJwkSetUseCase jwkSetUseCase;
+    private final ValidationTokenUseCase validationTokenUseCase;
+
 
     public TokenResponse createToken(String userName, String password) {
 
@@ -53,8 +50,8 @@ public class AuthenticationService {
         return deleteUserUseCase.execute(username);
     }
 
-    public JWKSet getJwkSet() throws IOException, ParseException {
-        return jwkSetUseCase.execute();
+    public boolean validationToken(String token) {
+        return validationTokenUseCase.execute(token);
     }
 
 }
