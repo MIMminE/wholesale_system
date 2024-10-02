@@ -1,24 +1,18 @@
 package nuts.project.wholesale_system.authentication.controller;
 
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jwt.SignedJWT;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import nuts.project.wholesale_system.authentication.controller.request.RequestCreateToken;
 import nuts.project.wholesale_system.authentication.controller.request.RequestCreateUsers;
 import nuts.project.wholesale_system.authentication.controller.request.RequestDeleteUsers;
 import nuts.project.wholesale_system.authentication.controller.response.UserTableResponse;
-import nuts.project.wholesale_system.authentication.service.dto.JwkSet;
 import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.AuthenticationService;
 import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 
@@ -31,7 +25,6 @@ public class AuthenticationController {
     @PostMapping("/authentication-service/token")
     ResponseEntity<TokenResponse> createToken(@RequestBody @Valid RequestCreateToken request) {
 
-        System.out.println("hello");
         String userName = request.getUserName();
         String password = request.getPassword();
         try {
