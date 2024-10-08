@@ -5,7 +5,5 @@ import nuts.project.wolesale_system.gateway.port.authentication.dto.ValidationRe
 
 public interface AuthenticationPort {
 
-    JWKSet getJWKSet();
-
     ValidationResult tokenValidation(String token);
 }

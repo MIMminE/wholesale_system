@@ -1,6 +1,7 @@
 package nuts.project.wolesale_system.gateway.routing;
 
 import lombok.RequiredArgsConstructor;
+import nuts.project.wolesale_system.gateway.filter.member.MemberServiceTokenValidationFilter;
 import nuts.project.wolesale_system.gateway.filter.member.MemberTokenFilter;
 import nuts.project.wolesale_system.gateway.filter.order.OrderLogFilter;
 import nuts.project.wolesale_system.gateway.filter.order.OrderAuthenticationFilter;
@@ -36,7 +37,7 @@ public class RoutingMapping {
         String targetUrl = createUrl("member-service");
         return r.path("/member-service/api/v1/**")
                 .filters(f -> f
-                        .filter(new MemberTokenFilter()))
+                        .filter(new MemberServiceTokenValidationFilter("testRole", authenticationAdapter)))
 //                .filters(f -> f
 //                        .filter(orderAuthenticationFilter)
 //                        .filter(orderLogFilter))
@@ -68,4 +69,3 @@ public class RoutingMapping {
                 routingConfig.getRoutingTable().get(routingKey).getPort(), routingKey);
     }
 }
-
