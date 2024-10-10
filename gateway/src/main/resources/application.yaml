@@ -30,6 +30,10 @@ routing:
       url: localhost
       port: 9003
 
+    authentication-service:
+      url: localhost
+      port: 9004
+
 server:
   port: 9000
 

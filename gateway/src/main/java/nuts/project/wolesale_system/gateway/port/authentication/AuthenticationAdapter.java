@@ -1,33 +1,28 @@
 package nuts.project.wolesale_system.gateway.port.authentication;
 
-import com.nimbusds.jose.jwk.JWKSet;
-import nuts.project.wolesale_system.gateway.exception.GatewayException;
+import lombok.RequiredArgsConstructor;
 import nuts.project.wolesale_system.gateway.port.authentication.dto.ValidationResult;
+import nuts.project.wolesale_system.gateway.routing.RoutingConfig;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
+import org.springframework.web.client.RestTemplate;
 
 import static nuts.project.wolesale_system.gateway.exception.GatewayException.GatewayExceptionCode.AuthenticationFail;
 
 @Component
+@RequiredArgsConstructor
 public class AuthenticationAdapter implements AuthenticationPort {
 
-    private final JWKSet jwkSet = getJWKSet();
-
-    @Override
-    public JWKSet getJWKSet() {
-        return new JWKSet();
-    }
+    private final RestTemplate restTemplate;
+    private final RoutingConfig routingConfig;
 
     @Override
     public ValidationResult tokenValidation(String token) {
 
-        // jwt 토큰 검증으로 권한 추출
-        if (token == "error")
-            throw new GatewayException(AuthenticationFail);
+        RoutingConfig.RoutingProperty routingProperty = routingConfig.getRoutingTable().get("authentication-service");
+        ResponseEntity<?> response = restTemplate.getForEntity("http://localhost:9004/authentication-service/validation/%s".formatted(token), Object.class);
+        System.out.println(response);
 
-        System.out.println(token + " token validation!");
-
-        return new ValidationResult("admin", "testUser",true);
+        return new ValidationResult("admin", "testUser", true);
     }
 }

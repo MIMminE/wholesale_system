@@ -10,6 +10,7 @@ import nuts.project.wholesale_system.authentication.controller.response.UserTabl
 import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.AuthenticationService;
 import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
+import nuts.project.wholesale_system.authentication.service.dto.ValidationResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,8 +77,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("/authentication-service/validation/{token}")
-    ResponseEntity<Boolean> isValid(@PathVariable("token") String token) throws JOSEException {
-        boolean validationResult = authenticationService.validationToken(token);
+    ResponseEntity<ValidationResponse> isValid(@PathVariable("token") String token) throws JOSEException {
+        ValidationResponse validationResult = authenticationService.validationToken(token);
         return ResponseEntity.ok(validationResult);
     }
 }
