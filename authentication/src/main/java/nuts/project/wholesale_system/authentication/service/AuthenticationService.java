@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nuts.project.wholesale_system.authentication.service.dto.TokenResponse;
 import nuts.project.wholesale_system.authentication.service.dto.UserInformation;
+import nuts.project.wholesale_system.authentication.service.dto.ValidationResponse;
 import nuts.project.wholesale_system.authentication.service.usecase.delete_user.DeleteUserUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.get_user.GetUserUseCase;
 import nuts.project.wholesale_system.authentication.service.usecase.get_user_table.GetUserTableUseCase;
@@ -50,7 +51,7 @@ public class AuthenticationService {
         return deleteUserUseCase.execute(username);
     }
 
-    public boolean validationToken(String token) {
+    public ValidationResponse validationToken(String token) {
         return validationTokenUseCase.execute(token);
     }
 

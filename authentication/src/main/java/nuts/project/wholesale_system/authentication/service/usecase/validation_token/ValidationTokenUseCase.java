@@ -1,7 +1,7 @@
 package nuts.project.wholesale_system.authentication.service.usecase.validation_token;
 
-import com.nimbusds.jose.JOSEException;
+import nuts.project.wholesale_system.authentication.service.dto.ValidationResponse;
 
 public interface ValidationTokenUseCase {
-    boolean execute(String token);
+    ValidationResponse execute(String token);
 }

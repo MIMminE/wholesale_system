@@ -1,7 +1,6 @@
 package nuts.project.wolesale_system.gateway.port.authentication;
 
 import lombok.RequiredArgsConstructor;
-import nuts.project.wolesale_system.gateway.exception.GatewayException;
 import nuts.project.wolesale_system.gateway.port.authentication.dto.ValidationResult;
 import nuts.project.wolesale_system.gateway.routing.RoutingConfig;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class AuthenticationAdapter implements AuthenticationPort {
     public ValidationResult tokenValidation(String token) {
 
         RoutingConfig.RoutingProperty routingProperty = routingConfig.getRoutingTable().get("authentication-service");
-        ResponseEntity<Boolean> response = restTemplate.getForEntity("http://localhost:9004/authentication-service/validation/%s".formatted(token), Boolean.class);
+        ResponseEntity<?> response = restTemplate.getForEntity("http://localhost:9004/authentication-service/validation/%s".formatted(token), Object.class);
         System.out.println(response);
 
         return new ValidationResult("admin", "testUser", true);
